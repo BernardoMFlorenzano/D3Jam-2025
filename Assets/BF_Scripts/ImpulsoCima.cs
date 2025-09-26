@@ -1,24 +1,13 @@
 using System.Collections;
 using UnityEngine;
 
-public class MovimentoPlayer : MonoBehaviour
+public class ImpulsoCima: MonoBehaviour
 {
-    private Rigidbody2D rb;
-    [SerializeField] private float velPlayerHor;
-    [SerializeField] private float velPlayerVer;
-    private Vector2 direcaoInput;
-    private Vector2 velMovReal;
-    private Vector2 velMovTarget;
-
-    [Header("Pulo")]
+    private MovimentoPlayer movimentoPlayer;
+    private teste movimentoInimigo;
     [SerializeField] private Transform transformCorpo;
-    [SerializeField] private float duracaoPulo;
-    [SerializeField] private float duracaoQueda;
-    [SerializeField] private float alturaPulo;
-    private bool puloInput;
-    private bool subindo;
-    private bool caindo;
-    private bool estaNoChao;
+    public bool subindo;
+    public bool caindo;
     [SerializeField] private string layerPlayerNome;
     [SerializeField] private string layerInimigoNome;
     private int layerPlayer;
@@ -27,59 +16,37 @@ public class MovimentoPlayer : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        if(CompareTag("Player"))
+            movimentoPlayer = GetComponent<MovimentoPlayer>();
+        else if(CompareTag("Inimigo"))
+            movimentoInimigo = GetComponent<teste>();
+
         layerPlayer = LayerMask.NameToLayer(layerPlayerNome);
         layerInimigo = LayerMask.NameToLayer(layerInimigoNome);
-        estaNoChao = true;
+        subindo = false;
+        caindo = false;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (estaNoChao)
-        {
-            direcaoInput.x = Input.GetAxisRaw("Horizontal");
-            direcaoInput.y = Input.GetAxisRaw("Vertical");
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            puloInput = true;
-        }
-    }
-
-    void FixedUpdate()
-    {
-        direcaoInput.Normalize();
-
-        velMovTarget.x = direcaoInput.x * velPlayerHor;
-        velMovTarget.y = direcaoInput.y * velPlayerVer;
-
-        rb.linearVelocity = velMovTarget;
-
-        if (puloInput && estaNoChao)
-        {
-            //StartCoroutine(ImpulsoCima(alturaPulo, velPulo, velQueda));
-            StartCoroutine(ImpulsoCima(alturaPulo, duracaoPulo, duracaoQueda));
-            puloInput = false;
-            estaNoChao = false;
-        }
-    }
-
     
-    public IEnumerator ImpulsoCima(float altura, float duracaoSubida, float duracaoDescida)
+    public IEnumerator Impulso(float altura, float duracaoSubida, float duracaoDescida)
     {
-        Debug.Log("Indo pra cima");
-        estaNoChao = false;
-        Debug.Log(layerInimigo);
+        //Debug.Log("Indo pra cima");
+        if (CompareTag("Player"))
+            movimentoPlayer.estaNoChao = false;
+        else if (CompareTag("Inimigo"))
+            movimentoInimigo.estaNoChao = false;
+        
         Physics2D.IgnoreLayerCollision(layerPlayer, layerInimigo, true);
 
         Vector2 posicaoInicial = transformCorpo.localPosition;
         Vector2 posicaoPico = new Vector2(posicaoInicial.x, posicaoInicial.y + altura);
-        float tempoDecorrido = 0f;
 
+        subindo = true;
+        caindo = false;
+
+        float tempoDecorrido = 0f;
         while (tempoDecorrido < duracaoSubida)
         {
+            Physics2D.IgnoreLayerCollision(layerPlayer, layerInimigo, true);    // Gambiarra pra corrotinas não influenciarem uma outra
             float t = tempoDecorrido / duracaoSubida;
 
             float tSuavizado = Mathf.Sin(t * Mathf.PI * 0.5f);
@@ -94,9 +61,13 @@ public class MovimentoPlayer : MonoBehaviour
         
         yield return new WaitForSeconds(0.1f);
 
+        subindo = false;
+        caindo = true;
+
         tempoDecorrido = 0f; 
         while (tempoDecorrido < duracaoDescida)
         {
+            Physics2D.IgnoreLayerCollision(layerPlayer, layerInimigo, true);    // Gambiarra pra corrotinas não influenciarem uma outra
             float t = tempoDecorrido / duracaoDescida;
 
             float tSuavizado = 1 - Mathf.Cos(t * Mathf.PI * 0.5f);
@@ -108,8 +79,15 @@ public class MovimentoPlayer : MonoBehaviour
         }
 
         transformCorpo.localPosition = posicaoInicial;
-        estaNoChao = true;
+        
+        if (CompareTag("Player"))
+            movimentoPlayer.estaNoChao = true;
+        else if (CompareTag("Inimigo"))
+            movimentoInimigo.estaNoChao = true;
+
+        subindo = false;
+        caindo = false;
         Physics2D.IgnoreLayerCollision(layerPlayer, layerInimigo, false);
-        Debug.Log("Caiu");
+        //Debug.Log("Caiu");
     }
 }
