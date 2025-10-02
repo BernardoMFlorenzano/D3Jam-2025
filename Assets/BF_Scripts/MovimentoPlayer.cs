@@ -22,6 +22,7 @@ public class MovimentoPlayer : MonoBehaviour
     [Header("Ataque")]
     [SerializeField] private GameObject rangeCorpo;
     [SerializeField] private GameObject rangeBase;
+    private ColisorCorpo colisorCorpo;
     public bool agindo;
     private bool podeAtacar;
     [SerializeField] private float delayAtaque;
@@ -35,6 +36,7 @@ public class MovimentoPlayer : MonoBehaviour
         estaNoChao = true;
         virado = false;
         rangeCorpo.SetActive(false);
+        colisorCorpo = rangeCorpo.GetComponent<ColisorCorpo>();
         agindo = false;
         podeAtacar = true;
         //rangeBase.enabled = false;
@@ -75,14 +77,12 @@ public class MovimentoPlayer : MonoBehaviour
             AtaqueNormal();
         }
 
-        if (agindo && estaNoChao)   // Não deixa player dar input 
+        if (agindo && estaNoChao)
         {
             if (direcaoInput != Vector2.zero)
                 rb.linearVelocity = Vector2.zero;
             return;
         }
-        else if (agindo)
-            return;
 
         direcaoInput.Normalize();
 
@@ -129,6 +129,7 @@ public class MovimentoPlayer : MonoBehaviour
     IEnumerator CorrotinaAtaqueChao()
     {
         //rangeBase.enabled = true;
+        colisorCorpo.tipoAtaque = 1;
         rangeCorpo.SetActive(true);
         yield return new WaitForSeconds(0.1f);
         rangeCorpo.SetActive(false);
@@ -139,11 +140,18 @@ public class MovimentoPlayer : MonoBehaviour
     IEnumerator CorrotinaAtaqueAr()
     {
         //rangeBase.enabled = true;
+        colisorCorpo.tipoAtaque = 2;
         rangeCorpo.SetActive(true);
+
+        /*
         while (!estaNoChao)
         {
             yield return new WaitForSeconds(0.05f);
         }
+        */
+
+        yield return new WaitUntil(() => estaNoChao || !agindo);
+
         rangeCorpo.SetActive(false);
 
         yield return new WaitForSeconds(0.5f);

@@ -5,11 +5,14 @@ public class SistemaVida : MonoBehaviour
 {
     public bool atingivelBase;
     [SerializeField] private TMP_Text textoTeste;
+    private Rigidbody2D rb;
+
     //private bool levandoAtaque;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if(textoTeste)
+        rb = GetComponent<Rigidbody2D>();
+        if (textoTeste)
             textoTeste.text = "10";
     }
 
@@ -19,17 +22,32 @@ public class SistemaVida : MonoBehaviour
 
     }
 
-    public void LevaAtaque()
+    public void LevaAtaque(int tipo, GameObject atacante)
     {
         if (atingivelBase)
         {
-            if (textoTeste)
+            if (tipo == 1)  
             {
-                int num = int.Parse(textoTeste.text) - 1;
-                textoTeste.text = num.ToString();
+                if (textoTeste)
+                {
+                    int num = int.Parse(textoTeste.text) - 1;
+                    textoTeste.text = num.ToString();
+                }
+                Debug.Log("Acertou ataque no chao");
             }
-                
-            Debug.Log("Acertou ataque");
+            else if (tipo == 2)
+            {
+                if (textoTeste)
+                {
+                    int num = int.Parse(textoTeste.text) - 1;
+                    textoTeste.text = num.ToString();
+                }
+                Debug.Log("Acertou ataque aereo");
+
+                Vector2 direcao = (transform.position - atacante.transform.position).normalized;
+
+                rb.AddForce(direcao*200, ForceMode2D.Impulse);
+            }
         }
     }
 }

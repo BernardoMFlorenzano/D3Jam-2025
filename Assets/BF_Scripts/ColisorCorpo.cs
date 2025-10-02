@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class ColisorCorpo : MonoBehaviour
 {
+    public int tipoAtaque;  // Vai ser setado o tipo do ataque assim que o collider for ativado; 1 = ataque chao, 2 = ataque aereo, 
     private SistemaVida sistemaVida;
+    [SerializeField] private GameObject gameObjectPrincipal;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -20,7 +22,7 @@ public class ColisorCorpo : MonoBehaviour
         if (collision.CompareTag("CorpoInimigo"))
         {
             sistemaVida = collision.GetComponentInParent<SistemaVida>();
-            sistemaVida.LevaAtaque();
+            sistemaVida.LevaAtaque(tipoAtaque, gameObjectPrincipal);
         }
     }
 }
