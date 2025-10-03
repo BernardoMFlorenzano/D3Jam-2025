@@ -20,9 +20,12 @@ public class MovimentoPlayer : MonoBehaviour
     public bool estaNoChao;
 
     [Header("Ataque")]
-    [SerializeField] private GameObject rangeCorpo;
-    [SerializeField] private GameObject rangeBase;
-    private ColisorCorpo colisorCorpo;
+    [SerializeField] private GameObject rangeCorpoPadrao;
+    [SerializeField] private GameObject rangeCorpoLanca;
+    //[SerializeField] private GameObject rangeBase;
+    [SerializeField] private int armaAtual; // Define qual arma o player está usando atualmente
+    private ColisorCorpo colisorCorpoPadrao;
+    private ColisorCorpo colisorCorpoLanca;
     public bool agindo;
     private bool podeAtacar;
     [SerializeField] private float delayAtaque;
@@ -35,8 +38,10 @@ public class MovimentoPlayer : MonoBehaviour
         impulsoPulo = GetComponent<ImpulsoCima>();
         estaNoChao = true;
         virado = false;
-        rangeCorpo.SetActive(false);
-        colisorCorpo = rangeCorpo.GetComponent<ColisorCorpo>();
+        rangeCorpoPadrao.SetActive(false);
+        rangeCorpoLanca.SetActive(false);
+        colisorCorpoPadrao = rangeCorpoPadrao.GetComponent<ColisorCorpo>();
+        colisorCorpoLanca = rangeCorpoLanca.GetComponent<ColisorCorpo>();
         agindo = false;
         podeAtacar = true;
         //rangeBase.enabled = false;
@@ -129,10 +134,23 @@ public class MovimentoPlayer : MonoBehaviour
     IEnumerator CorrotinaAtaqueChao()
     {
         //rangeBase.enabled = true;
-        colisorCorpo.tipoAtaque = 1;
-        rangeCorpo.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
-        rangeCorpo.SetActive(false);
+        if (armaAtual == 0)
+        {
+            colisorCorpoPadrao.tipoAtaque = 1;
+            rangeCorpoPadrao.SetActive(true);
+            yield return new WaitForSeconds(0.1f);
+            rangeCorpoPadrao.SetActive(false);
+        }
+        else if (armaAtual == 1)
+        {
+            colisorCorpoLanca.tipoAtaque = 1;
+            rangeCorpoLanca.SetActive(true);
+            yield return new WaitForSeconds(0.1f);
+            rangeCorpoLanca.SetActive(false);
+        }
+
+
+        
         //yield return new WaitForSeconds(0.4f);
         agindo = false;
     }
@@ -140,8 +158,16 @@ public class MovimentoPlayer : MonoBehaviour
     IEnumerator CorrotinaAtaqueAr()
     {
         //rangeBase.enabled = true;
-        colisorCorpo.tipoAtaque = 2;
-        rangeCorpo.SetActive(true);
+        if (armaAtual == 0)
+        {
+            colisorCorpoPadrao.tipoAtaque = 2;
+            rangeCorpoPadrao.SetActive(true);
+        }
+        else if (armaAtual == 1)
+        {
+            colisorCorpoLanca.tipoAtaque = 2;
+            rangeCorpoLanca.SetActive(true);
+        }
 
         /*
         while (!estaNoChao)
@@ -152,7 +178,8 @@ public class MovimentoPlayer : MonoBehaviour
 
         yield return new WaitUntil(() => estaNoChao || !agindo);
 
-        rangeCorpo.SetActive(false);
+        rangeCorpoPadrao.SetActive(false);
+        rangeCorpoLanca.SetActive(false);
 
         yield return new WaitForSeconds(0.5f);
         agindo = false;

@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 
 public class DetectaBase : MonoBehaviour
 {
     private SistemaVida sistemaVida;
+    public int armaPlayer;  // Arma do player do colisor
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -20,8 +23,14 @@ public class DetectaBase : MonoBehaviour
         if (collision.CompareTag("Inimigo"))
         {
             sistemaVida = collision.GetComponent<SistemaVida>();
+
             if (sistemaVida)
-                sistemaVida.atingivelBase = true;
+            {
+                if (armaPlayer == 0)
+                    sistemaVida.atingivelBasePadrao = true;
+                else if (armaPlayer == 1)
+                    sistemaVida.atingivelBaseLanca = true;
+            }
             Debug.Log("Player acerta pela base");
         }
 
@@ -38,7 +47,12 @@ public class DetectaBase : MonoBehaviour
         {
             sistemaVida = collision.GetComponent<SistemaVida>();
             if (sistemaVida)
-                sistemaVida.atingivelBase = false;
+            {
+                if (armaPlayer == 0)
+                    sistemaVida.atingivelBasePadrao = false;
+                else if (armaPlayer == 1)
+                    sistemaVida.atingivelBaseLanca = false;
+            }
             Debug.Log("Player não acerta mais pela base");
         }
 

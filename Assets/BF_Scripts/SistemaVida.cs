@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class SistemaVida : MonoBehaviour
 {
-    public bool atingivelBase;
+    public bool atingivelBasePadrao;
+    public bool atingivelBaseLanca;
     [SerializeField] private TMP_Text textoTeste;
     private Rigidbody2D rb;
 
@@ -22,9 +23,38 @@ public class SistemaVida : MonoBehaviour
 
     }
 
-    public void LevaAtaque(int tipo, GameObject atacante)
+    public void LevaAtaquePadrao(int tipo, GameObject atacante)
     {
-        if (atingivelBase)
+        if (atingivelBasePadrao)
+        {
+            if (tipo == 1)
+            {
+                if (textoTeste)
+                {
+                    int num = int.Parse(textoTeste.text) - 1;
+                    textoTeste.text = num.ToString();
+                }
+                Debug.Log("Acertou ataque no chao");
+            }
+            else if (tipo == 2)
+            {
+                if (textoTeste)
+                {
+                    int num = int.Parse(textoTeste.text) - 1;
+                    textoTeste.text = num.ToString();
+                }
+                Debug.Log("Acertou ataque aereo");
+
+                Vector2 direcao = (transform.position - atacante.transform.position).normalized;
+
+                rb.AddForce(direcao * 200, ForceMode2D.Impulse);
+            }
+        }
+    }
+    
+    public void LevaAtaqueLanca(int tipo, GameObject atacante)
+    {
+        if (atingivelBaseLanca)
         {
             if (tipo == 1)  
             {
