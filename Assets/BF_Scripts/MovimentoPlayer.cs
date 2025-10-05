@@ -20,16 +20,23 @@ public class MovimentoPlayer : MonoBehaviour
     public bool estaNoChao;
 
     [Header("Ataque")]
-    [SerializeField] private GameObject rangeCorpoPadrao;
-    [SerializeField] private GameObject rangeCorpoLanca;
-    //[SerializeField] private GameObject rangeBase;
+    [SerializeField] private GameObject rangeCorpo;
+    [SerializeField] private GameObject rangeBase;
     [SerializeField] private int armaAtual; // Define qual arma o player está usando atualmente
-    private ColisorCorpo colisorCorpoPadrao;
-    private ColisorCorpo colisorCorpoLanca;
+    private ColisorCorpo colisorCorpo;
+    private BoxCollider2D boxCorpo;
+    private BoxCollider2D boxBase;
     public bool agindo;
     private bool podeAtacar;
     [SerializeField] private float delayAtaque;
     private bool ataqueInput;
+    [Header("Soco")]
+    [SerializeField] private Vector2 offsetBoxSoco;
+    [SerializeField] private Vector2 sizeBoxSoco;
+    [Header("Lança")]
+    [SerializeField] private Vector2 offsetBoxLanca;
+    [SerializeField] private Vector2 sizeBoxLanca;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -38,13 +45,17 @@ public class MovimentoPlayer : MonoBehaviour
         impulsoPulo = GetComponent<ImpulsoCima>();
         estaNoChao = true;
         virado = false;
-        rangeCorpoPadrao.SetActive(false);
-        rangeCorpoLanca.SetActive(false);
-        colisorCorpoPadrao = rangeCorpoPadrao.GetComponent<ColisorCorpo>();
-        colisorCorpoLanca = rangeCorpoLanca.GetComponent<ColisorCorpo>();
+        rangeCorpo.SetActive(false);
+        colisorCorpo = rangeCorpo.GetComponent<ColisorCorpo>();
+
+        boxCorpo = rangeCorpo.GetComponent<BoxCollider2D>();
+        boxBase = rangeBase.GetComponent<BoxCollider2D>();
+        
         agindo = false;
         podeAtacar = true;
-        //rangeBase.enabled = false;
+
+        SetarHitBox();
+
     }
 
     // Update is called once per frame
@@ -71,6 +82,19 @@ public class MovimentoPlayer : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Z))
         {
             ataqueInput = true;
+        }
+
+
+        // Troca de arma pra teste
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            armaAtual = 0;
+            SetarHitBox();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            armaAtual = 1;
+            SetarHitBox();
         }
     }
 
@@ -134,23 +158,10 @@ public class MovimentoPlayer : MonoBehaviour
     IEnumerator CorrotinaAtaqueChao()
     {
         //rangeBase.enabled = true;
-        if (armaAtual == 0)
-        {
-            colisorCorpoPadrao.tipoAtaque = 1;
-            rangeCorpoPadrao.SetActive(true);
-            yield return new WaitForSeconds(0.1f);
-            rangeCorpoPadrao.SetActive(false);
-        }
-        else if (armaAtual == 1)
-        {
-            colisorCorpoLanca.tipoAtaque = 1;
-            rangeCorpoLanca.SetActive(true);
-            yield return new WaitForSeconds(0.1f);
-            rangeCorpoLanca.SetActive(false);
-        }
-
-
-        
+        colisorCorpo.tipoAtaque = 1;
+        rangeCorpo.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        rangeCorpo.SetActive(false);
         //yield return new WaitForSeconds(0.4f);
         agindo = false;
     }
@@ -158,16 +169,8 @@ public class MovimentoPlayer : MonoBehaviour
     IEnumerator CorrotinaAtaqueAr()
     {
         //rangeBase.enabled = true;
-        if (armaAtual == 0)
-        {
-            colisorCorpoPadrao.tipoAtaque = 2;
-            rangeCorpoPadrao.SetActive(true);
-        }
-        else if (armaAtual == 1)
-        {
-            colisorCorpoLanca.tipoAtaque = 2;
-            rangeCorpoLanca.SetActive(true);
-        }
+        colisorCorpo.tipoAtaque = 2;
+        rangeCorpo.SetActive(true);
 
         /*
         while (!estaNoChao)
@@ -178,10 +181,29 @@ public class MovimentoPlayer : MonoBehaviour
 
         yield return new WaitUntil(() => estaNoChao || !agindo);
 
-        rangeCorpoPadrao.SetActive(false);
-        rangeCorpoLanca.SetActive(false);
+        rangeCorpo.SetActive(false);
+        rangeCorpo.SetActive(false);
 
         yield return new WaitForSeconds(0.5f);
         agindo = false;
+    }
+
+
+    public void SetarHitBox()
+    {
+        if (armaAtual == 0) // Soco
+        {
+            boxBase.size = sizeBoxSoco;
+            boxCorpo.size = sizeBoxSoco;
+            boxBase.offset = offsetBoxSoco;
+            boxCorpo.offset = offsetBoxSoco;
+        }
+        else if (armaAtual == 1) // Lanca
+        {
+            boxBase.size = sizeBoxLanca;
+            boxCorpo.size = sizeBoxLanca;
+            boxBase.offset = offsetBoxLanca;
+            boxCorpo.offset = offsetBoxLanca;
+        }
     }
 }

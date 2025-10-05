@@ -26,10 +26,7 @@ public class DetectaBase : MonoBehaviour
 
             if (sistemaVida)
             {
-                if (armaPlayer == 0)
-                    sistemaVida.atingivelBasePadrao = true;
-                else if (armaPlayer == 1)
-                    sistemaVida.atingivelBaseLanca = true;
+                sistemaVida.atingivelBase = true;
             }
             Debug.Log("Player acerta pela base");
         }
@@ -48,10 +45,7 @@ public class DetectaBase : MonoBehaviour
             sistemaVida = collision.GetComponent<SistemaVida>();
             if (sistemaVida)
             {
-                if (armaPlayer == 0)
-                    sistemaVida.atingivelBasePadrao = false;
-                else if (armaPlayer == 1)
-                    sistemaVida.atingivelBaseLanca = false;
+                sistemaVida.atingivelBase = false;
             }
             Debug.Log("Player não acerta mais pela base");
         }

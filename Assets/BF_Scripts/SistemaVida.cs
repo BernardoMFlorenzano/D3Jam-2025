@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class SistemaVida : MonoBehaviour
 {
-    public bool atingivelBasePadrao;
-    public bool atingivelBaseLanca;
+    public bool atingivelBase;
     [SerializeField] private TMP_Text textoTeste;
     private Rigidbody2D rb;
 
@@ -23,9 +22,9 @@ public class SistemaVida : MonoBehaviour
 
     }
 
-    public void LevaAtaquePadrao(int tipo, GameObject atacante)
+    public void LevaAtaqueSoco(int tipo, GameObject atacante)
     {
-        if (atingivelBasePadrao)
+        if (atingivelBase)
         {
             if (tipo == 1)
             {
@@ -51,12 +50,14 @@ public class SistemaVida : MonoBehaviour
             }
         }
     }
-    
+
+    // Ataques de armas estão separados para depois botar diferença de dano e outras caracteristicas
+
     public void LevaAtaqueLanca(int tipo, GameObject atacante)
     {
-        if (atingivelBaseLanca)
+        if (atingivelBase)
         {
-            if (tipo == 1)  
+            if (tipo == 1)
             {
                 if (textoTeste)
                 {
@@ -76,7 +77,7 @@ public class SistemaVida : MonoBehaviour
 
                 Vector2 direcao = (transform.position - atacante.transform.position).normalized;
 
-                rb.AddForce(direcao*200, ForceMode2D.Impulse);
+                rb.AddForce(direcao * 200, ForceMode2D.Impulse);
             }
         }
     }

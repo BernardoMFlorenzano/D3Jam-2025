@@ -25,7 +25,7 @@ public class ColisorCorpo : MonoBehaviour
             sistemaVida = collision.GetComponentInParent<SistemaVida>();
             if (armaAtaque == 0)
             {
-                sistemaVida.LevaAtaquePadrao(tipoAtaque, gameObjectPrincipal);
+                sistemaVida.LevaAtaqueSoco(tipoAtaque, gameObjectPrincipal);
             }
             else if (armaAtaque == 1)
             {
