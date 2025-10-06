@@ -1,4 +1,7 @@
 using System.Collections;
+using System.Collections.Generic;
+using NUnit.Framework;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class MovimentoPlayer : MonoBehaviour
@@ -28,14 +31,38 @@ public class MovimentoPlayer : MonoBehaviour
     private BoxCollider2D boxBase;
     public bool agindo;
     private bool podeAtacar;
-    [SerializeField] private float delayAtaque;
-    private bool ataqueInput;
+    [SerializeField] private float delayAtaquePadrao;
+    private bool ataqueInput1;
+    private bool ataqueInput2;
     [Header("Soco")]
     [SerializeField] private Vector2 offsetBoxSoco;
     [SerializeField] private Vector2 sizeBoxSoco;
     [Header("Lança")]
-    [SerializeField] private Vector2 offsetBoxLanca;
-    [SerializeField] private Vector2 sizeBoxLanca;
+    [SerializeField] private Vector2 offsetBoxEstocada;
+    [SerializeField] private Vector2 sizeBoxEstocada;
+    [Header("Espada")]
+    [SerializeField] private Vector2 offsetBoxCorte;
+    [SerializeField] private Vector2 sizeBoxCorte;
+    [SerializeField] private int indexCorte = 1;
+    [SerializeField] private int indexEstocada = 2;
+    [Header("Combos")]
+    [SerializeField] private bool podeEntrarCombo;
+    [SerializeField] private float delayCancelaCombo = 2f;
+    [SerializeField] private Ataque cortePadrao;
+    [SerializeField] private Ataque estocPadrao;
+    [SerializeField] private List<Ataque> combo1;
+    [SerializeField] private List<Ataque> combo2;   // Quando adicionar combos vai ter que atualizar o código, não consegui deixar isso dinamico
+    [SerializeField] private List<Ataque> combo3;
+    [SerializeField] private List<Ataque> combo4;
+    private List<int> comboEfetuado = new List<int>();
+    private bool estaEmCombo;
+    //private bool comboFinalizado = false;
+    //private bool acabouCombo;
+    private int comboCount;
+    private Coroutine comboTimerCorrotina;
+    private Coroutine delayAtaqueCorrotina; 
+    //[SerializeField] private float delayTrocaArma;
+    //private bool podeTrocarArma = true;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -50,11 +77,15 @@ public class MovimentoPlayer : MonoBehaviour
 
         boxCorpo = rangeCorpo.GetComponent<BoxCollider2D>();
         boxBase = rangeBase.GetComponent<BoxCollider2D>();
-        
+
         agindo = false;
         podeAtacar = true;
+        podeEntrarCombo = true;
+        estaEmCombo = false;
+        //acabouCombo = false;
+        comboCount = 0;
 
-        SetarHitBox();
+        //SetarHitBox();
 
     }
 
@@ -74,36 +105,50 @@ public class MovimentoPlayer : MonoBehaviour
                 Flip();
         }
 
+        if (estaEmCombo && direcaoInput.magnitude > 0.1f)
+        {
+            ResetarCombo();
+        }
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             puloInput = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.J))    // Trocar inputs depois pra ser mais flexiveis
         {
-            ataqueInput = true;
+            ataqueInput1 = true;
+            ataqueInput2 = false;
         }
+        else if (Input.GetKeyDown(KeyCode.K))
+        {
+            ataqueInput2 = true;
+            ataqueInput1 = false;
+        }
+
+
 
 
         // Troca de arma pra teste
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            armaAtual = 0;
-            SetarHitBox();
+            TrocaArma(indexCorte);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            armaAtual = 1;
-            SetarHitBox();
+            TrocaArma(indexEstocada);
         }
     }
 
     void FixedUpdate()
     {
-        if (ataqueInput)
+        if (ataqueInput1)
         {
-            ataqueInput = false;
-            AtaqueNormal();
+            AtaqueNormal(indexCorte);
+        }
+        if (ataqueInput2)
+        {
+            AtaqueNormal(indexEstocada);
         }
 
         if (agindo && estaNoChao)
@@ -134,76 +179,251 @@ public class MovimentoPlayer : MonoBehaviour
         transform.Rotate(0, 180, 0); // roda em 180 para objeto flipar
     }
 
-    void AtaqueNormal()
+    void AtaqueNormal(int ataqueModo)
     {
         if (podeAtacar)
         {
+            if (ataqueInput1)
+            {
+                ataqueInput1 = false;
+            }
+            if (ataqueInput2)
+            {
+                ataqueInput2 = false;
+            }
             Debug.Log("Atacou");
             podeAtacar = false;
             agindo = true;
-            StartCoroutine(CorrotinaDelayAtaque());
+
             if (estaNoChao)
-                StartCoroutine(CorrotinaAtaqueChao());
+            {
+                TrocaArma(ataqueModo);   // Eventualmente vai ter diferença entre hitbox do chao e pulo
+                StartCoroutine(CorrotinaAtaqueChao(ataqueModo));
+                if (delayAtaqueCorrotina != null)
+                    StopCoroutine(delayAtaqueCorrotina);
+                delayAtaqueCorrotina = StartCoroutine(CorrotinaDelayAtaque(delayAtaquePadrao));
+            }
             else
-                StartCoroutine(CorrotinaAtaqueAr());
+            {
+                TrocaArma(ataqueModo);
+                StartCoroutine(CorrotinaAtaqueAr(ataqueModo));
+            }
         }
     }
 
-    IEnumerator CorrotinaDelayAtaque()
+    IEnumerator CorrotinaDelayAtaque(float delayAtaque)
     {
         yield return new WaitForSeconds(delayAtaque);
         podeAtacar = true;
     }
 
-    IEnumerator CorrotinaAtaqueChao()
+    IEnumerator CorrotinaAtaqueChao(int ataqueModo)
     {
-        //rangeBase.enabled = true;
-        colisorCorpo.tipoAtaque = 1;
-        rangeCorpo.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
-        rangeCorpo.SetActive(false);
-        //yield return new WaitForSeconds(0.4f);
-        agindo = false;
+        if (!estaEmCombo)
+        {
+            if (ataqueModo == 1) 
+            {
+                SetarColisorVars(1, ataqueModo, cortePadrao.dano, cortePadrao.knockback, cortePadrao.forcaKnockback);   
+            }
+            else if (ataqueModo == 2)
+                SetarColisorVars(1, ataqueModo, estocPadrao.dano, estocPadrao.knockback, estocPadrao.forcaKnockback);
+
+            SetarHitBox(ataqueModo);
+
+            if (podeEntrarCombo)
+            {
+                comboEfetuado.Clear();
+                comboCount = 1;
+                estaEmCombo = true;
+                comboEfetuado.Add(ataqueModo);
+                //acabouCombo = false;
+            }
+
+            rangeCorpo.SetActive(true);
+            yield return new WaitForSeconds(0.1f);
+            rangeCorpo.SetActive(false);
+            agindo = false;
+
+            if (podeEntrarCombo)
+            {
+                podeEntrarCombo = false;
+                if(comboTimerCorrotina != null)
+                    StopCoroutine(comboTimerCorrotina);
+                comboTimerCorrotina = StartCoroutine(TimerCombo());
+            }
+        }
+        else if (estaEmCombo)
+        {
+            if (comboTimerCorrotina != null)
+            {
+                StopCoroutine(comboTimerCorrotina);
+            }
+
+            comboEfetuado.Add(ataqueModo);
+            bool continuouCombo = false; // Pra saber se um novo timer deve ser iniciado
+            bool finalizouCombo = false;    
+
+            // Ordem dos combos vai servir como a prioridade: menor = maior prioridade
+
+            // Combo 1
+            if (comboCount < combo1.Count && comboEfetuado[comboCount] == combo1[comboCount].modoAtaque && comboEfetuado[comboCount - 1] == combo1[comboCount - 1].modoAtaque)
+            {
+                SetarColisorVars(1, ataqueModo, combo1[comboCount].dano, combo1[comboCount].knockback, combo1[comboCount].forcaKnockback);
+                comboCount++;
+                continuouCombo = true;
+                if (comboCount >= combo1.Count)
+                {
+                    finalizouCombo = true;
+                    StartCoroutine(FinalizarCombo(0.5f)); // finaliza o combo
+                }
+            }
+            // Combo 2
+            else if (comboCount < combo2.Count && comboEfetuado[comboCount] == combo2[comboCount].modoAtaque && comboEfetuado[comboCount - 1] == combo2[comboCount - 1].modoAtaque)
+            {
+                SetarColisorVars(1, ataqueModo, combo2[comboCount].dano, combo2[comboCount].knockback, combo2[comboCount].forcaKnockback);
+                comboCount++;
+                continuouCombo = true;
+                if (comboCount >= combo2.Count)
+                {
+                    finalizouCombo = true;
+                    StartCoroutine(FinalizarCombo(0.5f)); // finaliza o combo
+                }
+            }
+            // Combo 3
+            else if (comboCount < combo3.Count && comboEfetuado[comboCount] == combo3[comboCount].modoAtaque && comboEfetuado[comboCount - 1] == combo3[comboCount - 1].modoAtaque)
+            {
+                SetarColisorVars(1, ataqueModo, combo3[comboCount].dano, combo3[comboCount].knockback, combo3[comboCount].forcaKnockback);
+                comboCount++;
+                continuouCombo = true;
+                if (comboCount >= combo3.Count)
+                {
+                    finalizouCombo = true;
+                    StartCoroutine(FinalizarCombo(0.5f)); // finaliza o combo
+                }
+            }
+            // Combo 4
+            else if (comboCount < combo4.Count && comboEfetuado[comboCount] == combo4[comboCount].modoAtaque && comboEfetuado[comboCount - 1] == combo4[comboCount - 1].modoAtaque)
+            {
+                SetarColisorVars(1, ataqueModo, combo4[comboCount].dano, combo4[comboCount].knockback, combo4[comboCount].forcaKnockback);
+                comboCount++;
+                continuouCombo = true;
+                if (comboCount >= combo4.Count)
+                {
+                    finalizouCombo = true;
+                    StartCoroutine(FinalizarCombo(0.5f)); // finaliza o combo
+                }
+            }
+
+            // Não achou combo, então ataca normalmente e acaba combo
+            else
+            {
+                SetarColisorVars(1, ataqueModo, 1, false, 0);
+                ResetarCombo(); // Quebrou o combo
+            }
+
+            // Executa para todos os ataques dentro do combo
+            SetarHitBox(ataqueModo);
+            rangeCorpo.SetActive(true);
+            yield return new WaitForSeconds(0.1f);
+            rangeCorpo.SetActive(false);
+            agindo = false;
+
+            // Se o combo continuou reiniciar o timer
+            if (continuouCombo && !finalizouCombo)
+            {
+                comboTimerCorrotina = StartCoroutine(TimerCombo());
+            }
+
+        }
     }
 
-    IEnumerator CorrotinaAtaqueAr()
+    IEnumerator TimerCombo()
+    {
+        yield return new WaitForSeconds(delayCancelaCombo);
+        if (!agindo && podeAtacar)
+        {
+            Debug.Log("Combo feito: " + string.Join(", ", comboEfetuado));
+            ResetarCombo();
+        }
+    }
+
+    IEnumerator FinalizarCombo(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Debug.Log("Combo feito: " + string.Join(", ", comboEfetuado));
+        ResetarCombo();
+    }
+
+    void ResetarCombo()
+    {
+        estaEmCombo = false;
+        podeEntrarCombo = true;
+        //acabouCombo = false;
+        comboEfetuado.Clear();
+        comboCount = 0;
+
+        if (comboTimerCorrotina != null)
+        {
+            StopCoroutine(comboTimerCorrotina);
+            comboTimerCorrotina = null; // Limpa a referência
+        }
+    }
+
+    IEnumerator CorrotinaAtaqueAr(int ataqueModo)
     {
         //rangeBase.enabled = true;
-        colisorCorpo.tipoAtaque = 2;
+        SetarColisorVars(2, ataqueModo, 1, true, 200f); // ataque no ar
+        SetarHitBox(ataqueModo);
         rangeCorpo.SetActive(true);
-
-        /*
-        while (!estaNoChao)
-        {
-            yield return new WaitForSeconds(0.05f);
-        }
-        */
 
         yield return new WaitUntil(() => estaNoChao || !agindo);
 
         rangeCorpo.SetActive(false);
-        rangeCorpo.SetActive(false);
 
         yield return new WaitForSeconds(0.5f);
         agindo = false;
+        podeAtacar = true;
+    }
+
+    void TrocaArma(int modo)    // Só serve pra teste por enquanto
+    {
+        if (!agindo)
+        {
+            if (armaAtual != modo)
+            {
+                armaAtual = modo; // troca modo de ataque
+                SetarHitBox(modo);
+            }
+        }
+
     }
 
 
-    public void SetarHitBox()
+    public void SetarHitBox(int ataqueModo)
     {
-        if (armaAtual == 0) // Soco
+        if (ataqueModo == 1)
         {
-            boxBase.size = sizeBoxSoco;
-            boxCorpo.size = sizeBoxSoco;
-            boxBase.offset = offsetBoxSoco;
-            boxCorpo.offset = offsetBoxSoco;
+            boxBase.size = sizeBoxCorte;
+            boxCorpo.size = sizeBoxCorte;
+            boxBase.offset = offsetBoxCorte;
+            boxCorpo.offset = offsetBoxCorte;
         }
-        else if (armaAtual == 1) // Lanca
+        else if (ataqueModo == 2)
         {
-            boxBase.size = sizeBoxLanca;
-            boxCorpo.size = sizeBoxLanca;
-            boxBase.offset = offsetBoxLanca;
-            boxCorpo.offset = offsetBoxLanca;
+            boxBase.size = sizeBoxEstocada;
+            boxCorpo.size = sizeBoxEstocada;
+            boxBase.offset = offsetBoxEstocada;
+            boxCorpo.offset = offsetBoxEstocada;
         }
+        
+    }
+
+    public void SetarColisorVars(int condicaoAtaque, int ataqueModo, int dano, bool knockback, float forcaKnockback)
+    {
+        colisorCorpo.condicaoAtaque = condicaoAtaque;    // ataque no chao
+        colisorCorpo.modoAtaque = ataqueModo;   // corte ou estocada
+        colisorCorpo.dano = dano;
+        colisorCorpo.knockback = knockback;
+        colisorCorpo.forcaKnockback = forcaKnockback;
     }
 }

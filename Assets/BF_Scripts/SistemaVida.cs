@@ -53,7 +53,7 @@ public class SistemaVida : MonoBehaviour
 
     // Ataques de armas estão separados para depois botar diferença de dano e outras caracteristicas
 
-    public void LevaAtaqueLanca(int tipo, GameObject atacante)
+    public void LevaAtaqueCorte(int tipo, int dano, bool knockback, float forcaKnockback, GameObject atacante)
     {
         if (atingivelBase)
         {
@@ -61,24 +61,71 @@ public class SistemaVida : MonoBehaviour
             {
                 if (textoTeste)
                 {
-                    int num = int.Parse(textoTeste.text) - 1;
+                    int num = int.Parse(textoTeste.text) - dano;
                     textoTeste.text = num.ToString();
                 }
                 Debug.Log("Acertou ataque no chao");
+
+                if (knockback)
+                {
+                    Vector2 direcao = (transform.position - atacante.transform.position).normalized;
+                    rb.AddForce(direcao * forcaKnockback, ForceMode2D.Impulse);
+                }
             }
             else if (tipo == 2)
             {
                 if (textoTeste)
                 {
-                    int num = int.Parse(textoTeste.text) - 1;
+                    int num = int.Parse(textoTeste.text) - dano;
                     textoTeste.text = num.ToString();
                 }
                 Debug.Log("Acertou ataque aereo");
 
-                Vector2 direcao = (transform.position - atacante.transform.position).normalized;
-
-                rb.AddForce(direcao * 200, ForceMode2D.Impulse);
+                if (knockback)
+                {
+                    Vector2 direcao = (transform.position - atacante.transform.position).normalized;
+                    rb.AddForce(direcao * forcaKnockback, ForceMode2D.Impulse);
+                }
             }
         }
     }
+
+    public void LevaAtaqueEstocada(int tipo, int dano, bool knockback, float forcaKnockback, GameObject atacante)
+    {
+        if (atingivelBase)
+        {
+            if (tipo == 1)
+            {
+                if (textoTeste)
+                {
+                    int num = int.Parse(textoTeste.text) - dano;
+                    textoTeste.text = num.ToString();
+                }
+                Debug.Log("Acertou ataque no chao");
+
+                if (knockback)
+                {
+                    Vector2 direcao = (transform.position - atacante.transform.position).normalized;
+                    rb.AddForce(direcao * forcaKnockback, ForceMode2D.Impulse);
+                }
+            }
+            else if (tipo == 2)
+            {
+                if (textoTeste)
+                {
+                    int num = int.Parse(textoTeste.text) - dano;
+                    textoTeste.text = num.ToString();
+                }
+                Debug.Log("Acertou ataque aereo");
+
+                if (knockback)
+                {
+                    Vector2 direcao = (transform.position - atacante.transform.position).normalized;
+                    rb.AddForce(direcao * forcaKnockback, ForceMode2D.Impulse);
+                }
+            }
+        }
+    }
+
+
 }

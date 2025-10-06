@@ -1866,11 +1866,35 @@ MonoBehaviour:
   rangeBase: {fileID: 1211273531}
   armaAtual: 0
   agindo: 0
-  delayAtaque: 0.25
+  delayAtaquePadrao: 0.25
   offsetBoxSoco: {x: 0.56, y: 0}
   sizeBoxSoco: {x: 1.15, y: 1.3}
-  offsetBoxLanca: {x: 1, y: 0}
-  sizeBoxLanca: {x: 2, y: 0.9}
+  offsetBoxEstocada: {x: 1, y: 0}
+  sizeBoxEstocada: {x: 2, y: 0.9}
+  offsetBoxCorte: {x: 0.75, y: 0}
+  sizeBoxCorte: {x: 1.5, y: 1.75}
+  indexCorte: 1
+  indexEstocada: 2
+  podeEntrarCombo: 0
+  delayCancelaCombo: 1
+  cortePadrao: {fileID: 11400000, guid: a818a3c7545422643b61a1d8ed9dfc0f, type: 2}
+  estocPadrao: {fileID: 11400000, guid: 136220dc471d4d945a558e16e6fbfc67, type: 2}
+  combo1:
+  - {fileID: 11400000, guid: a818a3c7545422643b61a1d8ed9dfc0f, type: 2}
+  - {fileID: 11400000, guid: 5ce2c88dc351e3b4fa00e74bbd75714d, type: 2}
+  - {fileID: 11400000, guid: 1a058d7dd2ead224e887f0ffe3ba388b, type: 2}
+  combo2:
+  - {fileID: 11400000, guid: 136220dc471d4d945a558e16e6fbfc67, type: 2}
+  - {fileID: 11400000, guid: 17c868fd6b096f14387e9f4486168f85, type: 2}
+  - {fileID: 11400000, guid: f798e8549a30b1d419b227e46db9fefc, type: 2}
+  combo3:
+  - {fileID: 11400000, guid: a818a3c7545422643b61a1d8ed9dfc0f, type: 2}
+  - {fileID: 11400000, guid: 5ce2c88dc351e3b4fa00e74bbd75714d, type: 2}
+  - {fileID: 11400000, guid: b3ef75a9cdc46b244a16e24993960433, type: 2}
+  combo4:
+  - {fileID: 11400000, guid: 136220dc471d4d945a558e16e6fbfc67, type: 2}
+  - {fileID: 11400000, guid: 17c868fd6b096f14387e9f4486168f85, type: 2}
+  - {fileID: 11400000, guid: 4c3ce727f7c7e1c42a2968dab7fcaa25, type: 2}
 --- !u!61 &1578352478
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2386,8 +2410,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7c80729dfa85674ab1074b9d40aacac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tipoAtaque: 0
-  armaAtaque: 0
+  condicaoAtaque: 0
+  modoAtaque: 0
+  dano: 0
+  knockback: 0
+  forcaKnockback: 0
   gameObjectPrincipal: {fileID: 1578352476}
 --- !u!1001 &3549705841072586471
 PrefabInstance:

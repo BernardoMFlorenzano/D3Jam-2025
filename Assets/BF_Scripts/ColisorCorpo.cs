@@ -2,8 +2,11 @@ using UnityEngine;
 
 public class ColisorCorpo : MonoBehaviour
 {
-    public int tipoAtaque;  // Vai ser setado o tipo do ataque assim que o collider for ativado; 1 = ataque chao, 2 = ataque aereo, 
-    public int armaAtaque;  // Arma que está sendo usada
+    public int condicaoAtaque;  // Vai ser setado a condiçao do ataque assim que o collider for ativado; 1 = ataque chao, 2 = ataque aereo, 
+    public int modoAtaque;  // modo que está sendo usada
+    public int dano;
+    public bool knockback;
+    public float forcaKnockback;
     private SistemaVida sistemaVida;
     [SerializeField] private GameObject gameObjectPrincipal;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -23,13 +26,17 @@ public class ColisorCorpo : MonoBehaviour
         if (collision.CompareTag("CorpoInimigo"))
         {
             sistemaVida = collision.GetComponentInParent<SistemaVida>();
-            if (armaAtaque == 0)
+            if (modoAtaque == 0)
             {
-                sistemaVida.LevaAtaqueSoco(tipoAtaque, gameObjectPrincipal);
+                sistemaVida.LevaAtaqueSoco(condicaoAtaque, gameObjectPrincipal);
             }
-            else if (armaAtaque == 1)
+            else if (modoAtaque == 1)
             {
-                sistemaVida.LevaAtaqueLanca(tipoAtaque, gameObjectPrincipal);
+                sistemaVida.LevaAtaqueCorte(condicaoAtaque, dano, knockback, forcaKnockback, gameObjectPrincipal);
+            }
+            else if (modoAtaque == 2)
+            {
+                sistemaVida.LevaAtaqueEstocada(condicaoAtaque, dano, knockback, forcaKnockback, gameObjectPrincipal);
             }
         }
     }
