@@ -28,7 +28,7 @@ public class ImpulsoCima: MonoBehaviour
         caindo = false;
     }
 
-    public IEnumerator Impulso(float altura, float duracaoSubida, float duracaoDescida)
+    public IEnumerator Impulso(float altura, float duracaoSubida, float duracaoDescida) // Logica de layer collision está desativada
     {
         //Debug.Log("Indo pra cima");
         if (CompareTag("Player"))
@@ -36,7 +36,7 @@ public class ImpulsoCima: MonoBehaviour
         else if (CompareTag("Inimigo"))
             movimentoInimigo.estaNoChao = false;
 
-        Physics2D.IgnoreLayerCollision(layerPlayer, layerInimigo, true);
+        //Physics2D.IgnoreLayerCollision(layerPlayer, layerInimigo, true);
 
         Vector2 posicaoInicial = transformCorpo.localPosition;
         Vector2 posicaoPico = new Vector2(posicaoInicial.x, posicaoInicial.y + altura);
@@ -55,7 +55,7 @@ public class ImpulsoCima: MonoBehaviour
         float tempoDecorrido = 0f;
         while (tempoDecorrido < duracaoSubida)
         {
-            Physics2D.IgnoreLayerCollision(layerPlayer, layerInimigo, true);    // Gambiarra pra corrotinas não influenciarem uma outra
+            //Physics2D.IgnoreLayerCollision(layerPlayer, layerInimigo, true);    // Gambiarra pra corrotinas não influenciarem uma outra
             float t = tempoDecorrido / duracaoSubida;
 
             float tSuavizado = Mathf.Sin(t * Mathf.PI * 0.5f);
@@ -83,7 +83,7 @@ public class ImpulsoCima: MonoBehaviour
         tempoDecorrido = 0f;
         while (tempoDecorrido < duracaoDescida)
         {
-            Physics2D.IgnoreLayerCollision(layerPlayer, layerInimigo, true);    // Gambiarra pra corrotinas não influenciarem uma outra
+            //Physics2D.IgnoreLayerCollision(layerPlayer, layerInimigo, true);    // Gambiarra pra corrotinas não influenciarem uma outra
             float t = tempoDecorrido / duracaoDescida;
 
             float tSuavizado = 1 - Mathf.Cos(t * Mathf.PI * 0.5f);
@@ -103,7 +103,7 @@ public class ImpulsoCima: MonoBehaviour
 
         subindo = false;
         caindo = false;
-        Physics2D.IgnoreLayerCollision(layerPlayer, layerInimigo, false);
+        //Physics2D.IgnoreLayerCollision(layerPlayer, layerInimigo, false);
         //Debug.Log("Caiu");
         
         // Animacoes

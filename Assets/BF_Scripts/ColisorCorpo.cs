@@ -26,11 +26,7 @@ public class ColisorCorpo : MonoBehaviour
         if (collision.CompareTag("CorpoInimigo"))
         {
             sistemaVida = collision.GetComponentInParent<SistemaVida>();
-            if (modoAtaque == 0)
-            {
-                sistemaVida.LevaAtaqueSoco(condicaoAtaque, gameObjectPrincipal);
-            }
-            else if (modoAtaque == 1)
+            if (modoAtaque == 1)
             {
                 sistemaVida.LevaAtaqueCorte(condicaoAtaque, dano, knockback, forcaKnockback, gameObjectPrincipal);
             }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -7,6 +8,11 @@ public class SistemaVida : MonoBehaviour
     public bool atingivelBase;
     [SerializeField] private TMP_Text textoTeste;
     private Rigidbody2D rb;
+    [SerializeField] private float tempoRecupDano;
+    private Coroutine CorRecupDano;
+    public bool sofrendoKnockback;
+    public bool recupDano;
+    public bool agindo; // Se estiver agindo, ignora função de repelir
 
     //private bool levandoAtaque;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -22,6 +28,7 @@ public class SistemaVida : MonoBehaviour
     {
 
     }
+    /*
 
     public void LevaAtaqueSoco(int tipo, GameObject atacante)
     {
@@ -48,10 +55,13 @@ public class SistemaVida : MonoBehaviour
                 Vector2 direcao = transform.position - atacante.transform.position;
                 direcao.Normalize();
 
+                sofrendoKnockback = true;
+                rb.linearVelocity = Vector2.zero;
                 rb.AddForce(new Vector2(direcao.x * 200, 0), ForceMode2D.Impulse);
             }
         }
     }
+    */
 
     // Ataques de armas estão separados para depois botar diferença de dano e outras caracteristicas
 
@@ -68,11 +78,19 @@ public class SistemaVida : MonoBehaviour
                 }
                 Debug.Log("Acertou ataque no chao");
 
+                recupDano = true;
+                if (CorRecupDano != null)
+                    StopCoroutine(CorRecupDano);
+                CorRecupDano = StartCoroutine(DelayRecupDano());
+
                 if (knockback)
                 {
                     Vector2 direcao = transform.position - atacante.transform.position;
                     direcao.Normalize();
-                    rb.AddForce(new Vector2(1*MathF.Sign(direcao.x) * forcaKnockback, 0), ForceMode2D.Impulse);
+
+                    sofrendoKnockback = true;
+                    rb.linearVelocity = Vector2.zero;
+                    rb.AddForce(new Vector2(1 * MathF.Sign(direcao.x) * forcaKnockback, 0), ForceMode2D.Impulse);
                 }
             }
             else if (tipo == 2)
@@ -84,11 +102,19 @@ public class SistemaVida : MonoBehaviour
                 }
                 Debug.Log("Acertou ataque aereo");
 
+                recupDano = true;
+                if (CorRecupDano != null)
+                    StopCoroutine(CorRecupDano);
+                CorRecupDano = StartCoroutine(DelayRecupDano());
+
                 if (knockback)
                 {
                     Vector2 direcao = transform.position - atacante.transform.position;
                     direcao.Normalize();
-                    rb.AddForce(new Vector2(1*MathF.Sign(direcao.x) * forcaKnockback, 0), ForceMode2D.Impulse);
+
+                    sofrendoKnockback = true;
+                    rb.linearVelocity = Vector2.zero;
+                    rb.AddForce(new Vector2(1 * MathF.Sign(direcao.x) * forcaKnockback, 0), ForceMode2D.Impulse);
                 }
             }
         }
@@ -107,11 +133,19 @@ public class SistemaVida : MonoBehaviour
                 }
                 Debug.Log("Acertou ataque no chao");
 
+                recupDano = true;
+                if (CorRecupDano != null)
+                    StopCoroutine(CorRecupDano);
+                CorRecupDano = StartCoroutine(DelayRecupDano());
+
                 if (knockback)
                 {
                     Vector2 direcao = transform.position - atacante.transform.position;
                     direcao.Normalize();
-                    rb.AddForce(new Vector2(1*MathF.Sign(direcao.x) * forcaKnockback, 0), ForceMode2D.Impulse);
+
+                    sofrendoKnockback = true;
+                    rb.linearVelocity = Vector2.zero;
+                    rb.AddForce(new Vector2(1 * MathF.Sign(direcao.x) * forcaKnockback, 0), ForceMode2D.Impulse);
                 }
             }
             else if (tipo == 2)
@@ -123,14 +157,34 @@ public class SistemaVida : MonoBehaviour
                 }
                 Debug.Log("Acertou ataque aereo");
 
+                recupDano = true;
+                if (CorRecupDano != null)
+                    StopCoroutine(CorRecupDano);
+                CorRecupDano = StartCoroutine(DelayRecupDano());
+
                 if (knockback)
                 {
                     Vector2 direcao = transform.position - atacante.transform.position;
                     direcao.Normalize();
-                    rb.AddForce(new Vector2(1*MathF.Sign(direcao.x) * forcaKnockback, 0), ForceMode2D.Impulse);
+
+                    sofrendoKnockback = true;
+                    rb.linearVelocity = Vector2.zero;
+                    rb.AddForce(new Vector2(1 * MathF.Sign(direcao.x) * forcaKnockback, 0), ForceMode2D.Impulse);
                 }
             }
         }
+    }
+
+    IEnumerator DelayRecupDano()
+    {
+        yield return new WaitForSeconds(tempoRecupDano);
+        recupDano = false;
+    }
+
+    public void RepeleObjeto(Vector2 direcao, float forca)
+    {
+        if (!sofrendoKnockback && !recupDano && !agindo)
+            rb.AddForce(new Vector2(MathF.Sign(-direcao.x), MathF.Sign(-direcao.y)) * forca);
     }
 
 
