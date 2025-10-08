@@ -12,6 +12,7 @@ public class ImpulsoCima: MonoBehaviour
     [SerializeField] private string layerInimigoNome;
     private int layerPlayer;
     private int layerInimigo;
+    [SerializeField] private Animator animatorPlayer;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -26,7 +27,7 @@ public class ImpulsoCima: MonoBehaviour
         subindo = false;
         caindo = false;
     }
-    
+
     public IEnumerator Impulso(float altura, float duracaoSubida, float duracaoDescida)
     {
         //Debug.Log("Indo pra cima");
@@ -34,7 +35,7 @@ public class ImpulsoCima: MonoBehaviour
             movimentoPlayer.estaNoChao = false;
         else if (CompareTag("Inimigo"))
             movimentoInimigo.estaNoChao = false;
-        
+
         Physics2D.IgnoreLayerCollision(layerPlayer, layerInimigo, true);
 
         Vector2 posicaoInicial = transformCorpo.localPosition;
@@ -42,6 +43,14 @@ public class ImpulsoCima: MonoBehaviour
 
         subindo = true;
         caindo = false;
+
+        // Animacoes
+        if (animatorPlayer)
+        {
+            animatorPlayer.SetBool("Pulando", subindo);
+            animatorPlayer.SetBool("Caindo", caindo);
+        }
+        
 
         float tempoDecorrido = 0f;
         while (tempoDecorrido < duracaoSubida)
@@ -58,13 +67,20 @@ public class ImpulsoCima: MonoBehaviour
         }
 
         transformCorpo.localPosition = posicaoPico;
-        
+
         yield return new WaitForSeconds(0.1f);
 
         subindo = false;
         caindo = true;
 
-        tempoDecorrido = 0f; 
+        // Animacoes
+        if (animatorPlayer)
+        {
+            animatorPlayer.SetBool("Pulando", subindo);
+            animatorPlayer.SetBool("Caindo", caindo);
+        }
+
+        tempoDecorrido = 0f;
         while (tempoDecorrido < duracaoDescida)
         {
             Physics2D.IgnoreLayerCollision(layerPlayer, layerInimigo, true);    // Gambiarra pra corrotinas não influenciarem uma outra
@@ -79,7 +95,7 @@ public class ImpulsoCima: MonoBehaviour
         }
 
         transformCorpo.localPosition = posicaoInicial;
-        
+
         if (CompareTag("Player"))
             movimentoPlayer.estaNoChao = true;
         else if (CompareTag("Inimigo"))
@@ -89,5 +105,12 @@ public class ImpulsoCima: MonoBehaviour
         caindo = false;
         Physics2D.IgnoreLayerCollision(layerPlayer, layerInimigo, false);
         //Debug.Log("Caiu");
+        
+        // Animacoes
+        if (animatorPlayer)
+        {
+            animatorPlayer.SetBool("Pulando", subindo);
+            animatorPlayer.SetBool("Caindo", caindo);
+        }
     }
 }

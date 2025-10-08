@@ -10,9 +10,11 @@ public class MovimentoPlayer : MonoBehaviour
     [SerializeField] private float velPlayerHor;
     [SerializeField] private float velPlayerVer;
     private Vector2 direcaoInput;
-    private Vector2 velMovReal;
+    //private Vector2 velMovReal;
     private Vector2 velMovTarget;
     private bool virado; // Controla flip do movimento
+    [Header("Animações")]
+    [SerializeField] private Animator animatorPlayer;
 
     [Header("Pulo")]
     [SerializeField] private float duracaoPulo;
@@ -170,7 +172,15 @@ public class MovimentoPlayer : MonoBehaviour
             StartCoroutine(impulsoPulo.Impulso(alturaPulo, duracaoPulo, duracaoQueda));
             puloInput = false;
             estaNoChao = false;
+            animatorPlayer.SetBool("Pulando", true);
         }
+
+        // Animacoes
+        if (animatorPlayer)
+        {
+            animatorPlayer.SetFloat("Vel", Mathf.Abs(rb.linearVelocityX) + Mathf.Abs(rb.linearVelocityY));
+        }
+
     }
 
     void Flip()
@@ -221,14 +231,16 @@ public class MovimentoPlayer : MonoBehaviour
     {
         if (!estaEmCombo)
         {
-            if (ataqueModo == 1) 
+            if (ataqueModo == 1)
             {
-                SetarColisorVars(1, ataqueModo, cortePadrao.dano, cortePadrao.knockback, cortePadrao.forcaKnockback);   
+                SetarColisorVars(1, ataqueModo, cortePadrao.dano, cortePadrao.knockback, cortePadrao.forcaKnockback);
+                SetarHitBox(sizeBoxCorte, offsetBoxCorte);
             }
             else if (ataqueModo == 2)
+            {
                 SetarColisorVars(1, ataqueModo, estocPadrao.dano, estocPadrao.knockback, estocPadrao.forcaKnockback);
-
-            SetarHitBox(ataqueModo);
+                SetarHitBox(sizeBoxEstocada, offsetBoxEstocada);
+            }
 
             if (podeEntrarCombo)
             {
@@ -269,6 +281,7 @@ public class MovimentoPlayer : MonoBehaviour
             if (comboCount < combo1.Count && comboEfetuado[comboCount] == combo1[comboCount].modoAtaque && comboEfetuado[comboCount - 1] == combo1[comboCount - 1].modoAtaque)
             {
                 SetarColisorVars(1, ataqueModo, combo1[comboCount].dano, combo1[comboCount].knockback, combo1[comboCount].forcaKnockback);
+                SetarHitBox(combo1[comboCount].boxSize, combo1[comboCount].boxOffset);
                 comboCount++;
                 continuouCombo = true;
                 if (comboCount >= combo1.Count)
@@ -281,6 +294,7 @@ public class MovimentoPlayer : MonoBehaviour
             else if (comboCount < combo2.Count && comboEfetuado[comboCount] == combo2[comboCount].modoAtaque && comboEfetuado[comboCount - 1] == combo2[comboCount - 1].modoAtaque)
             {
                 SetarColisorVars(1, ataqueModo, combo2[comboCount].dano, combo2[comboCount].knockback, combo2[comboCount].forcaKnockback);
+                SetarHitBox(combo2[comboCount].boxSize, combo2[comboCount].boxOffset);
                 comboCount++;
                 continuouCombo = true;
                 if (comboCount >= combo2.Count)
@@ -293,6 +307,7 @@ public class MovimentoPlayer : MonoBehaviour
             else if (comboCount < combo3.Count && comboEfetuado[comboCount] == combo3[comboCount].modoAtaque && comboEfetuado[comboCount - 1] == combo3[comboCount - 1].modoAtaque)
             {
                 SetarColisorVars(1, ataqueModo, combo3[comboCount].dano, combo3[comboCount].knockback, combo3[comboCount].forcaKnockback);
+                SetarHitBox(combo3[comboCount].boxSize, combo3[comboCount].boxOffset);
                 comboCount++;
                 continuouCombo = true;
                 if (comboCount >= combo3.Count)
@@ -305,6 +320,7 @@ public class MovimentoPlayer : MonoBehaviour
             else if (comboCount < combo4.Count && comboEfetuado[comboCount] == combo4[comboCount].modoAtaque && comboEfetuado[comboCount - 1] == combo4[comboCount - 1].modoAtaque)
             {
                 SetarColisorVars(1, ataqueModo, combo4[comboCount].dano, combo4[comboCount].knockback, combo4[comboCount].forcaKnockback);
+                SetarHitBox(combo4[comboCount].boxSize, combo4[comboCount].boxOffset);
                 comboCount++;
                 continuouCombo = true;
                 if (comboCount >= combo4.Count)
@@ -314,15 +330,25 @@ public class MovimentoPlayer : MonoBehaviour
                 }
             }
 
+            // Mais combos adicionar aqui, acho que deve funcionar só mudando aqui mesmo eu espero
+
+
             // Não achou combo, então ataca normalmente e acaba combo
             else
             {
                 SetarColisorVars(1, ataqueModo, 1, false, 0);
+                if (ataqueModo == 1)
+                {
+                    SetarHitBox(sizeBoxCorte, offsetBoxCorte);   // Hitbox padrão
+                }
+                else if (ataqueModo == 2)
+                {
+                    SetarHitBox(sizeBoxEstocada, offsetBoxEstocada);
+                }
                 ResetarCombo(); // Quebrou o combo
             }
 
             // Executa para todos os ataques dentro do combo
-            SetarHitBox(ataqueModo);
             rangeCorpo.SetActive(true);
             yield return new WaitForSeconds(0.1f);
             rangeCorpo.SetActive(false);
@@ -373,7 +399,14 @@ public class MovimentoPlayer : MonoBehaviour
     {
         //rangeBase.enabled = true;
         SetarColisorVars(2, ataqueModo, 1, true, 200f); // ataque no ar
-        SetarHitBox(ataqueModo);
+        if (ataqueModo == 1)
+        {
+            SetarHitBox(sizeBoxCorte, offsetBoxCorte);  // Vai ter hitboxes especificas depois
+        }
+        else if (ataqueModo == 2)
+        {
+            SetarHitBox(sizeBoxEstocada, offsetBoxEstocada);
+        }
         rangeCorpo.SetActive(true);
 
         yield return new WaitUntil(() => estaNoChao || !agindo);
@@ -392,29 +425,26 @@ public class MovimentoPlayer : MonoBehaviour
             if (armaAtual != modo)
             {
                 armaAtual = modo; // troca modo de ataque
-                SetarHitBox(modo);
+                if (modo == 1)
+                {
+                    SetarHitBox(sizeBoxCorte, offsetBoxCorte);
+                }
+                else if (modo == 2)
+                {
+                    SetarHitBox(sizeBoxEstocada, offsetBoxEstocada);
+                }
             }
         }
 
     }
 
 
-    public void SetarHitBox(int ataqueModo)
+    public void SetarHitBox(Vector2 size, Vector2 offset)
     {
-        if (ataqueModo == 1)
-        {
-            boxBase.size = sizeBoxCorte;
-            boxCorpo.size = sizeBoxCorte;
-            boxBase.offset = offsetBoxCorte;
-            boxCorpo.offset = offsetBoxCorte;
-        }
-        else if (ataqueModo == 2)
-        {
-            boxBase.size = sizeBoxEstocada;
-            boxCorpo.size = sizeBoxEstocada;
-            boxBase.offset = offsetBoxEstocada;
-            boxCorpo.offset = offsetBoxEstocada;
-        }
+        boxBase.size = size;
+        boxCorpo.size = size;
+        boxBase.offset = offset;
+        boxCorpo.offset = offset;
         
     }
 

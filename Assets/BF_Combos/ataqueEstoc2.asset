@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: ataqueEstoc2
   m_EditorClassIdentifier: 
   modoAtaque: 2
-  boxOffset: {x: 1, y: 0}
-  boxSize: {x: 2, y: 0.9}
+  boxOffset: {x: 1.25, y: 0}
+  boxSize: {x: 2.25, y: 0.9}
   dano: 1
   knockback: 1
   forcaKnockback: 50

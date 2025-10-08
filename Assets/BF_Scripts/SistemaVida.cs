@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -44,9 +45,10 @@ public class SistemaVida : MonoBehaviour
                 }
                 Debug.Log("Acertou ataque aereo");
 
-                Vector2 direcao = (transform.position - atacante.transform.position).normalized;
+                Vector2 direcao = transform.position - atacante.transform.position;
+                direcao.Normalize();
 
-                rb.AddForce(direcao * 200, ForceMode2D.Impulse);
+                rb.AddForce(new Vector2(direcao.x * 200, 0), ForceMode2D.Impulse);
             }
         }
     }
@@ -68,8 +70,9 @@ public class SistemaVida : MonoBehaviour
 
                 if (knockback)
                 {
-                    Vector2 direcao = (transform.position - atacante.transform.position).normalized;
-                    rb.AddForce(direcao * forcaKnockback, ForceMode2D.Impulse);
+                    Vector2 direcao = transform.position - atacante.transform.position;
+                    direcao.Normalize();
+                    rb.AddForce(new Vector2(1*MathF.Sign(direcao.x) * forcaKnockback, 0), ForceMode2D.Impulse);
                 }
             }
             else if (tipo == 2)
@@ -83,8 +86,9 @@ public class SistemaVida : MonoBehaviour
 
                 if (knockback)
                 {
-                    Vector2 direcao = (transform.position - atacante.transform.position).normalized;
-                    rb.AddForce(direcao * forcaKnockback, ForceMode2D.Impulse);
+                    Vector2 direcao = transform.position - atacante.transform.position;
+                    direcao.Normalize();
+                    rb.AddForce(new Vector2(1*MathF.Sign(direcao.x) * forcaKnockback, 0), ForceMode2D.Impulse);
                 }
             }
         }
@@ -105,8 +109,9 @@ public class SistemaVida : MonoBehaviour
 
                 if (knockback)
                 {
-                    Vector2 direcao = (transform.position - atacante.transform.position).normalized;
-                    rb.AddForce(direcao * forcaKnockback, ForceMode2D.Impulse);
+                    Vector2 direcao = transform.position - atacante.transform.position;
+                    direcao.Normalize();
+                    rb.AddForce(new Vector2(1*MathF.Sign(direcao.x) * forcaKnockback, 0), ForceMode2D.Impulse);
                 }
             }
             else if (tipo == 2)
@@ -120,8 +125,9 @@ public class SistemaVida : MonoBehaviour
 
                 if (knockback)
                 {
-                    Vector2 direcao = (transform.position - atacante.transform.position).normalized;
-                    rb.AddForce(direcao * forcaKnockback, ForceMode2D.Impulse);
+                    Vector2 direcao = transform.position - atacante.transform.position;
+                    direcao.Normalize();
+                    rb.AddForce(new Vector2(1*MathF.Sign(direcao.x) * forcaKnockback, 0), ForceMode2D.Impulse);
                 }
             }
         }
