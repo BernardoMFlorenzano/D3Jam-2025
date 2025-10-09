@@ -4,7 +4,6 @@ using UnityEngine;
 public class ImpulsoCima: MonoBehaviour
 {
     private MovimentoPlayer movimentoPlayer;
-    private teste movimentoInimigo;
     [SerializeField] private Transform transformCorpo;
     public bool subindo;
     public bool caindo;
@@ -19,8 +18,6 @@ public class ImpulsoCima: MonoBehaviour
     {
         if(CompareTag("Player"))
             movimentoPlayer = GetComponent<MovimentoPlayer>();
-        else if(CompareTag("Inimigo"))
-            movimentoInimigo = GetComponent<teste>();
 
         layerPlayer = LayerMask.NameToLayer(layerPlayerNome);
         layerInimigo = LayerMask.NameToLayer(layerInimigoNome);
@@ -33,8 +30,6 @@ public class ImpulsoCima: MonoBehaviour
         //Debug.Log("Indo pra cima");
         if (CompareTag("Player"))
             movimentoPlayer.estaNoChao = false;
-        else if (CompareTag("Inimigo"))
-            movimentoInimigo.estaNoChao = false;
 
         //Physics2D.IgnoreLayerCollision(layerPlayer, layerInimigo, true);
 
@@ -98,8 +93,6 @@ public class ImpulsoCima: MonoBehaviour
 
         if (CompareTag("Player"))
             movimentoPlayer.estaNoChao = true;
-        else if (CompareTag("Inimigo"))
-            movimentoInimigo.estaNoChao = true;
 
         subindo = false;
         caindo = false;

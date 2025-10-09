@@ -373,10 +373,12 @@ public class MovimentoPlayer : MonoBehaviour
                 if (ataqueModo == 1)
                 {
                     SetarHitBox(sizeBoxCorte, offsetBoxCorte);   // Hitbox padrão
+                    efeitoAtaque.SetarEfeitoPosEscala(cortePadrao.posEfeito, cortePadrao.escalaEfeito);
                 }
                 else if (ataqueModo == 2)
                 {
                     SetarHitBox(sizeBoxEstocada, offsetBoxEstocada);
+                    efeitoAtaque.SetarEfeitoPosEscala(estocPadrao.posEfeito, estocPadrao.escalaEfeito);
                 }
                 ResetarCombo(); // Quebrou o combo
             }
@@ -388,13 +390,11 @@ public class MovimentoPlayer : MonoBehaviour
             {
                 animatorPlayer.SetTrigger("Corte");
                 animatorEfeitoAtaque.SetTrigger("Corte");
-                efeitoAtaque.SetarEfeitoPosEscala(cortePadrao.posEfeito, cortePadrao.escalaEfeito);
             }
             else if (ataqueModo == 2)
             {
                 animatorPlayer.SetTrigger("Estocada");
                 animatorEfeitoAtaque.SetTrigger("Estocada");
-                efeitoAtaque.SetarEfeitoPosEscala(estocPadrao.posEfeito, estocPadrao.escalaEfeito);
             }
 
             yield return new WaitForSeconds(0.1f);

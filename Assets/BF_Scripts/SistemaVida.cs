@@ -6,7 +6,6 @@ using UnityEngine;
 public class SistemaVida : MonoBehaviour
 {
     public bool atingivelBase;
-    [SerializeField] private TMP_Text textoTeste;
     private Rigidbody2D rb;
     [SerializeField] private float tempoRecupDano;
     private Coroutine CorRecupDano;
@@ -14,13 +13,17 @@ public class SistemaVida : MonoBehaviour
     public bool recupDano;
     public bool agindo; // Se estiver agindo, ignora função de repelir
 
-    //private bool levandoAtaque;
+    [Header("Vida")]
+    [SerializeField] private int vidaMax;
+    private int vidaAtual;
+    private bool morreu;
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        if (textoTeste)
-            textoTeste.text = "10";
+        vidaAtual = vidaMax;
     }
 
     // Update is called once per frame
@@ -28,42 +31,12 @@ public class SistemaVida : MonoBehaviour
     {
 
     }
-    /*
 
-    public void LevaAtaqueSoco(int tipo, GameObject atacante)
+    void MataInimigo()
     {
-        if (atingivelBase)
-        {
-            if (tipo == 1)
-            {
-                if (textoTeste)
-                {
-                    int num = int.Parse(textoTeste.text) - 1;
-                    textoTeste.text = num.ToString();
-                }
-                Debug.Log("Acertou ataque no chao");
-            }
-            else if (tipo == 2)
-            {
-                if (textoTeste)
-                {
-                    int num = int.Parse(textoTeste.text) - 1;
-                    textoTeste.text = num.ToString();
-                }
-                Debug.Log("Acertou ataque aereo");
-
-                Vector2 direcao = transform.position - atacante.transform.position;
-                direcao.Normalize();
-
-                sofrendoKnockback = true;
-                rb.linearVelocity = Vector2.zero;
-                rb.AddForce(new Vector2(direcao.x * 200, 0), ForceMode2D.Impulse);
-            }
-        }
+        Debug.Log("Inimigo Morreu");
+        Destroy(gameObject, 0.5f);
     }
-    */
-
-    // Ataques de armas estão separados para depois botar diferença de dano e outras caracteristicas
 
     public void LevaAtaqueCorte(int tipo, int dano, bool knockback, float forcaKnockback, GameObject atacante)
     {
@@ -71,12 +44,9 @@ public class SistemaVida : MonoBehaviour
         {
             if (tipo == 1)
             {
-                if (textoTeste)
-                {
-                    int num = int.Parse(textoTeste.text) - dano;
-                    textoTeste.text = num.ToString();
-                }
                 Debug.Log("Acertou ataque no chao");
+
+                vidaAtual -= dano;
 
                 recupDano = true;
                 if (CorRecupDano != null)
@@ -95,13 +65,10 @@ public class SistemaVida : MonoBehaviour
             }
             else if (tipo == 2)
             {
-                if (textoTeste)
-                {
-                    int num = int.Parse(textoTeste.text) - dano;
-                    textoTeste.text = num.ToString();
-                }
                 Debug.Log("Acertou ataque aereo");
 
+                vidaAtual = vidaAtual - dano;
+                
                 recupDano = true;
                 if (CorRecupDano != null)
                     StopCoroutine(CorRecupDano);
@@ -116,6 +83,11 @@ public class SistemaVida : MonoBehaviour
                     rb.linearVelocity = Vector2.zero;
                     rb.AddForce(new Vector2(1 * MathF.Sign(direcao.x) * forcaKnockback, 0), ForceMode2D.Impulse);
                 }
+            }
+
+            if (vidaAtual <= 0)
+            {
+                MataInimigo();
             }
         }
     }
@@ -127,12 +99,9 @@ public class SistemaVida : MonoBehaviour
             Debug.Log("Leva estocada");
             if (tipo == 1)
             {
-                if (textoTeste)
-                {
-                    int num = int.Parse(textoTeste.text) - dano;
-                    textoTeste.text = num.ToString();
-                }
                 Debug.Log("Acertou ataque no chao");
+
+                vidaAtual -= dano;
 
                 recupDano = true;
                 if (CorRecupDano != null)
@@ -151,12 +120,9 @@ public class SistemaVida : MonoBehaviour
             }
             else if (tipo == 2)
             {
-                if (textoTeste)
-                {
-                    int num = int.Parse(textoTeste.text) - dano;
-                    textoTeste.text = num.ToString();
-                }
                 Debug.Log("Acertou ataque aereo");
+                
+                vidaAtual -= dano;
 
                 recupDano = true;
                 if (CorRecupDano != null)
@@ -172,6 +138,11 @@ public class SistemaVida : MonoBehaviour
                     rb.linearVelocity = Vector2.zero;
                     rb.AddForce(new Vector2(1 * MathF.Sign(direcao.x) * forcaKnockback, 0), ForceMode2D.Impulse);
                 }
+            }
+
+            if (vidaAtual <= 0)
+            {
+                MataInimigo();
             }
         }
     }

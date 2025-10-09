@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: ataqueEstoc1
   m_EditorClassIdentifier: 
   modoAtaque: 2
-  boxOffset: {x: 1, y: 0}
-  boxSize: {x: 2, y: 0.9}
+  boxOffset: {x: 1.75, y: 0}
+  boxSize: {x: 3.5, y: 0.9}
   dano: 1
   knockback: 1
   forcaKnockback: 50
-  posEfeito: {x: 1.325, y: -0.25}
+  posEfeito: {x: 1, y: -0.25}
   escalaEfeito: {x: 1, y: 1}

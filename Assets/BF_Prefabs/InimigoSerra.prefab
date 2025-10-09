@@ -307,11 +307,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   atingivelBase: 0
-  textoTeste: {fileID: 0}
   tempoRecupDano: 1
   sofrendoKnockback: 0
   recupDano: 0
   agindo: 0
+  vidaMax: 5
 --- !u!114 &2069038235622414186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -343,7 +343,7 @@ MonoBehaviour:
   sizeBoxDano: {x: 1.3, y: 1}
   offsetBoxRangeAtaque: {x: 1.85, y: 0}
   sizeBoxRangeAtaque: {x: 3.65, y: 1}
-  cooldownAtaque: 12
+  cooldownAtaque: 6
   tempoParadoPosAtaque: 2
   velBaseInimigoHorCorrida: 10
   velMaxInimigoHorCorrida: 15
