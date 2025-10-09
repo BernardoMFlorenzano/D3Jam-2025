@@ -12,4 +12,7 @@ public class Ataque : ScriptableObject
     public int dano;
     public bool knockback;
     public float forcaKnockback;
+    // Efeito visual
+    public Vector2 posEfeito;
+    public Vector2 escalaEfeito;
 }

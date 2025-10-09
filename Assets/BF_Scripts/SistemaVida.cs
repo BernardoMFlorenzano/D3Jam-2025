@@ -124,6 +124,7 @@ public class SistemaVida : MonoBehaviour
     {
         if (atingivelBase)
         {
+            Debug.Log("Leva estocada");
             if (tipo == 1)
             {
                 if (textoTeste)

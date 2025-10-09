@@ -54,16 +54,16 @@
                     "name": "Jump",
                     "type": "Button",
                     "id": "f1ba0d36-48eb-4cd5-b651-1c94a6531f70",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press",
                     "initialStateCheck": false
                 },
                 {
                     "name": "Previous",
                     "type": "Button",
                     "id": "2776c80d-3c14-4091-8c56-d04ced07a2b0",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -87,12 +87,21 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Troca",
+                    "name": "Corte",
                     "type": "Button",
-                    "id": "76a743b1-e537-4e09-be44-dbfa8d318a51",
+                    "id": "cda50126-a969-4aea-9a7f-4ec79e8a7186",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Estocada",
+                    "type": "Button",
+                    "id": "06d06329-e0e9-457e-88ae-fc193d0f0fbe",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press",
                     "initialStateCheck": false
                 }
             ],
@@ -407,17 +416,6 @@
                 },
                 {
                     "name": "",
-                    "id": "603f3daf-40bd-4854-8724-93e8017f59e3",
-                    "path": "<XRController>/secondaryButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "XR",
-                    "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "1534dc16-a6aa-499d-9c3a-22b47347b52a",
                     "path": "<Keyboard>/1",
                     "interactions": "",
@@ -484,23 +482,45 @@
                 },
                 {
                     "name": "",
-                    "id": "c1210306-fd28-408a-a8b1-dd6b81c6e4b3",
+                    "id": "a9a0d2c6-2243-4650-8f32-7a1bef45087d",
                     "path": "<Keyboard>/#(J)",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Troca",
+                    "action": "Corte",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "a747247c-9514-4cf8-b75e-cd12d0cb5aba",
+                    "id": "c9fd16e6-586a-47e2-ab4b-e969dd8b9931",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Corte",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3d68b4d4-8b80-41cf-9c97-94784e19ac05",
+                    "path": "<Keyboard>/k",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Estocada",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e70a74a9-534e-4cf0-b6d0-f5fc4ebd2de9",
                     "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "Troca",
+                    "action": "Estocada",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

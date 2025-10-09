@@ -18,3 +18,5 @@ MonoBehaviour:
   dano: 1
   knockback: 1
   forcaKnockback: 200
+  posEfeito: {x: 1.325, y: -0.25}
+  escalaEfeito: {x: 1, y: 1}

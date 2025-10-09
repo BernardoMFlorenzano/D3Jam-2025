@@ -109,20 +109,20 @@ TextureImporter:
       name: Spear slash_0
       rect:
         serializedVersion: 2
-        x: 191
-        y: 100
-        width: 368
-        height: 88
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 0
+        y: 0
+        width: 600
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 32f527be72dc1c5e0800000000000000
-      internalID: -1891004797181337821
+      spriteID: e08d6e8d9ecd2cd4dafcbb988bf71137
+      internalID: 112395102
       vertices: []
       indices: 
       edges: []
@@ -131,42 +131,20 @@ TextureImporter:
       name: Spear slash_1
       rect:
         serializedVersion: 2
-        x: 753
-        y: 89
-        width: 296
-        height: 117
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 600
+        y: 0
+        width: 600
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 4d022c91226144b30800000000000000
-      internalID: 4270562682370924756
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Spear slash_2
-      rect:
-        serializedVersion: 2
-        x: 1080
-        y: 129
-        width: 31
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: dbc630e1e7e50c420800000000000000
-      internalID: 2648220476656282813
+      spriteID: 87b31161f85db14489da787d13b03834
+      internalID: -1613008986
       vertices: []
       indices: 
       edges: []
@@ -175,7 +153,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 11d9a00d4441b604bb27caa24f645671
     internalID: 0
     vertices: []
     indices: 
@@ -184,7 +162,9 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Spear slash_0: 112395102
+      Spear slash_1: -1613008986
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

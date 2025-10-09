@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class MovimentoPlayer : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class MovimentoPlayer : MonoBehaviour
     private bool virado; // Controla flip do movimento
     [Header("Animações")]
     [SerializeField] private Animator animatorPlayer;
+    [SerializeField] private Animator animatorEfeitoAtaque;
+    [SerializeField] private SetaEfeitoAtaque efeitoAtaque;
 
     [Header("Pulo")]
     [SerializeField] private float duracaoPulo;
@@ -91,6 +94,23 @@ public class MovimentoPlayer : MonoBehaviour
 
     }
 
+    public void OnJump()
+    {
+        puloInput = true;
+    }
+
+    public void OnCorte()
+    {
+        ataqueInput1 = true;
+        ataqueInput2 = false;
+    }
+
+    public void OnEstocada()
+    {
+        ataqueInput2 = true;
+        ataqueInput1 = false;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -112,21 +132,23 @@ public class MovimentoPlayer : MonoBehaviour
             ResetarCombo();
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        /*
+        if (Input.GetButtonDown("Jump"))
         {
             puloInput = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.J))    // Trocar inputs depois pra ser mais flexiveis
+        if (Input.GetButtonDown("Corte"))    // Trocar inputs depois pra ser mais flexiveis
         {
             ataqueInput1 = true;
             ataqueInput2 = false;
         }
-        else if (Input.GetKeyDown(KeyCode.K))
+        else if (Input.GetButtonDown("Estocada"))
         {
             ataqueInput2 = true;
             ataqueInput1 = false;
         }
+        */
 
 
 
@@ -179,6 +201,7 @@ public class MovimentoPlayer : MonoBehaviour
         if (animatorPlayer)
         {
             animatorPlayer.SetFloat("Vel", Mathf.Abs(rb.linearVelocityX) + Mathf.Abs(rb.linearVelocityY));
+            animatorPlayer.SetBool("NoChao", estaNoChao);
         }
 
     }
@@ -235,11 +258,17 @@ public class MovimentoPlayer : MonoBehaviour
             {
                 SetarColisorVars(1, ataqueModo, cortePadrao.dano, cortePadrao.knockback, cortePadrao.forcaKnockback);
                 SetarHitBox(sizeBoxCorte, offsetBoxCorte);
+                animatorPlayer.SetTrigger("Corte");
+                animatorEfeitoAtaque.SetTrigger("Corte");
+                efeitoAtaque.SetarEfeitoPosEscala(cortePadrao.posEfeito, cortePadrao.escalaEfeito);
             }
             else if (ataqueModo == 2)
             {
                 SetarColisorVars(1, ataqueModo, estocPadrao.dano, estocPadrao.knockback, estocPadrao.forcaKnockback);
                 SetarHitBox(sizeBoxEstocada, offsetBoxEstocada);
+                animatorPlayer.SetTrigger("Estocada");
+                animatorEfeitoAtaque.SetTrigger("Estocada");
+                efeitoAtaque.SetarEfeitoPosEscala(estocPadrao.posEfeito, estocPadrao.escalaEfeito);
             }
 
             if (podeEntrarCombo)
@@ -282,6 +311,7 @@ public class MovimentoPlayer : MonoBehaviour
             {
                 SetarColisorVars(1, ataqueModo, combo1[comboCount].dano, combo1[comboCount].knockback, combo1[comboCount].forcaKnockback);
                 SetarHitBox(combo1[comboCount].boxSize, combo1[comboCount].boxOffset);
+                efeitoAtaque.SetarEfeitoPosEscala(combo1[comboCount].posEfeito, combo1[comboCount].escalaEfeito);
                 comboCount++;
                 continuouCombo = true;
                 if (comboCount >= combo1.Count)
@@ -295,6 +325,7 @@ public class MovimentoPlayer : MonoBehaviour
             {
                 SetarColisorVars(1, ataqueModo, combo2[comboCount].dano, combo2[comboCount].knockback, combo2[comboCount].forcaKnockback);
                 SetarHitBox(combo2[comboCount].boxSize, combo2[comboCount].boxOffset);
+                efeitoAtaque.SetarEfeitoPosEscala(combo2[comboCount].posEfeito, combo2[comboCount].escalaEfeito);
                 comboCount++;
                 continuouCombo = true;
                 if (comboCount >= combo2.Count)
@@ -308,6 +339,7 @@ public class MovimentoPlayer : MonoBehaviour
             {
                 SetarColisorVars(1, ataqueModo, combo3[comboCount].dano, combo3[comboCount].knockback, combo3[comboCount].forcaKnockback);
                 SetarHitBox(combo3[comboCount].boxSize, combo3[comboCount].boxOffset);
+                efeitoAtaque.SetarEfeitoPosEscala(combo3[comboCount].posEfeito, combo3[comboCount].escalaEfeito);
                 comboCount++;
                 continuouCombo = true;
                 if (comboCount >= combo3.Count)
@@ -321,6 +353,7 @@ public class MovimentoPlayer : MonoBehaviour
             {
                 SetarColisorVars(1, ataqueModo, combo4[comboCount].dano, combo4[comboCount].knockback, combo4[comboCount].forcaKnockback);
                 SetarHitBox(combo4[comboCount].boxSize, combo4[comboCount].boxOffset);
+                efeitoAtaque.SetarEfeitoPosEscala(combo4[comboCount].posEfeito, combo4[comboCount].escalaEfeito);
                 comboCount++;
                 continuouCombo = true;
                 if (comboCount >= combo4.Count)
@@ -349,7 +382,21 @@ public class MovimentoPlayer : MonoBehaviour
             }
 
             // Executa para todos os ataques dentro do combo
+            yield return new WaitForSeconds(0.05f);
             rangeCorpo.SetActive(true);
+            if (ataqueModo == 1)
+            {
+                animatorPlayer.SetTrigger("Corte");
+                animatorEfeitoAtaque.SetTrigger("Corte");
+                efeitoAtaque.SetarEfeitoPosEscala(cortePadrao.posEfeito, cortePadrao.escalaEfeito);
+            }
+            else if (ataqueModo == 2)
+            {
+                animatorPlayer.SetTrigger("Estocada");
+                animatorEfeitoAtaque.SetTrigger("Estocada");
+                efeitoAtaque.SetarEfeitoPosEscala(estocPadrao.posEfeito, estocPadrao.escalaEfeito);
+            }
+
             yield return new WaitForSeconds(0.1f);
             rangeCorpo.SetActive(false);
             agindo = false;

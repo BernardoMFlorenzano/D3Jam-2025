@@ -1,22 +1,10 @@
 fileFormatVersion: 2
-guid: 9989ed712f3f9974c96ed74ad2649830
+guid: 5bf4a88e2dd57044996bd42f0667b177
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5788831373639089522
-    second: Spear anim_0
-  - first:
-      213: 6397746285356033951
-    second: Spear anim_1
-  - first:
-      213: 7924735122278451613
-    second: Spear anim_2
-  - first:
-      213: 4618643793650630642
-    second: Spear anim_3
-  - first:
-      213: 147793868112528495
-    second: Spear anim_4
+      213: 4740944688123520496
+    second: damage taken_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -112,111 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Spear anim_0
+      name: damage taken_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 315
-        width: 600
-        height: 285
+        y: 0
+        width: 200
+        height: 300
       alignment: 9
-      pivot: {x: 0.15, y: 0}
+      pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 52051f2135291dd4e89277c43e465f0d
-      internalID: -564599849
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Spear anim_1
-      rect:
-        serializedVersion: 2
-        x: 600
-        y: 315
-        width: 600
-        height: 285
-      alignment: 9
-      pivot: {x: 0.15, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 14f34deb8ee5a20459fa9690a2cd787d
-      internalID: 1489443662
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Spear anim_2
-      rect:
-        serializedVersion: 2
-        x: 1200
-        y: 315
-        width: 600
-        height: 285
-      alignment: 9
-      pivot: {x: 0.15, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 991ff0ea6555bce4c9b5e572619f551e
-      internalID: -501300615
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Spear anim_3
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 15
-        width: 600
-        height: 285
-      alignment: 9
-      pivot: {x: 0.15, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 673a9ffc8c6ea0643bce59b7b9c6810f
-      internalID: 444774066
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Spear anim_4
-      rect:
-        serializedVersion: 2
-        x: 600
-        y: 15
-        width: 600
-        height: 285
-      alignment: 9
-      pivot: {x: 0.15, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f8f8cce854aa0c543b2b3c9c42d303fa
-      internalID: 1172174333
+      spriteID: 8adb0fc106d9ee24b84e745ead5572c9
+      internalID: 341465917
       vertices: []
       indices: 
       edges: []
@@ -225,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: e384d343195a0fe4c8f0f88c90d328c9
+    spriteID: 205091dbc165d63468c8f02aa7a54a20
     internalID: 0
     vertices: []
     indices: 
@@ -235,11 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Spear anim_0: -564599849
-      Spear anim_1: 1489443662
-      Spear anim_2: -501300615
-      Spear anim_3: 444774066
-      Spear anim_4: 1172174333
+      damage taken_0: 341465917
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

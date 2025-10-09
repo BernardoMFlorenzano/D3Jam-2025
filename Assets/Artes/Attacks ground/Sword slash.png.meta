@@ -109,20 +109,20 @@ TextureImporter:
       name: Sword slash_0
       rect:
         serializedVersion: 2
-        x: 15
+        x: 0
         y: 0
-        width: 313
-        height: 187
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 350
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 9934f16c5bbd4fb40800000000000000
-      internalID: 5473241020921496473
+      spriteID: 2b8eb4bf87e9ad14a9fb99db4bb83992
+      internalID: -855791964
       vertices: []
       indices: 
       edges: []
@@ -131,42 +131,20 @@ TextureImporter:
       name: Sword slash_1
       rect:
         serializedVersion: 2
-        x: 460
-        y: 115
-        width: 20
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a2e89b6d6fe7d9450800000000000000
-      internalID: 6097169069159058986
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sword slash_2
-      rect:
-        serializedVersion: 2
-        x: 351
+        x: 350
         y: 0
-        width: 216
-        height: 85
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 350
+        height: 300
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: cf656ae8b12404f90800000000000000
-      internalID: -6971499537044711684
+      spriteID: a0f01900f9783bb44a8d607013203ee5
+      internalID: -2124123384
       vertices: []
       indices: 
       edges: []
@@ -175,7 +153,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 0bbc7d93191dff74992d63e75548e10b
     internalID: 0
     vertices: []
     indices: 
@@ -184,7 +162,9 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Sword slash_0: -855791964
+      Sword slash_1: -2124123384
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
