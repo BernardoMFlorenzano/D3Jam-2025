@@ -114,7 +114,7 @@ public class ImpulsoCima: MonoBehaviour
         }
     }
     
-    public IEnumerator ImpulsoDrone(float duracaoDescida, float duracaoSubida)
+    public IEnumerator ImpulsoDrone(float duracaoDescida, float duracaoSubida, float tempoChao)
     {
         // inimigoDrone.acabouRasante já é falso
 
@@ -148,7 +148,7 @@ public class ImpulsoCima: MonoBehaviour
 
         transformCorpo.localPosition = posicaoBase;
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(tempoChao);
 
         subindo = true;
         caindo = false;

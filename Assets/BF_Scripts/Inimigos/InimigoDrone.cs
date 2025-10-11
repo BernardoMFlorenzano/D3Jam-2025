@@ -61,6 +61,7 @@ public class InimigoDrone : MonoBehaviour
     private Vector2 direcaoRasante;
     [SerializeField] private float descidaRasante;  // Duração da descida
     [SerializeField] private float subidaRasante;   // Duração da subida
+    [SerializeField] private float tempoChao;
     private ImpulsoCima impulsoRasante;
     private bool atacando;
     private bool acabouAtaque;
@@ -286,7 +287,7 @@ public class InimigoDrone : MonoBehaviour
         direcaoRasante = -direcaoPlayer;
 
         SetaColisor(danoAtaque, knockBackAtaque, forcaKnockbackAtaque);
-        StartCoroutine(impulsoRasante.ImpulsoDrone(descidaRasante, subidaRasante));
+        StartCoroutine(impulsoRasante.ImpulsoDrone(descidaRasante, subidaRasante, tempoChao));
         acabouRasante = false;
         corTerminaRasante = StartCoroutine(TerminaRasante());
         Debug.Log("Começa Ataque");
@@ -298,18 +299,26 @@ public class InimigoDrone : MonoBehaviour
 
     void Atacando()
     {
-        if (acabouAtaque)
+        if (acabouAtaque || sistemaVida.recupDano)
         {
             podeAtacar = false;
             acabouAtaque = false;
-            rb.linearVelocity = Vector2.zero;
+            //rb.linearVelocity = Vector2.zero;
             parado = true;
+
+            StopCoroutine(TerminaRasante());    // Para logica de rasante
+            SetaColisor(1, false, 0);   // Valor padrão do dano e knockback
+
             corCooldownAtaque = StartCoroutine(CooldownAtaque());
         }
         else if (!parado)
         {
-            rb.linearVelocityX = direcaoRasante.x * velInimigoHorRasante; 
-            rb.linearVelocityY = direcaoRasante.y * velInimigoVerRasante; 
+            rb.linearVelocityX = direcaoRasante.x * velInimigoHorRasante;
+            rb.linearVelocityY = direcaoRasante.y * velInimigoVerRasante;
+        }
+        else if (parado)
+        {
+            rb.linearVelocity = rb.linearVelocity * 0.95f;
         }
     }
 

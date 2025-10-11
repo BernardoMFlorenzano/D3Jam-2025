@@ -19,7 +19,7 @@ public class RepeleInimigo : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Inimigo") && CompareTag("Inimigo") || collision.CompareTag("InimigoVoador") && CompareTag("InimigoVoador"))
+        if (collision.CompareTag("Inimigo") && transform.parent.CompareTag("Inimigo") || collision.CompareTag("InimigoVoador") && transform.parent.CompareTag("InimigoVoador"))
         {
             sistemaVida = collision.GetComponent<SistemaVida>();
             distancia = Vector2.Distance(transform.position, collision.transform.position);

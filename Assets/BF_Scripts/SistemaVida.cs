@@ -20,7 +20,9 @@ public class SistemaVida : MonoBehaviour
     private bool morreu;
     [Header("Player")]
     [SerializeField] private float tempoInvenc; // tempo de invencibilidade
+    public bool levandoDano;
     private bool podeLevarDano;
+    [SerializeField] private Animator animatorPlayer;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -170,6 +172,7 @@ public class SistemaVida : MonoBehaviour
         if (podeLevarDano && CompareTag("Player"))
         {
             podeLevarDano = false;
+            levandoDano = true;
             vidaAtual -= dano;
 
             if (knockback)
@@ -190,10 +193,11 @@ public class SistemaVida : MonoBehaviour
     
     IEnumerator Invencibilidade()
     {
-        // ativa animação de dano
+        animatorPlayer.SetBool("Dano", true);
         yield return new WaitForSeconds(tempoInvenc);
-        // desativa animação de dano
+        animatorPlayer.SetBool("Dano", false);
         podeLevarDano = true;
+        levandoDano = false;
     }
 
 

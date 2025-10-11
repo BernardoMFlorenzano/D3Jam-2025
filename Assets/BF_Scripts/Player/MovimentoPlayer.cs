@@ -14,6 +14,7 @@ public class MovimentoPlayer : MonoBehaviour
     //private Vector2 velMovReal;
     private Vector2 velMovTarget;
     private bool virado; // Controla flip do movimento
+    private SistemaVida sistemaVida;
     [Header("Animações")]
     [SerializeField] private Animator animatorPlayer;
     [SerializeField] private Animator animatorEfeitoAtaque;
@@ -83,6 +84,8 @@ public class MovimentoPlayer : MonoBehaviour
         boxCorpo = rangeCorpo.GetComponent<BoxCollider2D>();
         boxBase = rangeBase.GetComponent<BoxCollider2D>();
 
+        sistemaVida = GetComponent<SistemaVida>();
+
         agindo = false;
         podeAtacar = true;
         podeEntrarCombo = true;
@@ -131,37 +134,6 @@ public class MovimentoPlayer : MonoBehaviour
         {
             ResetarCombo();
         }
-
-        /*
-        if (Input.GetButtonDown("Jump"))
-        {
-            puloInput = true;
-        }
-
-        if (Input.GetButtonDown("Corte"))    // Trocar inputs depois pra ser mais flexiveis
-        {
-            ataqueInput1 = true;
-            ataqueInput2 = false;
-        }
-        else if (Input.GetButtonDown("Estocada"))
-        {
-            ataqueInput2 = true;
-            ataqueInput1 = false;
-        }
-        */
-
-
-
-
-        // Troca de arma pra teste
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            TrocaArma(indexCorte);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            TrocaArma(indexEstocada);
-        }
     }
 
     void FixedUpdate()
@@ -175,9 +147,9 @@ public class MovimentoPlayer : MonoBehaviour
             AtaqueNormal(indexEstocada);
         }
 
-        if (agindo && estaNoChao)
+        if (agindo && estaNoChao || sistemaVida.levandoDano)
         {
-            if (direcaoInput != Vector2.zero)
+            if (direcaoInput != Vector2.zero && !sistemaVida.levandoDano)
                 rb.linearVelocity = Vector2.zero;
             return;
         }
@@ -230,7 +202,6 @@ public class MovimentoPlayer : MonoBehaviour
 
             if (estaNoChao)
             {
-                TrocaArma(ataqueModo);   // Eventualmente vai ter diferença entre hitbox do chao e pulo
                 StartCoroutine(CorrotinaAtaqueChao(ataqueModo));
                 if (delayAtaqueCorrotina != null)
                     StopCoroutine(delayAtaqueCorrotina);
@@ -238,7 +209,6 @@ public class MovimentoPlayer : MonoBehaviour
             }
             else
             {
-                TrocaArma(ataqueModo);
                 StartCoroutine(CorrotinaAtaqueAr(ataqueModo));
             }
         }
@@ -464,27 +434,6 @@ public class MovimentoPlayer : MonoBehaviour
         agindo = false;
         podeAtacar = true;
     }
-
-    void TrocaArma(int modo)    // Só serve pra teste por enquanto
-    {
-        if (!agindo)
-        {
-            if (armaAtual != modo)
-            {
-                armaAtual = modo; // troca modo de ataque
-                if (modo == 1)
-                {
-                    SetarHitBox(sizeBoxCorte, offsetBoxCorte);
-                }
-                else if (modo == 2)
-                {
-                    SetarHitBox(sizeBoxEstocada, offsetBoxEstocada);
-                }
-            }
-        }
-
-    }
-
 
     public void SetarHitBox(Vector2 size, Vector2 offset)
     {
