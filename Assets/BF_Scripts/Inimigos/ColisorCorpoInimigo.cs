@@ -26,6 +26,8 @@ public class ColisorCorpoInimigo : MonoBehaviour
         {
             // Da dano no player
             Debug.Log("Player leva dano");
+            sistemaVida = collision.GetComponentInParent<SistemaVida>();
+            sistemaVida.LevaAtaquePlayer(dano, knockback, forcaKnockback, gameObjectPrincipal);
         }
     }
 }

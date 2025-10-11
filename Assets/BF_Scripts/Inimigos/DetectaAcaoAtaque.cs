@@ -5,6 +5,7 @@ public class DetectaAcaoAtaque : MonoBehaviour
     private SistemaVida sistemaVida;
     [SerializeField] private int tipoInimigo;
     [SerializeField] private InimigoSerra inimigoSerra;
+    [SerializeField] private InimigoDrone inimigoDrone;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -27,6 +28,11 @@ public class DetectaAcaoAtaque : MonoBehaviour
                 inimigoSerra.podeTentarAtacar = true;
                 Debug.Log("Inimigo serra pode atacar");
             }
+            else if (tipoInimigo == 2) // Drone
+            {
+                inimigoDrone.podeTentarAtacar = true;
+                Debug.Log("Inimigo drone pode atacar");
+            }
         }
     }
 
@@ -39,7 +45,11 @@ public class DetectaAcaoAtaque : MonoBehaviour
                 inimigoSerra.podeTentarAtacar = false;
                 Debug.Log("Inimigo serra não pode atacar");
             }
-            
+            else if (tipoInimigo == 2) // Drone
+            {
+                inimigoDrone.podeTentarAtacar = false;
+                Debug.Log("Inimigo drone não pode atacar");
+            }
         }
     }
 

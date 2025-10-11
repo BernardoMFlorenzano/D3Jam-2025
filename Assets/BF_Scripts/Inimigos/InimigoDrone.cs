@@ -1,10 +1,8 @@
 using System;
 using System.Collections;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class InimigoSerra : MonoBehaviour
+public class InimigoDrone : MonoBehaviour
 {
     private Rigidbody2D rb;
     [SerializeField] private float velInimigoHor;
@@ -23,9 +21,9 @@ public class InimigoSerra : MonoBehaviour
 
     [Header("Patrulha")]
     [SerializeField] private float rangeMinMovimentoPatrulha = 0.5f;
-    [SerializeField] private float rangeMaxMovimentoPatrulha = 2f;
-    [SerializeField] private float tempoParadoMaxPatrulha = 4f;
-    [SerializeField] private float tempoParadoMinPatrulha = 2f;
+    [SerializeField] private float rangeMaxMovimentoPatrulha = 1f;
+    [SerializeField] private float tempoParadoMaxPatrulha = 2f;
+    [SerializeField] private float tempoParadoMinPatrulha = 1f;
     [SerializeField] private float velInimigoHorPatrulha;
     [SerializeField] private float velInimigoVerPatrulha;
     private bool patrulhando;
@@ -35,7 +33,7 @@ public class InimigoSerra : MonoBehaviour
     private Coroutine corDelayAndaEmPatrulha;
 
     [Header("Em Combate")]
-    [SerializeField] private float distanciaIdealX; // Distancia horizontal que o inimigo vai tentar manter
+    [SerializeField] private float distanciaIdeal; // Distancia em que o drone vai tentar chegar perto
     [SerializeField] private float tempoPreparaAtaque;  // Pequeno delay até iniciar ataque
     [SerializeField] private float danoPassivo;  // Dano no player ao tocar o inimigo fora do modo ataque
     [SerializeField] private float tempoDeRespostaInimigo;  // Delay na atualização da posição e direção do player
@@ -58,16 +56,17 @@ public class InimigoSerra : MonoBehaviour
     [SerializeField] private Vector2 sizeBoxRangeAtaque;
     [SerializeField] private float cooldownAtaque;
     [SerializeField] private float tempoParadoPosAtaque;
-    [SerializeField] private float velBaseInimigoHorCorrida;
-    [SerializeField] private float velMaxInimigoHorCorrida;
-    [SerializeField] private float aceleracaoCorrida;
-    private float velAtualCorrida;
-    private float direcaoCorrida;
-    [SerializeField] private float tempoCorrida;
+    [SerializeField] private float velInimigoHorRasante;
+    [SerializeField] private float velInimigoVerRasante;
+    private Vector2 direcaoRasante;
+    [SerializeField] private float descidaRasante;  // Duração da descida
+    [SerializeField] private float subidaRasante;   // Duração da subida
+    private ImpulsoCima impulsoRasante;
     private bool atacando;
     private bool acabouAtaque;
+    public bool acabouRasante;
     private Coroutine corCooldownAtaque;
-    private Coroutine corTerminaCorrida;
+    private Coroutine corTerminaRasante;
 
     //[Header("Variaveis Externas")]
     private SistemaVida sistemaVida;
@@ -77,6 +76,7 @@ public class InimigoSerra : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         rb = GetComponent<Rigidbody2D>();
         sistemaVida = GetComponent<SistemaVida>();
+        impulsoRasante = GetComponent<ImpulsoCima>();
 
         patrulhando = true;
         andandoEmPatrulha = false;
@@ -242,18 +242,16 @@ public class InimigoSerra : MonoBehaviour
 
         else if (!sistemaVida.sofrendoKnockback && !sistemaVida.recupDano && !preparandoAtaque)
         {
-            if (distanciaIdealX < MathF.Abs(transform.position.x - player.transform.position.x))
+            if (distanciaIdeal < distanciaPlayer)
             {
                 velMov.x = MathF.Sign(-direcaoPlayer.x);
-            }
-            else if (distanciaIdealX / 2 > MathF.Abs(transform.position.x - player.transform.position.x))
-            {
-                velMov.x = MathF.Sign(direcaoPlayer.x);
+                velMov.y = MathF.Sign(-direcaoPlayer.y);
             }
             else
             {
-                velMov.x = 0f;
+                velMov = Vector2.zero;
             }
+            /*
 
             if (distanciaIdealX / 2 < MathF.Abs(transform.position.x - player.transform.position.x) && MathF.Abs(transform.position.y - player.transform.position.y) > 0.2f)
             {
@@ -263,6 +261,8 @@ public class InimigoSerra : MonoBehaviour
             {
                 velMov.y = 0f;
             }
+            */
+
             rb.AddForce(new Vector2(velMov.x * 10 * velInimigoHor, velMov.y * 10 * velInimigoVer));
         }
         else if (sistemaVida.sofrendoKnockback)
@@ -283,11 +283,12 @@ public class InimigoSerra : MonoBehaviour
         atacando = true;
         sistemaVida.agindo = true;
         preparandoAtaque = false;
-        velAtualCorrida = velBaseInimigoHorCorrida; // Seta velocidade inicial da corrida
-        direcaoCorrida = -direcaoPlayer.x;
+        direcaoRasante = -direcaoPlayer;
 
         SetaColisor(danoAtaque, knockBackAtaque, forcaKnockbackAtaque);
-        corTerminaCorrida = StartCoroutine(TerminaCorrida());
+        StartCoroutine(impulsoRasante.ImpulsoDrone(descidaRasante, subidaRasante));
+        acabouRasante = false;
+        corTerminaRasante = StartCoroutine(TerminaRasante());
         Debug.Log("Começa Ataque");
     }
 
@@ -307,17 +308,14 @@ public class InimigoSerra : MonoBehaviour
         }
         else if (!parado)
         {
-            rb.linearVelocityX = direcaoCorrida * velAtualCorrida;    // PODE NAO DAR CERTO
-            if (velAtualCorrida < velMaxInimigoHorCorrida)
-            {
-                velAtualCorrida += aceleracaoCorrida;
-            }
+            rb.linearVelocityX = direcaoRasante.x * velInimigoHorRasante; 
+            rb.linearVelocityY = direcaoRasante.y * velInimigoVerRasante; 
         }
     }
 
-    IEnumerator TerminaCorrida()
+    IEnumerator TerminaRasante()
     {
-        yield return new WaitForSeconds(tempoCorrida);
+        yield return new WaitUntil(() => acabouRasante);
         acabouAtaque = true;
         SetaColisor(1, false, 0);   // Valor padrão do dano e knockback
         Debug.Log("Acaba Ataque");
@@ -325,13 +323,13 @@ public class InimigoSerra : MonoBehaviour
 
     IEnumerator CooldownAtaque()
     {
-        StartCoroutine(ParadoPosCorrida());
+        StartCoroutine(ParadoPosRasante());
         yield return new WaitForSeconds(cooldownAtaque);
         podeAtacar = true;
         Debug.Log("Pode Atacar de novo");
     }
 
-    IEnumerator ParadoPosCorrida()
+    IEnumerator ParadoPosRasante()
     {
         Debug.Log("Recuperando apos ataque");
         yield return new WaitForSeconds(tempoParadoPosAtaque);
