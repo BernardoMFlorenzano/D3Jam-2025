@@ -25,8 +25,19 @@ public class ColisorCorpoInimigo : MonoBehaviour
         if (collision.CompareTag("CorpoPlayer") && atingePelaBase)
         {
             // Da dano no player
-            Debug.Log("Player leva dano");
+            //Debug.Log("Player leva dano");
             sistemaVida = collision.GetComponentInParent<SistemaVida>();
+            sistemaVida.LevaAtaquePlayer(dano, knockback, forcaKnockback, gameObjectPrincipal);
+        }
+    }
+
+    // Tira getcomponent do triggerstay
+
+    void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("CorpoPlayer") && atingePelaBase)
+        {
+            // Da dano no player
             sistemaVida.LevaAtaquePlayer(dano, knockback, forcaKnockback, gameObjectPrincipal);
         }
     }

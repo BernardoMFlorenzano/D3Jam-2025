@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+//using System.Numerics;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -20,36 +21,54 @@ public class SistemaVida : MonoBehaviour
     public bool morreu;
     [Header("Player")]
     [SerializeField] private float tempoInvenc; // tempo de invencibilidade
+    [SerializeField] private float tempoInvencPos;  // tempo de invencibilidade apos animação de dano acabar
     public bool levandoDano;
     private bool podeLevarDano;
     [SerializeField] private Animator animator;
+    [SerializeField] private SpriteRenderer spriteRenderer;
     [Header("Inimigos")]
     [SerializeField] private float multKnockback;
     [SerializeField] private RuntimeAnimatorController animatorMorto;
+    [SerializeField] private float tempoEfeitoDano;
+    [SerializeField] private Transform corpo;
+    private bool animDano = false;
+    private Coroutine corEfeitoDano;
+    private Coroutine corTimerEfeitoDano;
+
+    [Header("Spawner")]
+    private SpawnWaves spawner;
+    
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        spawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<SpawnWaves>();
         vidaAtual = vidaMax;
         podeLevarDano = true;
         morreu = false;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-    
+
     }
 
     void MataInimigo()
     {
-        if(animator)
+        StopAllCoroutines();
+        if (animator)
         {
             animator.runtimeAnimatorController = animatorMorto;
         }
         Debug.Log("Inimigo Morreu");
+
+        // Avisa spawner
+        spawner.numInimigos--;
+
         Destroy(gameObject, 2f);
     }
 
@@ -80,7 +99,7 @@ public class SistemaVida : MonoBehaviour
                 Debug.Log("Acertou ataque aereo");
 
                 vidaAtual = vidaAtual - dano;
-                
+
                 recupDano = true;
 
                 if (knockback)
@@ -104,6 +123,16 @@ public class SistemaVida : MonoBehaviour
                 if (CorRecupDano != null)
                     StopCoroutine(CorRecupDano);
                 CorRecupDano = StartCoroutine(DelayRecupDano());
+
+                if (corEfeitoDano != null || corTimerEfeitoDano != null)
+                {
+                    StopCoroutine(corEfeitoDano);
+                    StopCoroutine(corTimerEfeitoDano);
+                    corpo.localPosition = new Vector2(0,corpo.localPosition.y);
+                }
+                animDano = true;
+                corEfeitoDano = StartCoroutine(TimerDanoInimigo());
+                corTimerEfeitoDano =StartCoroutine(EfeitoDanoInimigo());
             }
         }
     }
@@ -134,7 +163,7 @@ public class SistemaVida : MonoBehaviour
             else if (tipo == 2)
             {
                 Debug.Log("Acertou ataque aereo");
-                
+
                 vidaAtual -= dano;
 
                 recupDano = true;
@@ -160,16 +189,26 @@ public class SistemaVida : MonoBehaviour
                 if (CorRecupDano != null)
                     StopCoroutine(CorRecupDano);
                 CorRecupDano = StartCoroutine(DelayRecupDano());
+
+                if (corEfeitoDano != null || corTimerEfeitoDano != null)
+                {
+                    StopCoroutine(corEfeitoDano);
+                    StopCoroutine(corTimerEfeitoDano);
+                    corpo.localPosition = new Vector2(0,corpo.localPosition.y);
+                }
+                animDano = true;
+                corEfeitoDano = StartCoroutine(TimerDanoInimigo());
+                corTimerEfeitoDano =StartCoroutine(EfeitoDanoInimigo());
             }
         }
     }
 
     IEnumerator DelayRecupDano()
     {
-        if (animator)
+        if (animator && !morreu)
             animator.SetBool("Dano", true);
         yield return new WaitForSeconds(tempoRecupDano);
-        if (animator) 
+        if (animator && !morreu)
             animator.SetBool("Dano", false);
         recupDano = false;
     }
@@ -204,15 +243,46 @@ public class SistemaVida : MonoBehaviour
             StartCoroutine(Invencibilidade());
         }
     }
-    
+
     IEnumerator Invencibilidade()
     {
+        StartCoroutine(EfeitoInvencibilidade());
         animator.SetBool("Dano", true);
         yield return new WaitForSeconds(tempoInvenc);
         animator.SetBool("Dano", false);
-        podeLevarDano = true;
         levandoDano = false;
+        yield return new WaitForSeconds(tempoInvencPos);
+        podeLevarDano = true;
     }
 
+    IEnumerator EfeitoInvencibilidade()
+    {
+        spriteRenderer.enabled = false;
+        while (podeLevarDano == false)
+        {
+            yield return new WaitForSeconds(0.1f);
+            spriteRenderer.enabled = !spriteRenderer.enabled;
+        }
+        spriteRenderer.enabled = true;
+    }
 
+    IEnumerator EfeitoDanoInimigo()
+    {
+        Vector2 vetorOriginal = corpo.localPosition;
+        Vector2 vetorShake = Vector2.zero;
+        vetorShake.x -= 0.1f;
+        while (animDano)
+        {
+            corpo.localPosition = vetorShake;
+            vetorShake.x -= 0.1f * MathF.Sign(vetorShake.x);
+            yield return new WaitForSeconds(0.1f);
+        }
+        corpo.localPosition = vetorOriginal;
+    }
+    
+    IEnumerator TimerDanoInimigo()
+    {
+        yield return new WaitForSeconds(tempoEfeitoDano);
+        animDano = false;
+    }
 }

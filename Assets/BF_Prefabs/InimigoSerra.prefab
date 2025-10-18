@@ -127,7 +127,7 @@ Transform:
   m_GameObject: {fileID: 3395394184713998687}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7, y: -3.97, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -315,10 +315,14 @@ MonoBehaviour:
   vidaMax: 5
   morreu: 0
   tempoInvenc: 0
+  tempoInvencPos: 0
   levandoDano: 0
   animator: {fileID: 3879390005358964030}
+  spriteRenderer: {fileID: 0}
   multKnockback: 1
   animatorMorto: {fileID: 9100000, guid: 4a2562155dea66c4d808b77f073d6977, type: 2}
+  tempoEfeitoDano: 0.5
+  corpo: {fileID: 3320268177094047295}
 --- !u!114 &2069038235622414186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -350,8 +354,8 @@ MonoBehaviour:
   danoAtaque: 1
   knockBackAtaque: 1
   forcaKnockbackAtaque: 50
-  offsetBoxDano: {x: 0.65, y: -0.05}
-  sizeBoxDano: {x: 1.3, y: 0.25}
+  offsetBoxDano: {x: 0.65, y: -0.09}
+  sizeBoxDano: {x: 1.3, y: 0.3}
   offsetBoxRangeAtaque: {x: 1.85, y: 0}
   sizeBoxRangeAtaque: {x: 3.65, y: 0.75}
   cooldownAtaque: 6
@@ -645,7 +649,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.65, y: -0.05}
+  m_Offset: {x: 0.65, y: -0.09}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -655,7 +659,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.3, y: 0.25}
+  m_Size: {x: 1.3, y: 0.3}
   m_EdgeRadius: 0
 --- !u!114 &7993388836687595613
 MonoBehaviour:
@@ -738,7 +742,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.65, y: -0.05}
+  m_Offset: {x: 0.65, y: -0.09}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -748,7 +752,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.3, y: 0.25}
+  m_Size: {x: 1.3, y: 0.3}
   m_EdgeRadius: 0
 --- !u!114 &7086967380002624218
 MonoBehaviour:
