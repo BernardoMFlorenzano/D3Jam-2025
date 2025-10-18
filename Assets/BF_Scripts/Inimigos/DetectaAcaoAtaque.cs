@@ -6,6 +6,7 @@ public class DetectaAcaoAtaque : MonoBehaviour
     [SerializeField] private int tipoInimigo;
     [SerializeField] private InimigoSerra inimigoSerra;
     [SerializeField] private InimigoDrone inimigoDrone;
+    [SerializeField] private InimigoFogo inimigoFogo;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

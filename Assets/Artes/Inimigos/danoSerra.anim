@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: danoPlayer
+  m_Name: danoSerra
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,9 +21,9 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 21300000, guid: 5bf4a88e2dd57044996bd42f0667b177, type: 3}
+      value: {fileID: 21300000, guid: a193442c8c82da94198a30dabe49108f, type: 3}
     - time: 0.083333336
-      value: {fileID: 21300000, guid: 16b9e2210852d3848860e0affdd44a5b, type: 3}
+      value: {fileID: 21300000, guid: 83d2a4a0c6b610a46a39eb9ba9315bc2, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -46,8 +46,8 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 21300000, guid: 5bf4a88e2dd57044996bd42f0667b177, type: 3}
-    - {fileID: 21300000, guid: 16b9e2210852d3848860e0affdd44a5b, type: 3}
+    - {fileID: 21300000, guid: a193442c8c82da94198a30dabe49108f, type: 3}
+    - {fileID: 21300000, guid: 83d2a4a0c6b610a46a39eb9ba9315bc2, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}

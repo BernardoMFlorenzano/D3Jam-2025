@@ -4,12 +4,12 @@ using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class InimigoSerra : MonoBehaviour
+public class InimigoFogo : MonoBehaviour
 {
     private Rigidbody2D rb;
     [SerializeField] private float velInimigoHor;
     [SerializeField] private float velInimigoVer;
-    [SerializeField] private Animator animatorSerra;
+    [SerializeField] private Animator animatorFogo;
     private Vector2 direcaoPlayer;
     private float distanciaPlayer;
     private Vector3 posicaoPlayerLida;
@@ -20,13 +20,13 @@ public class InimigoSerra : MonoBehaviour
     [SerializeField] private ColisorCorpoInimigo colisorCorpo;
     //private Vector2 posPlayer;
     [Header("Visão")]
-    [SerializeField] private float visaoDetecta = 5f;
+    [SerializeField] private float visaoDetecta = 20f;
 
     [Header("Patrulha")]
     [SerializeField] private float rangeMinMovimentoPatrulha = 0.5f;
-    [SerializeField] private float rangeMaxMovimentoPatrulha = 2f;
-    [SerializeField] private float tempoParadoMaxPatrulha = 4f;
-    [SerializeField] private float tempoParadoMinPatrulha = 2f;
+    [SerializeField] private float rangeMaxMovimentoPatrulha = 1f;
+    [SerializeField] private float tempoParadoMaxPatrulha = 6f;
+    [SerializeField] private float tempoParadoMinPatrulha = 3f;
     [SerializeField] private float velInimigoHorPatrulha;
     [SerializeField] private float velInimigoVerPatrulha;
     private bool patrulhando;
@@ -50,7 +50,7 @@ public class InimigoSerra : MonoBehaviour
     private Coroutine corPreparandoAtaque;
 
     [Header("Atacando")]
-    [SerializeField] private int danoAtaque;  // Dano no player ao tocar o inimigo durante ataque
+    [SerializeField] private int danoAtaque;  // Dano no player ao tocar na labareda
     [SerializeField] private bool knockBackAtaque;
     [SerializeField] private float forcaKnockbackAtaque;
     [SerializeField] private Vector2 offsetBoxDano;
@@ -59,16 +59,11 @@ public class InimigoSerra : MonoBehaviour
     [SerializeField] private Vector2 sizeBoxRangeAtaque;
     [SerializeField] private float cooldownAtaque;
     [SerializeField] private float tempoParadoPosAtaque;
-    [SerializeField] private float velBaseInimigoHorCorrida;
-    [SerializeField] private float velMaxInimigoHorCorrida;
-    [SerializeField] private float aceleracaoCorrida;
-    private float velAtualCorrida;
-    private float direcaoCorrida;
-    [SerializeField] private float tempoCorrida;
+    [SerializeField] private float tempoDuracaoLabareda;
     private bool atacando;
     private bool acabouAtaque;
     private Coroutine corCooldownAtaque;
-    private Coroutine corTerminaCorrida;
+    private Coroutine corTerminaLabareda;
 
 
     //[Header("Variaveis Externas")]
@@ -95,6 +90,8 @@ public class InimigoSerra : MonoBehaviour
         atacando = false;
 
         virado = false;
+
+        colisorCorpo.gameObject.SetActive(false);
     }
 
     void Update()
@@ -161,9 +158,9 @@ public class InimigoSerra : MonoBehaviour
         }
 
         // Animacoes
-        if (animatorSerra && !sistemaVida.morreu)
+        if (animatorFogo && !sistemaVida.morreu)
         {
-            animatorSerra.SetFloat("Vel", Mathf.Abs(rb.linearVelocityX) + Mathf.Abs(rb.linearVelocityY));
+            animatorFogo.SetFloat("Vel", Mathf.Abs(rb.linearVelocityX) + Mathf.Abs(rb.linearVelocityY));
         }
 
     }
@@ -216,12 +213,12 @@ public class InimigoSerra : MonoBehaviour
 
     IEnumerator AndaEmPatrulha()
     {
-        Debug.Log("Anda");
+        //Debug.Log("Anda");
         yield return new WaitForSeconds(UnityEngine.Random.Range(rangeMinMovimentoPatrulha, rangeMaxMovimentoPatrulha));
         rb.linearVelocity = Vector2.zero;
         andandoEmPatrulha = false;
         delayAndarEmPatrulha = true;
-        Debug.Log("Para de andar");
+        //Debug.Log("Para de andar");
         corDelayAndaEmPatrulha = StartCoroutine(DelayAndarEmPatrulha());
     }
 
@@ -244,7 +241,7 @@ public class InimigoSerra : MonoBehaviour
                 StopCoroutine(corPreparandoAtaque);
                 preparandoAtaque = false;
                 podeAtacar = false;
-                animatorSerra.SetBool("Preparando", false);
+                //animatorSerra.SetBool("Preparando", false);
                 corCooldownAtaque = StartCoroutine(CooldownAtaqueInterrompido());
             }
         }
@@ -294,20 +291,18 @@ public class InimigoSerra : MonoBehaviour
     IEnumerator PreparaAtaque()
     {
         rb.linearVelocity = Vector2.zero;
-        animatorSerra.SetBool("Preparando", true);
+        //animatorSerra.SetBool("Preparando", true);
         yield return new WaitForSeconds(tempoPreparaAtaque);
-        animatorSerra.SetBool("Preparando", false);
+        //animatorSerra.SetBool("Preparando", false);
 
-        animatorSerra.SetBool("Correndo", true);
+        //animatorSerra.SetBool("Correndo", true);
         emCombate = false;
         atacando = true;
         sistemaVida.agindo = true;
         preparandoAtaque = false;
-        velAtualCorrida = velBaseInimigoHorCorrida; // Seta velocidade inicial da corrida
-        direcaoCorrida = MathF.Sign(-direcaoPlayer.x);
 
         SetaColisor(danoAtaque, knockBackAtaque, forcaKnockbackAtaque);
-        corTerminaCorrida = StartCoroutine(TerminaCorrida());
+        corTerminaLabareda = StartCoroutine(TerminaLabareda());
         //Debug.Log("Começa Ataque");
     }
 
@@ -325,34 +320,26 @@ public class InimigoSerra : MonoBehaviour
             parado = true;
             corCooldownAtaque = StartCoroutine(CooldownAtaque());
         }
-        else if (!parado)
-        {
-            rb.linearVelocityX = direcaoCorrida * velAtualCorrida;    // PODE NAO DAR CERTO
-            if (velAtualCorrida < velMaxInimigoHorCorrida)
-            {
-                velAtualCorrida += aceleracaoCorrida;
-            }
-        }
     }
 
-    IEnumerator TerminaCorrida()
+    IEnumerator TerminaLabareda()
     {
-        yield return new WaitForSeconds(tempoCorrida);
+        yield return new WaitForSeconds(tempoDuracaoLabareda);
         acabouAtaque = true;
         SetaColisor(1, false, 0);   // Valor padrão do dano e knockback
-        animatorSerra.SetBool("Correndo", false);
+        //animatorSerra.SetBool("Correndo", false);
         //Debug.Log("Acaba Ataque");
     }
 
     IEnumerator CooldownAtaque()
     {
-        StartCoroutine(ParadoPosCorrida());
+        StartCoroutine(ParadoPosAtaque());
         yield return new WaitForSeconds(cooldownAtaque);
         podeAtacar = true;
         //Debug.Log("Pode Atacar de novo");
     }
 
-    IEnumerator ParadoPosCorrida()
+    IEnumerator ParadoPosAtaque()
     {
         Debug.Log("Recuperando apos ataque");
         yield return new WaitForSeconds(tempoParadoPosAtaque);
@@ -378,3 +365,4 @@ public class InimigoSerra : MonoBehaviour
     
     /* -------------------------------BLOCO ATACANDO FIM------------------------------- */
 }
+

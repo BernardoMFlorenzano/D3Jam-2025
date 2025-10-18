@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 5bf4a88e2dd57044996bd42f0667b177
+guid: 4afab6adb14f3ee4eb25068623542869
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4740944688123520496
-    second: damage taken_0
+      213: 8366931210181703408
+    second: stabber drone damage_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -49,8 +49,8 @@ TextureImporter:
   spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 9
-  spritePivot: {x: 0.5, y: 0.1}
+  alignment: 7
+  spritePivot: {x: 0.5, y: 0}
   spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
@@ -100,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: damage taken_0
+      name: stabber drone damage_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 200
-        height: 300
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+        x: 20
+        y: 20
+        width: 124
+        height: 136
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 8adb0fc106d9ee24b84e745ead5572c9
-      internalID: 341465917
+      spriteID: 0f672031b9f4d1470800000000000000
+      internalID: 8366931210181703408
       vertices: []
       indices: 
       edges: []
@@ -125,8 +125,8 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 205091dbc165d63468c8f02aa7a54a20
-    internalID: 1588130642
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 1537655665
     vertices: []
     indices: 
     edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      damage taken_0: 341465917
+      stabber drone damage_0: 8366931210181703408
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

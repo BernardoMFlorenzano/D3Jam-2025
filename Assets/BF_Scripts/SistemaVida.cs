@@ -17,12 +17,15 @@ public class SistemaVida : MonoBehaviour
     [Header("Vida")]
     [SerializeField] private int vidaMax;
     private int vidaAtual;
-    private bool morreu;
+    public bool morreu;
     [Header("Player")]
     [SerializeField] private float tempoInvenc; // tempo de invencibilidade
     public bool levandoDano;
     private bool podeLevarDano;
-    [SerializeField] private Animator animatorPlayer;
+    [SerializeField] private Animator animator;
+    [Header("Inimigos")]
+    [SerializeField] private float multKnockback;
+    [SerializeField] private RuntimeAnimatorController animatorMorto;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -31,18 +34,23 @@ public class SistemaVida : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         vidaAtual = vidaMax;
         podeLevarDano = true;
+        morreu = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+    
     }
 
     void MataInimigo()
     {
+        if(animator)
+        {
+            animator.runtimeAnimatorController = animatorMorto;
+        }
         Debug.Log("Inimigo Morreu");
-        Destroy(gameObject, 0.5f);
+        Destroy(gameObject, 2f);
     }
 
     public void LevaAtaqueCorte(int tipo, int dano, bool knockback, float forcaKnockback, GameObject atacante)
@@ -56,9 +64,6 @@ public class SistemaVida : MonoBehaviour
                 vidaAtual -= dano;
 
                 recupDano = true;
-                if (CorRecupDano != null)
-                    StopCoroutine(CorRecupDano);
-                CorRecupDano = StartCoroutine(DelayRecupDano());
 
                 if (knockback)
                 {
@@ -67,7 +72,7 @@ public class SistemaVida : MonoBehaviour
 
                     sofrendoKnockback = true;
                     rb.linearVelocity = Vector2.zero;
-                    rb.AddForce(new Vector2(1 * MathF.Sign(direcao.x) * forcaKnockback, 0), ForceMode2D.Impulse);
+                    rb.AddForce(new Vector2(1 * MathF.Sign(direcao.x) * forcaKnockback * multKnockback, 0), ForceMode2D.Impulse);
                 }
             }
             else if (tipo == 2)
@@ -77,9 +82,6 @@ public class SistemaVida : MonoBehaviour
                 vidaAtual = vidaAtual - dano;
                 
                 recupDano = true;
-                if (CorRecupDano != null)
-                    StopCoroutine(CorRecupDano);
-                CorRecupDano = StartCoroutine(DelayRecupDano());
 
                 if (knockback)
                 {
@@ -88,13 +90,20 @@ public class SistemaVida : MonoBehaviour
 
                     sofrendoKnockback = true;
                     rb.linearVelocity = Vector2.zero;
-                    rb.AddForce(new Vector2(1 * MathF.Sign(direcao.x) * forcaKnockback, 0), ForceMode2D.Impulse);
+                    rb.AddForce(new Vector2(1 * MathF.Sign(direcao.x) * forcaKnockback * multKnockback, 0), ForceMode2D.Impulse);
                 }
             }
 
-            if (vidaAtual <= 0)
+            if (vidaAtual <= 0 && !morreu)
             {
+                morreu = true;
                 MataInimigo();
+            }
+            else
+            {
+                if (CorRecupDano != null)
+                    StopCoroutine(CorRecupDano);
+                CorRecupDano = StartCoroutine(DelayRecupDano());
             }
         }
     }
@@ -111,9 +120,6 @@ public class SistemaVida : MonoBehaviour
                 vidaAtual -= dano;
 
                 recupDano = true;
-                if (CorRecupDano != null)
-                    StopCoroutine(CorRecupDano);
-                CorRecupDano = StartCoroutine(DelayRecupDano());
 
                 if (knockback)
                 {
@@ -122,7 +128,7 @@ public class SistemaVida : MonoBehaviour
 
                     sofrendoKnockback = true;
                     rb.linearVelocity = Vector2.zero;
-                    rb.AddForce(new Vector2(1 * MathF.Sign(direcao.x) * forcaKnockback, 0), ForceMode2D.Impulse);
+                    rb.AddForce(new Vector2(1 * MathF.Sign(direcao.x) * forcaKnockback * multKnockback, 0), ForceMode2D.Impulse);
                 }
             }
             else if (tipo == 2)
@@ -132,9 +138,6 @@ public class SistemaVida : MonoBehaviour
                 vidaAtual -= dano;
 
                 recupDano = true;
-                if (CorRecupDano != null)
-                    StopCoroutine(CorRecupDano);
-                CorRecupDano = StartCoroutine(DelayRecupDano());
 
                 if (knockback)
                 {
@@ -143,20 +146,31 @@ public class SistemaVida : MonoBehaviour
 
                     sofrendoKnockback = true;
                     rb.linearVelocity = Vector2.zero;
-                    rb.AddForce(new Vector2(1 * MathF.Sign(direcao.x) * forcaKnockback, 0), ForceMode2D.Impulse);
+                    rb.AddForce(new Vector2(1 * MathF.Sign(direcao.x) * forcaKnockback * multKnockback, 0), ForceMode2D.Impulse);
                 }
             }
 
-            if (vidaAtual <= 0)
+            if (vidaAtual <= 0 && !morreu)
             {
+                morreu = true;
                 MataInimigo();
+            }
+            else
+            {
+                if (CorRecupDano != null)
+                    StopCoroutine(CorRecupDano);
+                CorRecupDano = StartCoroutine(DelayRecupDano());
             }
         }
     }
 
     IEnumerator DelayRecupDano()
     {
+        if (animator)
+            animator.SetBool("Dano", true);
         yield return new WaitForSeconds(tempoRecupDano);
+        if (animator) 
+            animator.SetBool("Dano", false);
         recupDano = false;
     }
 
@@ -182,7 +196,7 @@ public class SistemaVida : MonoBehaviour
 
                 //sofrendoKnockback = true;
                 rb.linearVelocity = Vector2.zero;
-                rb.AddForce(new Vector2(MathF.Sign(direcao.x) * forcaKnockback, 0), ForceMode2D.Impulse);
+                rb.AddForce(new Vector2(MathF.Sign(direcao.x) * forcaKnockback * multKnockback, 0), ForceMode2D.Impulse);
             }
 
             Debug.Log("Vida do player: " + vidaAtual);
@@ -193,9 +207,9 @@ public class SistemaVida : MonoBehaviour
     
     IEnumerator Invencibilidade()
     {
-        animatorPlayer.SetBool("Dano", true);
+        animator.SetBool("Dano", true);
         yield return new WaitForSeconds(tempoInvenc);
-        animatorPlayer.SetBool("Dano", false);
+        animator.SetBool("Dano", false);
         podeLevarDano = true;
         levandoDano = false;
     }

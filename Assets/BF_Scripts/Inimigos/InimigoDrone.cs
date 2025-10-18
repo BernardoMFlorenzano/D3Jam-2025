@@ -206,7 +206,7 @@ public class InimigoDrone : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
         andandoEmPatrulha = false;
         delayAndarEmPatrulha = true;
-        Debug.Log("Para de andar");
+        //Debug.Log("Para de andar");
         corDelayAndaEmPatrulha = StartCoroutine(DelayAndarEmPatrulha());
     }
 
@@ -268,7 +268,7 @@ public class InimigoDrone : MonoBehaviour
         }
         else if (sistemaVida.sofrendoKnockback)
         {
-            if (rb.linearVelocity == Vector2.zero)
+            if (rb.linearVelocity.x <= 0.1f && rb.linearVelocity.y <= 0.1f)
             {
                 sistemaVida.sofrendoKnockback = false;
             }
@@ -290,7 +290,7 @@ public class InimigoDrone : MonoBehaviour
         StartCoroutine(impulsoRasante.ImpulsoDrone(descidaRasante, subidaRasante, tempoChao));
         acabouRasante = false;
         corTerminaRasante = StartCoroutine(TerminaRasante());
-        Debug.Log("Começa Ataque");
+        //Debug.Log("Começa Ataque");
     }
 
     /* -------------------------------BLOCO EMCOMBATE FIM------------------------------- */
@@ -327,7 +327,7 @@ public class InimigoDrone : MonoBehaviour
         yield return new WaitUntil(() => acabouRasante);
         acabouAtaque = true;
         SetaColisor(1, false, 0);   // Valor padrão do dano e knockback
-        Debug.Log("Acaba Ataque");
+        //Debug.Log("Acaba Ataque");
     }
 
     IEnumerator CooldownAtaque()
@@ -335,12 +335,12 @@ public class InimigoDrone : MonoBehaviour
         StartCoroutine(ParadoPosRasante());
         yield return new WaitForSeconds(cooldownAtaque);
         podeAtacar = true;
-        Debug.Log("Pode Atacar de novo");
+        //Debug.Log("Pode Atacar de novo");
     }
 
     IEnumerator ParadoPosRasante()
     {
-        Debug.Log("Recuperando apos ataque");
+        //Debug.Log("Recuperando apos ataque");
         yield return new WaitForSeconds(tempoParadoPosAtaque);
         parado = false;
         atacando = false;
@@ -352,7 +352,7 @@ public class InimigoDrone : MonoBehaviour
     {
         yield return new WaitForSeconds(cooldownAtaque);
         podeAtacar = true;
-        Debug.Log("Pode Atacar de novo");
+        //Debug.Log("Pode Atacar de novo");
     }
 
     void SetaColisor(int dano, bool knockback, float forcaKnockback)

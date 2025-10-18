@@ -250,6 +250,7 @@ public class MovimentoPlayer : MonoBehaviour
                 //acabouCombo = false;
             }
 
+            rangeCorpo.SetActive(false);
             rangeCorpo.SetActive(true);
             yield return new WaitForSeconds(0.1f);
             rangeCorpo.SetActive(false);
@@ -355,6 +356,7 @@ public class MovimentoPlayer : MonoBehaviour
 
             // Executa para todos os ataques dentro do combo
             yield return new WaitForSeconds(0.05f);
+            rangeCorpo.SetActive(false);
             rangeCorpo.SetActive(true);
             if (ataqueModo == 1)
             {
@@ -424,6 +426,7 @@ public class MovimentoPlayer : MonoBehaviour
         {
             SetarHitBox(sizeBoxEstocada, offsetBoxEstocada);
         }
+        rangeCorpo.SetActive(false);
         rangeCorpo.SetActive(true);
 
         yield return new WaitUntil(() => estaNoChao || !agindo);

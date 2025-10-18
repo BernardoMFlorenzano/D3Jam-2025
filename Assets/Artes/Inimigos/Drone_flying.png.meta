@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: 5bf4a88e2dd57044996bd42f0667b177
+guid: 9f526e73f1e5bdb41ab6a6dba4093cad
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4740944688123520496
-    second: damage taken_0
+      213: -7573894346612249749
+    second: Drone_flying_0
+  - first:
+      213: 4239104972877930702
+    second: Drone_flying_1
+  - first:
+      213: 1540254949300599920
+    second: Drone_flying_2
+  - first:
+      213: -5688311655526990613
+    second: Drone_flying_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,11 +55,11 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 9
-  spritePivot: {x: 0.5, y: 0.1}
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
@@ -100,23 +109,89 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: damage taken_0
+      name: Drone_flying_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 200
-        height: 300
-      alignment: 9
-      pivot: {x: 0.5, y: 0.1}
+        y: 180
+        width: 180
+        height: 180
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8adb0fc106d9ee24b84e745ead5572c9
-      internalID: 341465917
+      spriteID: 28c0ac384ae5f364e9d3993408eddb5f
+      internalID: -1550956072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Drone_flying_1
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 180
+        width: 180
+        height: 180
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 650c28d7beb50c447b6827f56ebbf25f
+      internalID: 1437465256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Drone_flying_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 180
+        height: 180
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7dac48e201a01940b0be495ff89eb39
+      internalID: 345752689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Drone_flying_3
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 0
+        width: 180
+        height: 180
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ecf74ed542ce3b44a95316b17fbf17f
+      internalID: -235834965
       vertices: []
       indices: 
       edges: []
@@ -125,8 +200,8 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 205091dbc165d63468c8f02aa7a54a20
-    internalID: 1588130642
+    spriteID: 5150785f3068f834994ac9afd5c6384a
+    internalID: 0
     vertices: []
     indices: 
     edges: []
@@ -135,7 +210,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      damage taken_0: 341465917
+      Drone_flying_0: -1550956072
+      Drone_flying_1: 1437465256
+      Drone_flying_2: 345752689
+      Drone_flying_3: -235834965
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
