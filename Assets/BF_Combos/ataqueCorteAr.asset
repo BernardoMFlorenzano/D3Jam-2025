@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3c27c779e37e6cf4e8bb44b05759886e, type: 3}
-  m_Name: ataqueCorteFinalPesado
+  m_Name: ataqueCorteAr
   m_EditorClassIdentifier: 
   modoAtaque: 1
-  boxOffset: {x: 1.45, y: 0.1}
-  boxSize: {x: 2.8, y: 2.35}
-  dano: 2
+  boxOffset: {x: 1.15, y: 0.1}
+  boxSize: {x: 2.25, y: 2.35}
+  dano: 1
   knockback: 1
   forcaKnockback: 200
-  posEfeito: {x: 0.75, y: -0.25}
-  escalaEfeito: {x: 1.5, y: 1}
+  posEfeito: {x: 0.75, y: -0.6}
+  escalaEfeito: {x: 1, y: 1.3}
   invertido: 0

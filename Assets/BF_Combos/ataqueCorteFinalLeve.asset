@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: ataqueCorteFinalLeve
   m_EditorClassIdentifier: 
   modoAtaque: 1
-  boxOffset: {x: 1.15, y: 0.1}
-  boxSize: {x: 2.25, y: 2.35}
+  boxOffset: {x: 1.45, y: 0.1}
+  boxSize: {x: 2.8, y: 2.35}
   dano: 1
   knockback: 1
   forcaKnockback: 100
   posEfeito: {x: 0.75, y: -0.25}
-  escalaEfeito: {x: 1, y: 1}
+  escalaEfeito: {x: 1.33, y: 1}
+  invertido: 0

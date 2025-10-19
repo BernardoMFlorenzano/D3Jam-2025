@@ -40,22 +40,30 @@ public class MovimentoPlayer : MonoBehaviour
     [SerializeField] private float delayAtaquePadrao;
     private bool ataqueInput1;
     private bool ataqueInput2;
-    [Header("Soco")]
-    [SerializeField] private Vector2 offsetBoxSoco;
-    [SerializeField] private Vector2 sizeBoxSoco;
     [Header("Lança")]
     [SerializeField] private Vector2 offsetBoxEstocada;
     [SerializeField] private Vector2 sizeBoxEstocada;
+    [SerializeField] private int indexEstocada = 2;
     [Header("Espada")]
     [SerializeField] private Vector2 offsetBoxCorte;
     [SerializeField] private Vector2 sizeBoxCorte;
     [SerializeField] private int indexCorte = 1;
-    [SerializeField] private int indexEstocada = 2;
+    [Header("Corte Ar")]
+    [SerializeField] private Vector2 offsetBoxCorteAr;
+    [SerializeField] private Vector2 sizeBoxCorteAr;
+    [Header("Estocada Ar")]
+    [SerializeField] private Vector2 offsetBoxEstocadaAr;
+    [SerializeField] private Vector2 sizeBoxEstocadaAr;
+    [SerializeField] private Vector2 offsetBoxEstocArChao;
+    [SerializeField] private Vector2 sizeBoxEstocArChao;
+
     [Header("Combos")]
     [SerializeField] private bool podeEntrarCombo;
     [SerializeField] private float delayCancelaCombo = 2f;
     [SerializeField] private Ataque cortePadrao;
     [SerializeField] private Ataque estocPadrao;
+    [SerializeField] private Ataque corteArPadrao;
+    [SerializeField] private Ataque estocArPadrao;
     [SerializeField] private List<Ataque> combo1;
     [SerializeField] private List<Ataque> combo2;   // Quando adicionar combos vai ter que atualizar o código, não consegui deixar isso dinamico
     [SerializeField] private List<Ataque> combo3;
@@ -209,7 +217,13 @@ public class MovimentoPlayer : MonoBehaviour
             }
             else
             {
-                StartCoroutine(CorrotinaAtaqueAr(ataqueModo));
+                if (ataqueModo == 1 || !impulsoPulo.subindo)
+                    StartCoroutine(CorrotinaAtaqueAr(ataqueModo));
+                else
+                {
+                    podeAtacar = true;
+                    agindo = false;
+                }
             }
         }
     }
@@ -231,7 +245,7 @@ public class MovimentoPlayer : MonoBehaviour
                 SetarHitBox(sizeBoxCorte, offsetBoxCorte);
                 animatorPlayer.SetTrigger("Corte");
                 animatorEfeitoAtaque.SetTrigger("Corte");
-                efeitoAtaque.SetarEfeitoPosEscala(cortePadrao.posEfeito, cortePadrao.escalaEfeito, cortePadrao.invertido);
+                efeitoAtaque.SetarEfeitoPosEscala(cortePadrao.posEfeito, cortePadrao.escalaEfeito, cortePadrao.invertido, Vector3.zero);
             }
             else if (ataqueModo == 2)
             {
@@ -239,7 +253,7 @@ public class MovimentoPlayer : MonoBehaviour
                 SetarHitBox(sizeBoxEstocada, offsetBoxEstocada);
                 animatorPlayer.SetTrigger("Estocada");
                 animatorEfeitoAtaque.SetTrigger("Estocada");
-                efeitoAtaque.SetarEfeitoPosEscala(estocPadrao.posEfeito, estocPadrao.escalaEfeito, estocPadrao.invertido);
+                efeitoAtaque.SetarEfeitoPosEscala(estocPadrao.posEfeito, estocPadrao.escalaEfeito, estocPadrao.invertido, Vector3.zero);
             }
 
             if (podeEntrarCombo)
@@ -283,7 +297,7 @@ public class MovimentoPlayer : MonoBehaviour
             {
                 SetarColisorVars(1, ataqueModo, combo1[comboCount].dano, combo1[comboCount].knockback, combo1[comboCount].forcaKnockback);
                 SetarHitBox(combo1[comboCount].boxSize, combo1[comboCount].boxOffset);
-                efeitoAtaque.SetarEfeitoPosEscala(combo1[comboCount].posEfeito, combo1[comboCount].escalaEfeito, combo1[comboCount].invertido);
+                efeitoAtaque.SetarEfeitoPosEscala(combo1[comboCount].posEfeito, combo1[comboCount].escalaEfeito, combo1[comboCount].invertido, Vector3.zero);
                 comboCount++;
                 continuouCombo = true;
                 if (comboCount >= combo1.Count)
@@ -297,7 +311,7 @@ public class MovimentoPlayer : MonoBehaviour
             {
                 SetarColisorVars(1, ataqueModo, combo2[comboCount].dano, combo2[comboCount].knockback, combo2[comboCount].forcaKnockback);
                 SetarHitBox(combo2[comboCount].boxSize, combo2[comboCount].boxOffset);
-                efeitoAtaque.SetarEfeitoPosEscala(combo2[comboCount].posEfeito, combo2[comboCount].escalaEfeito, combo2[comboCount].invertido);
+                efeitoAtaque.SetarEfeitoPosEscala(combo2[comboCount].posEfeito, combo2[comboCount].escalaEfeito, combo2[comboCount].invertido, Vector3.zero);
                 comboCount++;
                 continuouCombo = true;
                 if (comboCount >= combo2.Count)
@@ -311,7 +325,7 @@ public class MovimentoPlayer : MonoBehaviour
             {
                 SetarColisorVars(1, ataqueModo, combo3[comboCount].dano, combo3[comboCount].knockback, combo3[comboCount].forcaKnockback);
                 SetarHitBox(combo3[comboCount].boxSize, combo3[comboCount].boxOffset);
-                efeitoAtaque.SetarEfeitoPosEscala(combo3[comboCount].posEfeito, combo3[comboCount].escalaEfeito, combo3[comboCount].invertido);
+                efeitoAtaque.SetarEfeitoPosEscala(combo3[comboCount].posEfeito, combo3[comboCount].escalaEfeito, combo3[comboCount].invertido, Vector3.zero);
                 comboCount++;
                 continuouCombo = true;
                 if (comboCount >= combo3.Count)
@@ -325,7 +339,7 @@ public class MovimentoPlayer : MonoBehaviour
             {
                 SetarColisorVars(1, ataqueModo, combo4[comboCount].dano, combo4[comboCount].knockback, combo4[comboCount].forcaKnockback);
                 SetarHitBox(combo4[comboCount].boxSize, combo4[comboCount].boxOffset);
-                efeitoAtaque.SetarEfeitoPosEscala(combo4[comboCount].posEfeito, combo4[comboCount].escalaEfeito, combo4[comboCount].invertido);
+                efeitoAtaque.SetarEfeitoPosEscala(combo4[comboCount].posEfeito, combo4[comboCount].escalaEfeito, combo4[comboCount].invertido, Vector3.zero);
                 comboCount++;
                 continuouCombo = true;
                 if (comboCount >= combo4.Count)
@@ -345,12 +359,12 @@ public class MovimentoPlayer : MonoBehaviour
                 if (ataqueModo == 1)
                 {
                     SetarHitBox(sizeBoxCorte, offsetBoxCorte);   // Hitbox padrão
-                    efeitoAtaque.SetarEfeitoPosEscala(cortePadrao.posEfeito, cortePadrao.escalaEfeito, cortePadrao.invertido);
+                    efeitoAtaque.SetarEfeitoPosEscala(cortePadrao.posEfeito, cortePadrao.escalaEfeito, cortePadrao.invertido, Vector3.zero);
                 }
                 else if (ataqueModo == 2)
                 {
                     SetarHitBox(sizeBoxEstocada, offsetBoxEstocada);
-                    efeitoAtaque.SetarEfeitoPosEscala(estocPadrao.posEfeito, estocPadrao.escalaEfeito, cortePadrao.invertido);
+                    efeitoAtaque.SetarEfeitoPosEscala(estocPadrao.posEfeito, estocPadrao.escalaEfeito, cortePadrao.invertido, Vector3.zero);
                 }
                 ResetarCombo(); // Quebrou o combo
             }
@@ -418,22 +432,36 @@ public class MovimentoPlayer : MonoBehaviour
     IEnumerator CorrotinaAtaqueAr(int ataqueModo)
     {
         //rangeBase.enabled = true;
-        SetarColisorVars(2, ataqueModo, 1, true, 200f); // ataque no ar
+        
         if (ataqueModo == 1)
         {
-            SetarHitBox(sizeBoxCorte, offsetBoxCorte);  // Vai ter hitboxes especificas depois
+            SetarHitBox(sizeBoxCorteAr, offsetBoxCorteAr); 
+            SetarColisorVars(2, ataqueModo, corteArPadrao.dano, corteArPadrao.knockback, corteArPadrao.forcaKnockback); // ataque no ar
+            //animatorPlayer.SetTrigger("Corte");
+            animatorEfeitoAtaque.SetTrigger("Corte");
+            efeitoAtaque.SetarEfeitoPosEscala(corteArPadrao.posEfeito, corteArPadrao.escalaEfeito, corteArPadrao.invertido, Vector3.zero);
         }
         else if (ataqueModo == 2)
         {
-            SetarHitBox(sizeBoxEstocada, offsetBoxEstocada);
+            SetarHitBox(sizeBoxEstocadaAr, offsetBoxEstocadaAr);
+            SetarColisorVars(2, ataqueModo, estocArPadrao.dano, estocArPadrao.knockback, estocArPadrao.forcaKnockback); // ataque no ar
+
+            // Box do chao é diferente
+            boxBase.size = sizeBoxEstocArChao;
+            boxBase.offset = offsetBoxEstocArChao;
+
+            //animatorPlayer.SetTrigger("Corte");
+            animatorEfeitoAtaque.SetTrigger("Estocada");
+            efeitoAtaque.SetarEfeitoPosEscala(estocArPadrao.posEfeito, estocArPadrao.escalaEfeito, estocArPadrao.invertido, new Vector3(0,0,-90f));
         }
         rangeCorpo.SetActive(false);
         rangeCorpo.SetActive(true);
 
-        yield return new WaitUntil(() => estaNoChao || !agindo);
+        yield return new WaitForSeconds(0.2f);
 
         rangeCorpo.SetActive(false);
 
+        yield return new WaitUntil(() => estaNoChao || !agindo || sistemaVida.levandoDano);
         yield return new WaitForSeconds(0.5f);
         agindo = false;
         podeAtacar = true;

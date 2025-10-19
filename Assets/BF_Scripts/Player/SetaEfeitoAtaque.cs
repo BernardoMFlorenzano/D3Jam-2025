@@ -9,10 +9,11 @@ public class SetaEfeitoAtaque : MonoBehaviour
         animatorEfeito = GetComponent<Animator>();
     }
 
-    public void SetarEfeitoPosEscala(Vector2 pos, Vector2 escala, bool invertido)
+    public void SetarEfeitoPosEscala(Vector2 pos, Vector2 escala, bool invertido, Vector3 rotacao)
     {
         transform.localPosition = pos;
         transform.localScale = escala;
+        transform.localEulerAngles = rotacao;
         animatorEfeito.SetBool("Invertido", invertido);
     }
 }

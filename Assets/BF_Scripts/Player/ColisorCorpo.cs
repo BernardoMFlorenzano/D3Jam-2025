@@ -32,7 +32,7 @@ public class ColisorCorpo : MonoBehaviour
             }
             else if (modoAtaque == 2)
             {
-                Debug.Log("Tenta dar dano de estocada");
+                //Debug.Log("Tenta dar dano de estocada");
                 sistemaVida.LevaAtaqueEstocada(condicaoAtaque, dano, knockback, forcaKnockback, gameObjectPrincipal);
             }
         }

@@ -98,7 +98,7 @@ public class SistemaVida : MonoBehaviour
             {
                 Debug.Log("Acertou ataque aereo");
 
-                vidaAtual = vidaAtual - dano;
+                vidaAtual -= dano;
 
                 recupDano = true;
 
@@ -128,7 +128,7 @@ public class SistemaVida : MonoBehaviour
                 {
                     StopCoroutine(corEfeitoDano);
                     StopCoroutine(corTimerEfeitoDano);
-                    corpo.localPosition = new Vector2(0,corpo.localPosition.y);
+                    corpo.localPosition = new Vector2(0, corpo.localPosition.y);
                 }
                 animDano = true;
                 corEfeitoDano = StartCoroutine(TimerDanoInimigo());
@@ -269,13 +269,14 @@ public class SistemaVida : MonoBehaviour
     IEnumerator EfeitoDanoInimigo()
     {
         Vector2 vetorOriginal = corpo.localPosition;
-        Vector2 vetorShake = Vector2.zero;
+        Vector2 vetorShake = vetorOriginal;
         vetorShake.x -= 0.1f;
         while (animDano)
         {
+            Debug.Log(vetorShake);
             corpo.localPosition = vetorShake;
-            vetorShake.x -= 0.1f * MathF.Sign(vetorShake.x);
-            yield return new WaitForSeconds(0.1f);
+            vetorShake.x -= 0.2f * MathF.Sign(vetorShake.x);
+            yield return new WaitForSeconds(0.05f);
         }
         corpo.localPosition = vetorOriginal;
     }
