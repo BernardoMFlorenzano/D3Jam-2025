@@ -4,6 +4,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 public class SistemaVida : MonoBehaviour
 {
@@ -70,6 +71,18 @@ public class SistemaVida : MonoBehaviour
         spawner.numInimigos--;
 
         Destroy(gameObject, 2f);
+    }
+
+    void MataPlayer()
+    {
+        StopAllCoroutines();
+        if (animator)
+        {
+            animator.runtimeAnimatorController = animatorMorto;
+        }
+        Debug.Log("Player Morreu");
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Vai chamar pra outra cena depois
     }
 
     public void LevaAtaqueCorte(int tipo, int dano, bool knockback, float forcaKnockback, GameObject atacante)
@@ -239,6 +252,11 @@ public class SistemaVida : MonoBehaviour
             }
 
             Debug.Log("Vida do player: " + vidaAtual);
+
+            if (vidaAtual <= 0)
+            {
+                MataPlayer();
+            }
 
             StartCoroutine(Invencibilidade());
         }
