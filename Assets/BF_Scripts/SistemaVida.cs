@@ -35,6 +35,7 @@ public class SistemaVida : MonoBehaviour
     private bool animDano = false;
     private Coroutine corEfeitoDano;
     private Coroutine corTimerEfeitoDano;
+    private Coroutine corTimerEfeitoDanoPisca;
 
     [Header("Spawner")]
     private SpawnWaves spawner;
@@ -137,15 +138,18 @@ public class SistemaVida : MonoBehaviour
                     StopCoroutine(CorRecupDano);
                 CorRecupDano = StartCoroutine(DelayRecupDano());
 
-                if (corEfeitoDano != null || corTimerEfeitoDano != null)
+                if (corEfeitoDano != null || corTimerEfeitoDano != null || corTimerEfeitoDanoPisca != null)
                 {
                     StopCoroutine(corEfeitoDano);
                     StopCoroutine(corTimerEfeitoDano);
+                    StopCoroutine(corTimerEfeitoDanoPisca);
                     corpo.localPosition = new Vector2(0, corpo.localPosition.y);
+                    spriteRenderer.enabled = true;
                 }
                 animDano = true;
                 corEfeitoDano = StartCoroutine(TimerDanoInimigo());
-                corTimerEfeitoDano =StartCoroutine(EfeitoDanoInimigo());
+                corTimerEfeitoDano = StartCoroutine(EfeitoDanoInimigo());
+                corTimerEfeitoDanoPisca = StartCoroutine(EfeitoDanoInimigoPisca());
             }
         }
     }
@@ -203,15 +207,17 @@ public class SistemaVida : MonoBehaviour
                     StopCoroutine(CorRecupDano);
                 CorRecupDano = StartCoroutine(DelayRecupDano());
 
-                if (corEfeitoDano != null || corTimerEfeitoDano != null)
+                if (corEfeitoDano != null || corTimerEfeitoDano != null || corTimerEfeitoDanoPisca != null)
                 {
                     StopCoroutine(corEfeitoDano);
                     StopCoroutine(corTimerEfeitoDano);
+                    StopCoroutine(corTimerEfeitoDanoPisca);
                     corpo.localPosition = new Vector2(0,corpo.localPosition.y);
                 }
                 animDano = true;
                 corEfeitoDano = StartCoroutine(TimerDanoInimigo());
-                corTimerEfeitoDano =StartCoroutine(EfeitoDanoInimigo());
+                corTimerEfeitoDano = StartCoroutine(EfeitoDanoInimigo());
+                corTimerEfeitoDanoPisca = StartCoroutine(EfeitoDanoInimigoPisca());
             }
         }
     }
@@ -288,15 +294,26 @@ public class SistemaVida : MonoBehaviour
     {
         Vector2 vetorOriginal = corpo.localPosition;
         Vector2 vetorShake = vetorOriginal;
-        vetorShake.x -= 0.1f;
+        vetorShake.x -= 0.05f;
         while (animDano)
         {
             Debug.Log(vetorShake);
             corpo.localPosition = vetorShake;
-            vetorShake.x -= 0.2f * MathF.Sign(vetorShake.x);
+            vetorShake.x -= 0.1f * MathF.Sign(vetorShake.x);
             yield return new WaitForSeconds(0.05f);
         }
         corpo.localPosition = vetorOriginal;
+    }
+
+    IEnumerator EfeitoDanoInimigoPisca()
+    {
+        spriteRenderer.enabled = false;
+        while (animDano)
+        {
+            yield return new WaitForSeconds(0.1f);
+            spriteRenderer.enabled = !spriteRenderer.enabled;
+        }
+        spriteRenderer.enabled = true;
     }
     
     IEnumerator TimerDanoInimigo()

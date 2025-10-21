@@ -8,6 +8,7 @@ public class ColisorCorpoInimigo : MonoBehaviour
     public bool atingePelaBase;
     private SistemaVida sistemaVida;
     [SerializeField] private GameObject gameObjectPrincipal;
+    [SerializeField] private SistemaVida sistemaVidaInimigo;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -22,7 +23,7 @@ public class ColisorCorpoInimigo : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("CorpoPlayer") && atingePelaBase)
+        if (collision.CompareTag("CorpoPlayer") && atingePelaBase && !sistemaVidaInimigo.morreu && !sistemaVidaInimigo.recupDano)
         {
             // Da dano no player
             //Debug.Log("Player leva dano");
@@ -35,10 +36,11 @@ public class ColisorCorpoInimigo : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("CorpoPlayer") && atingePelaBase)
+        if (collision.CompareTag("CorpoPlayer") && atingePelaBase && !sistemaVidaInimigo.morreu && !sistemaVidaInimigo.recupDano)
         {
             // Da dano no player
-            sistemaVida.LevaAtaquePlayer(dano, knockback, forcaKnockback, gameObjectPrincipal);
+            if(sistemaVida)
+                sistemaVida.LevaAtaquePlayer(dano, knockback, forcaKnockback, gameObjectPrincipal);
         }
     }
 }

@@ -799,7 +799,7 @@ MonoBehaviour:
   tempoInvencPos: 0
   levandoDano: 0
   animator: {fileID: 8448991945719089523}
-  spriteRenderer: {fileID: 0}
+  spriteRenderer: {fileID: 3255195626922919177}
   multKnockback: 0.5
   animatorMorto: {fileID: 9100000, guid: 35e5d5620de17fe4eb4027f95e5be86b, type: 2}
   tempoEfeitoDano: 0.25
@@ -959,3 +959,4 @@ MonoBehaviour:
   forcaKnockback: 0
   atingePelaBase: 0
   gameObjectPrincipal: {fileID: 4267842907587816688}
+  sistemaVidaInimigo: {fileID: 8843119527186386392}
