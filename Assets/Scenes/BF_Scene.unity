@@ -1889,6 +1889,177 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &886795041
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 886795044}
+  - component: {fileID: 886795043}
+  - component: {fileID: 886795042}
+  m_Layer: 0
+  m_Name: SplineArvoresFg
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &886795042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 886795041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b74686beb0670a4ea61325c0acf4411, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Container: {fileID: 886795043}
+  m_ItemsToInstantiate:
+  - prefab: {fileID: 0}
+    Prefab: {fileID: 1417832372737442990, guid: 87d7600a7f5714140bc7391ff2b64933, type: 3}
+    probability: 0
+    Probability: 33
+  - prefab: {fileID: 0}
+    Prefab: {fileID: 5775964396312852866, guid: 391318dcc2cdf1840a077fa1a77c3a8b, type: 3}
+    probability: 0
+    Probability: 33
+  - prefab: {fileID: 0}
+    Prefab: {fileID: 5086277077691913507, guid: c43d879d8c609b948987f366c47ee3c2, type: 3}
+    probability: 0
+    Probability: 33
+  m_Method: 1
+  m_Space: 2
+  m_Spacing: {x: 5, y: 20}
+  m_Up: 1
+  m_Forward: 2
+  m_PositionOffset:
+    setup: 1
+    min: {x: 0, y: -0.5, z: 0}
+    max: {x: 0, y: 0.5, z: 0}
+    randomX: 0
+    randomY: 1
+    randomZ: 0
+    space: 0
+  m_RotationOffset:
+    setup: 0
+    min: {x: 0, y: 0, z: 0}
+    max: {x: 0, y: 0, z: 0}
+    randomX: 0
+    randomY: 0
+    randomZ: 0
+    space: 0
+  m_ScaleOffset:
+    setup: 0
+    min: {x: 0, y: 0, z: 0}
+    max: {x: 0, y: 0, z: 0}
+    randomX: 0
+    randomY: 0
+    randomZ: 0
+    space: 0
+  m_DeprecatedInstances: []
+  m_AutoRefresh: 1
+  m_Seed: -85244432
+--- !u!114 &886795043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 886795041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dab5c7d4c32e743048dfca98e2d5914f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Spline:
+    m_EditModeType: 1
+    m_Knots: []
+    m_MetaData: []
+    m_Closed: 0
+    m_IntData:
+      m_Data: []
+    m_FloatData:
+      m_Data: []
+    m_Float4Data:
+      m_Data: []
+    m_ObjectData:
+      m_Data: []
+  m_Splines:
+  - m_EditModeType: 1
+    m_Knots:
+    - Position:
+        x: 0
+        y: 0
+        z: 0
+      TangentIn:
+        x: -0
+        y: -0
+        z: -4
+      TangentOut:
+        x: 0
+        y: 0
+        z: 4
+      Rotation:
+        value:
+          x: -0.5
+          y: 0.5
+          z: -0.5
+          w: 0.5
+    - Position:
+        x: 40
+        y: 0
+        z: 0
+      TangentIn:
+        x: -0
+        y: -0
+        z: -4
+      TangentOut:
+        x: 0
+        y: 0
+        z: 4
+      Rotation:
+        value:
+          x: -0.49999994
+          y: 0.50000006
+          z: -0.49999994
+          w: 0.50000006
+    m_MetaData:
+    - Mode: 0
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    m_Closed: 0
+    m_IntData:
+      m_Data: []
+    m_FloatData:
+      m_Data: []
+    m_Float4Data:
+      m_Data: []
+    m_ObjectData:
+      m_Data: []
+  m_Knots:
+    m_KnotsLink: []
+--- !u!4 &886795044
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 886795041}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.01, y: -8.15, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &892387403
 GameObject:
   m_ObjectHideFlags: 0
@@ -41519,6 +41690,7 @@ SceneRoots:
   - {fileID: 892387406}
   - {fileID: 1623755111}
   - {fileID: 1259696395}
+  - {fileID: 886795044}
   - {fileID: 1668363581}
   - {fileID: 1312781642}
   - {fileID: 933878835}
