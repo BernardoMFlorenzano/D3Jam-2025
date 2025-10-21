@@ -13,10 +13,8 @@ MonoBehaviour:
   m_Name: Wave3
   m_EditorClassIdentifier: 
   inimigosWave:
-  - {fileID: 3395394184713998687, guid: 6eaef844d60cae64b8868f956830642b, type: 3}
-  - {fileID: 3395394184713998687, guid: 6eaef844d60cae64b8868f956830642b, type: 3}
-  - {fileID: 3395394184713998687, guid: 6eaef844d60cae64b8868f956830642b, type: 3}
-  - {fileID: 3395394184713998687, guid: 6eaef844d60cae64b8868f956830642b, type: 3}
-  - {fileID: 3395394184713998687, guid: 6eaef844d60cae64b8868f956830642b, type: 3}
+  - {fileID: 4267842907587816688, guid: 25df433e18623184ea90c711082a9024, type: 3}
+  - {fileID: 4267842907587816688, guid: 25df433e18623184ea90c711082a9024, type: 3}
+  - {fileID: 4267842907587816688, guid: 25df433e18623184ea90c711082a9024, type: 3}
   intervaloSpawn: 2
   lado: 2

@@ -293,6 +293,8 @@ MonoBehaviour:
   transformCorpo: {fileID: 3320268177094047295}
   subindo: 0
   caindo: 0
+  layerPlayerNome: 
+  layerObjetosNome: 
   animatorPlayer: {fileID: 0}
   animatorDrone: {fileID: 0}
 --- !u!114 &1738644745382752714
@@ -323,6 +325,7 @@ MonoBehaviour:
   animatorMorto: {fileID: 9100000, guid: 4a2562155dea66c4d808b77f073d6977, type: 2}
   tempoEfeitoDano: 0.5
   corpo: {fileID: 3320268177094047295}
+  tempoMorto: 5
 --- !u!114 &2069038235622414186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -854,6 +857,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forcaRepulsa: 200
+  sistemaVidaSelf: {fileID: 1738644745382752714}
 --- !u!1 &8733398274940905616
 GameObject:
   m_ObjectHideFlags: 0

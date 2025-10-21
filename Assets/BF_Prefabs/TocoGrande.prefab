@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6766615627113791319}
   - component: {fileID: 9044732947337704137}
-  - component: {fileID: 3249740402902758558}
+  - component: {fileID: 2704266076818624481}
   m_Layer: 9
   m_Name: TocoGrande
   m_TagString: Untagged
@@ -88,8 +88,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!61 &3249740402902758558
-BoxCollider2D:
+--- !u!70 &2704266076818624481
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -122,15 +122,6 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.007391691, y: 0.25557482}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.18988466}
-    oldSize: {x: 2.44, y: 1.42}
-    newSize: {x: 2.44, y: 1.42}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1.5776525, y: 0.6364949}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0.041217353, y: 0.17760123}
+  m_Size: {x: 1.6871266, y: 0.59700876}
+  m_Direction: 1

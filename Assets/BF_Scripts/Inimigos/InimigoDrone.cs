@@ -68,6 +68,11 @@ public class InimigoDrone : MonoBehaviour
     public bool acabouRasante;
     private Coroutine corCooldownAtaque;
     private Coroutine corTerminaRasante;
+    private Coroutine corImpulsoDrone;
+
+    [Header("Morto")]
+    [SerializeField] private float descidaMorte = 1f;
+    private bool morreu;
 
     //[Header("Variaveis Externas")]
     private SistemaVida sistemaVida;
@@ -93,6 +98,8 @@ public class InimigoDrone : MonoBehaviour
 
         atacando = false;
 
+        morreu = false;
+
         virado = false;
     }
 
@@ -105,7 +112,7 @@ public class InimigoDrone : MonoBehaviour
             else if (direcao.x > 0 && virado)
                 Flip();
         }
-        else if (emCombate && !parado)
+        else if (emCombate && !parado && !atacando && !sistemaVida.morreu)
         {
             if (player.transform.position.x < transform.position.x && !virado)
             {
@@ -138,17 +145,30 @@ public class InimigoDrone : MonoBehaviour
         direcaoPlayer = (transform.position - posicaoPlayerLida).normalized;
         distanciaPlayer = Vector2.Distance(transform.position, posicaoPlayerLida);
 
-        if (patrulhando)
+        if (!sistemaVida.morreu)
         {
-            Patrulha();
+            if (patrulhando)
+            {
+                Patrulha();
+            }
+            else if (emCombate)
+            {
+                EmCombate();
+            }
+            else if (atacando)
+            {
+                Atacando();
+            }
         }
-        else if (emCombate)
+        else
         {
-            EmCombate();
-        }
-        else if (atacando)
-        {
-            Atacando();
+            // Roda lógica de morte e então não faz nada
+            if (!morreu)
+            {
+                morreu = true;
+                Morto();
+            }
+                
         }
 
     }
@@ -287,7 +307,7 @@ public class InimigoDrone : MonoBehaviour
         direcaoRasante = -direcaoPlayer;
 
         SetaColisor(danoAtaque, knockBackAtaque, forcaKnockbackAtaque);
-        StartCoroutine(impulsoRasante.ImpulsoDrone(descidaRasante, subidaRasante, tempoChao));
+        corImpulsoDrone = StartCoroutine(impulsoRasante.ImpulsoDrone(descidaRasante, subidaRasante, tempoChao));
         acabouRasante = false;
         corTerminaRasante = StartCoroutine(TerminaRasante());
         //Debug.Log("Começa Ataque");
@@ -363,4 +383,18 @@ public class InimigoDrone : MonoBehaviour
     }
     
     /* -------------------------------BLOCO ATACANDO FIM------------------------------- */
+
+    /* -------------------------------BLOCO MORTO INICIO------------------------------- */
+
+    void Morto()
+    {
+        StopAllCoroutines();
+        if (corImpulsoDrone != null)
+            StopCoroutine(corImpulsoDrone);
+
+        StartCoroutine(impulsoRasante.ImpulsoDrone(descidaMorte, 0, 20f));
+        rb.linearDamping = 5f;
+    }
+
+    /* -------------------------------BLOCO MORTO FIM------------------------------- */
 }

@@ -3,8 +3,9 @@ using System.Collections;
 //using System.Numerics;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
+//using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SistemaVida : MonoBehaviour
 {
@@ -27,11 +28,13 @@ public class SistemaVida : MonoBehaviour
     private bool podeLevarDano;
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer spriteRenderer;
+    private Slider sliderVida;
     [Header("Inimigos")]
     [SerializeField] private float multKnockback;
     [SerializeField] private RuntimeAnimatorController animatorMorto;
     [SerializeField] private float tempoEfeitoDano;
     [SerializeField] private Transform corpo;
+    [SerializeField] private float tempoMorto;
     private bool animDano = false;
     private Coroutine corEfeitoDano;
     private Coroutine corTimerEfeitoDano;
@@ -51,6 +54,12 @@ public class SistemaVida : MonoBehaviour
         podeLevarDano = true;
         morreu = false;
 
+        if (CompareTag("Player"))
+        {
+            sliderVida = GameObject.FindGameObjectWithTag("SliderVida").GetComponent<Slider>();
+            sliderVida.value = 1f;
+        }
+
     }
 
     // Update is called once per frame
@@ -62,6 +71,10 @@ public class SistemaVida : MonoBehaviour
     void MataInimigo()
     {
         StopAllCoroutines();
+
+        corpo.localPosition = new Vector2(0, corpo.localPosition.y);    // Resetar o que as corrotinas cuidariam
+        spriteRenderer.enabled = true;
+
         if (animator)
         {
             animator.runtimeAnimatorController = animatorMorto;
@@ -71,7 +84,7 @@ public class SistemaVida : MonoBehaviour
         // Avisa spawner
         spawner.numInimigos--;
 
-        Destroy(gameObject, 2f);
+        Destroy(gameObject, tempoMorto);
     }
 
     void MataPlayer()
@@ -132,7 +145,7 @@ public class SistemaVida : MonoBehaviour
                 morreu = true;
                 MataInimigo();
             }
-            else
+            else if (!morreu)
             {
                 if (CorRecupDano != null)
                     StopCoroutine(CorRecupDano);
@@ -201,7 +214,7 @@ public class SistemaVida : MonoBehaviour
                 morreu = true;
                 MataInimigo();
             }
-            else
+            else if (!morreu)
             {
                 if (CorRecupDano != null)
                     StopCoroutine(CorRecupDano);
@@ -212,7 +225,8 @@ public class SistemaVida : MonoBehaviour
                     StopCoroutine(corEfeitoDano);
                     StopCoroutine(corTimerEfeitoDano);
                     StopCoroutine(corTimerEfeitoDanoPisca);
-                    corpo.localPosition = new Vector2(0,corpo.localPosition.y);
+                    corpo.localPosition = new Vector2(0, corpo.localPosition.y);
+                    spriteRenderer.enabled = true;
                 }
                 animDano = true;
                 corEfeitoDano = StartCoroutine(TimerDanoInimigo());
@@ -246,6 +260,7 @@ public class SistemaVida : MonoBehaviour
             podeLevarDano = false;
             levandoDano = true;
             vidaAtual -= dano;
+            sliderVida.value -= (float)dano / vidaMax;
 
             if (knockback)
             {

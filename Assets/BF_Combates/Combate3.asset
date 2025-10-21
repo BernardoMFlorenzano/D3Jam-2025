@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cb80bd5a7f1be245984c68db8402e00, type: 3}
   m_Name: Combate3
   m_EditorClassIdentifier: 
-  listaWaves: []
-  delayEntreWaves: 2
-  tempoMaxWave: 10
+  listaWaves:
+  - {fileID: 11400000, guid: eb4f528e3556350429703f8e477bf1c3, type: 2}
+  - {fileID: 11400000, guid: cbf56cbdb95258a4dbbd808462875d10, type: 2}
+  - {fileID: 11400000, guid: eb4f528e3556350429703f8e477bf1c3, type: 2}
+  delayEntreWaves: 5
+  tempoMaxWave: 20
   maxInimigos: 5
   minInimigoPassaWave: 1

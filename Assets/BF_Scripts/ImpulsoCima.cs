@@ -8,10 +8,10 @@ public class ImpulsoCima: MonoBehaviour
     [SerializeField] private Transform transformCorpo;
     public bool subindo;
     public bool caindo;
-    //[SerializeField] private string layerPlayerNome;
-    //[SerializeField] private string layerInimigoNome;
-    //private int layerPlayer;
-    //private int layerInimigo;
+    [SerializeField] private string layerPlayerNome;
+    [SerializeField] private string layerObjetosNome;
+    private int layerPlayer;
+    private int layerObjetos;
     [SerializeField] private Animator animatorPlayer;
     [SerializeField] private Animator animatorDrone;
 
@@ -26,8 +26,8 @@ public class ImpulsoCima: MonoBehaviour
         else if (CompareTag("InimigoVoador"))
             inimigoDrone = GetComponent<InimigoDrone>();
 
-        //layerPlayer = LayerMask.NameToLayer(layerPlayerNome);
-        //layerInimigo = LayerMask.NameToLayer(layerInimigoNome);
+        layerPlayer = LayerMask.NameToLayer(layerPlayerNome);
+        layerObjetos = LayerMask.NameToLayer(layerObjetosNome);
         subindo = false;
         caindo = false;
     }
@@ -38,7 +38,7 @@ public class ImpulsoCima: MonoBehaviour
         if (CompareTag("Player"))
             movimentoPlayer.estaNoChao = false;
 
-        //Physics2D.IgnoreLayerCollision(layerPlayer, layerInimigo, true);
+        Physics2D.IgnoreLayerCollision(layerPlayer, layerObjetos, true);
 
         Vector2 posicaoInicial = transformCorpo.localPosition;
         Vector2 posicaoPico = new Vector2(posicaoInicial.x, posicaoInicial.y + altura);
@@ -103,7 +103,7 @@ public class ImpulsoCima: MonoBehaviour
 
         subindo = false;
         caindo = false;
-        //Physics2D.IgnoreLayerCollision(layerPlayer, layerInimigo, false);
+        Physics2D.IgnoreLayerCollision(layerPlayer, layerObjetos, false);
         //Debug.Log("Caiu");
 
         // Animacoes

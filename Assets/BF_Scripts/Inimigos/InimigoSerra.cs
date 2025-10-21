@@ -106,7 +106,7 @@ public class InimigoSerra : MonoBehaviour
             else if (direcao.x > 0 && virado)
                 Flip();
         }
-        else if (emCombate && !parado)
+        else if (emCombate && !parado && !atacando && !preparandoAtaque && !sistemaVida.morreu)
         {
             if (player.transform.position.x < transform.position.x && !virado)
             {
@@ -294,6 +294,7 @@ public class InimigoSerra : MonoBehaviour
     IEnumerator PreparaAtaque()
     {
         rb.linearVelocity = Vector2.zero;
+        direcaoCorrida = MathF.Sign(-direcaoPlayer.x);
         animatorSerra.SetBool("Preparando", true);
         yield return new WaitForSeconds(tempoPreparaAtaque);
         animatorSerra.SetBool("Preparando", false);
@@ -304,7 +305,6 @@ public class InimigoSerra : MonoBehaviour
         sistemaVida.agindo = true;
         preparandoAtaque = false;
         velAtualCorrida = velBaseInimigoHorCorrida; // Seta velocidade inicial da corrida
-        direcaoCorrida = MathF.Sign(-direcaoPlayer.x);
 
         SetaColisor(danoAtaque, knockBackAtaque, forcaKnockbackAtaque);
         corTerminaCorrida = StartCoroutine(TerminaCorrida());

@@ -16,7 +16,8 @@ MonoBehaviour:
   boxOffset: {x: 2, y: 0}
   boxSize: {x: 3.75, y: 0.9}
   dano: 1
-  knockback: 1
+  knockback: 0
   forcaKnockback: 50
   posEfeito: {x: 1.25, y: -0.25}
   escalaEfeito: {x: 1, y: 1}
+  invertido: 0

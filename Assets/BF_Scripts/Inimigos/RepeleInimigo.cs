@@ -4,6 +4,7 @@ public class RepeleInimigo : MonoBehaviour
 {
     [SerializeField] float forcaRepulsa;
     private SistemaVida sistemaVida;
+    [SerializeField] private SistemaVida sistemaVidaSelf;
     private float distancia;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -19,7 +20,7 @@ public class RepeleInimigo : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Inimigo") && transform.parent.CompareTag("Inimigo") || collision.CompareTag("InimigoVoador") && transform.parent.CompareTag("InimigoVoador"))
+        if ((collision.CompareTag("Inimigo") && transform.parent.CompareTag("Inimigo") || collision.CompareTag("InimigoVoador") && transform.parent.CompareTag("InimigoVoador")) && !sistemaVidaSelf.morreu)
         {
             sistemaVida = collision.GetComponent<SistemaVida>();
             distancia = Vector2.Distance(transform.position, collision.transform.position);

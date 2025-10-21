@@ -284,7 +284,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1e88cce248247c4e9848849452d48df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forcaRepulsa: 50
+  forcaRepulsa: 100
+  sistemaVidaSelf: {fileID: 8843119527186386392}
 --- !u!1 &3895005060544066989
 GameObject:
   m_ObjectHideFlags: 0
@@ -774,6 +775,8 @@ MonoBehaviour:
   transformCorpo: {fileID: 4934909786156698670}
   subindo: 0
   caindo: 0
+  layerPlayerNome: 
+  layerObjetosNome: 
   animatorPlayer: {fileID: 0}
   animatorDrone: {fileID: 0}
 --- !u!114 &8843119527186386392
@@ -793,7 +796,7 @@ MonoBehaviour:
   sofrendoKnockback: 0
   recupDano: 0
   agindo: 0
-  vidaMax: 5
+  vidaMax: 2
   morreu: 0
   tempoInvenc: 0
   tempoInvencPos: 0
@@ -804,6 +807,7 @@ MonoBehaviour:
   animatorMorto: {fileID: 9100000, guid: 35e5d5620de17fe4eb4027f95e5be86b, type: 2}
   tempoEfeitoDano: 0.25
   corpo: {fileID: 4934909786156698670}
+  tempoMorto: 5
 --- !u!114 &6039226610278790047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -816,8 +820,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53780c8c271922a49a8d0d909f8beeef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velInimigoHor: 5
-  velInimigoVer: 3
+  velInimigoHor: 4
+  velInimigoVer: 2.5
   colisorCorpo: {fileID: 7097817536938964653}
   visaoDetecta: 20
   rangeMinMovimentoPatrulha: 0.5
@@ -846,6 +850,7 @@ MonoBehaviour:
   subidaRasante: 0.5
   tempoChao: 0.5
   acabouRasante: 0
+  descidaMorte: 0.5
 --- !u!114 &7302878123799225480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -861,6 +866,8 @@ MonoBehaviour:
   transformCorpo: {fileID: 4934909786156698670}
   subindo: 0
   caindo: 0
+  layerPlayerNome: 
+  layerObjetosNome: 
   animatorPlayer: {fileID: 0}
   animatorDrone: {fileID: 8448991945719089523}
 --- !u!1 &7698090732822155121

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 896152267030850873}
   - component: {fileID: 8900810330098683146}
-  - component: {fileID: 4654651424433236160}
+  - component: {fileID: 8067602753378229552}
   m_Layer: 9
   m_Name: TocoPequeno
   m_TagString: Untagged
@@ -88,8 +88,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!61 &4654651424433236160
-BoxCollider2D:
+--- !u!70 &8067602753378229552
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -98,7 +98,7 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 95139c87a058eb541b98abc34f0e158b, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -122,15 +122,6 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.0051362813, y: 0.13207197}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.07829025}
-    oldSize: {x: 1.02, y: 0.94}
-    newSize: {x: 1.02, y: 0.94}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 0.7015496, y: 0.3565426}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0.0148905665, y: 0.1109965}
+  m_Size: {x: 0.7271498, y: 0.3493307}
+  m_Direction: 1
