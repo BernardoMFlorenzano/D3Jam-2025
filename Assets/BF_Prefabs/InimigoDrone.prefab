@@ -804,7 +804,7 @@ MonoBehaviour:
   animator: {fileID: 8448991945719089523}
   spriteRenderer: {fileID: 3255195626922919177}
   multKnockback: 0.5
-  animatorMorto: {fileID: 9100000, guid: 35e5d5620de17fe4eb4027f95e5be86b, type: 2}
+  animatorMorto: {fileID: 9100000, guid: 7e8c4963205949842856b860ab29e796, type: 2}
   tempoEfeitoDano: 0.25
   corpo: {fileID: 4934909786156698670}
   tempoMorto: 5
