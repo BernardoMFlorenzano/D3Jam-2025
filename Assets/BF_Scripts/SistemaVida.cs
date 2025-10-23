@@ -30,6 +30,7 @@ public class SistemaVida : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private AudioClip danoPlayer;
+    [SerializeField] private PassaCena gameManager;
     private Slider sliderVida;
     [Header("Inimigos")]
     [SerializeField] private float multKnockback;
@@ -66,6 +67,7 @@ public class SistemaVida : MonoBehaviour
         {
             sliderVida = GameObject.FindGameObjectWithTag("SliderVida").GetComponent<Slider>();
             sliderVida.value = 1f;
+            gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<PassaCena>();
         }
 
     }
@@ -106,7 +108,7 @@ public class SistemaVida : MonoBehaviour
         }
         Debug.Log("Player Morreu");
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Vai chamar pra outra cena depois
+        gameManager.TrocaCena(3);   // Morte
     }
 
     public void LevaAtaqueCorte(int tipo, int dano, bool knockback, float forcaKnockback, GameObject atacante)

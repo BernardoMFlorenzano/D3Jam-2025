@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 
 public class SpawnWaves : MonoBehaviour
 {
+    [SerializeField] private CombateController combateController;
     public Combate combate; // Vai ser trocado externamente
     //private bool emCombate;
     public bool desligado;
@@ -19,6 +20,10 @@ public class SpawnWaves : MonoBehaviour
     [SerializeField] List<Transform> spawnPointsDir;
     public int numInimigos;
     [SerializeField] CinemachinePositionComposer controleCamera;
+    [SerializeField] private GameObject pickupCura;
+    [SerializeField] private GameObject seta;
+    [SerializeField] private float tempoSeta;
+    private bool piscandoSeta = false;
     
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -96,6 +101,14 @@ public class SpawnWaves : MonoBehaviour
         desligado = true;
         corCombate = null;
         //emCombate = false;
+
+        if (!combateController.acabouCombates)
+        {
+            SpawnarCura();
+            piscandoSeta = true;
+            StartCoroutine(SetaGo());
+        }
+
         Debug.Log("Acabou combate");
     }
 
@@ -104,6 +117,26 @@ public class SpawnWaves : MonoBehaviour
         yield return new WaitForSeconds(tempo);
         passaWave = true;
     }
+
+    IEnumerator SetaGo()
+    {
+        StartCoroutine(TempoSetaGo());
+        while (piscandoSeta)
+        {
+            seta.SetActive(true);
+            yield return new WaitForSeconds(0.5f);
+            seta.SetActive(false);
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
+
+    IEnumerator TempoSetaGo()
+    {
+        yield return new WaitForSeconds(tempoSeta);
+        seta.SetActive(false);
+        piscandoSeta = false;
+    }
+
     
     void SpawnarInimigo(GameObject inimigo, int lado)
     {
@@ -132,6 +165,16 @@ public class SpawnWaves : MonoBehaviour
             {
                 SpawnarInimigo(inimigo, 2);
             }
+        }
+    }
+    
+    void SpawnarCura()
+    {
+        int chance = Random.Range(0, 3);
+        if (chance == 2)
+        {
+            int spawnPos = Random.Range(0, spawnPointsDir.Count);
+            Instantiate(pickupCura, new Vector3(spawnPointsDir[spawnPos].position.x, spawnPointsDir[spawnPos].position.y, 0), Quaternion.identity);
         }
     }
 
