@@ -7406,6 +7406,7 @@ MonoBehaviour:
   duracaoPulo: 0.5
   duracaoQueda: 0.4
   alturaPulo: 2
+  delayPosPulo: 0.5
   estaNoChao: 0
   rangeCorpo: {fileID: 2094570081}
   rangeBase: {fileID: 1211273531}

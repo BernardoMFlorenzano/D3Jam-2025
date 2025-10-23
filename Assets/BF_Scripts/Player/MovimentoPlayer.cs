@@ -23,6 +23,7 @@ public class MovimentoPlayer : MonoBehaviour
     [SerializeField] private float duracaoPulo;
     [SerializeField] private float duracaoQueda;
     [SerializeField] private float alturaPulo;
+    [SerializeField] private float delayPosPulo;
     private ImpulsoCima impulsoPulo;
     private bool puloInput;
     public bool estaNoChao;
@@ -516,7 +517,7 @@ public class MovimentoPlayer : MonoBehaviour
         rangeCorpo.SetActive(false);
 
         yield return new WaitUntil(() => estaNoChao || !agindo || sistemaVida.levandoDano);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(delayPosPulo);
         agindo = false;
         podeAtacar = true;
     }
