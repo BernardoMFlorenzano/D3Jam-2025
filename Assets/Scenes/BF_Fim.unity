@@ -2272,7 +2272,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1579999724}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Config, Assembly-CSharp
         m_MethodName: DesativaConfiguracao
         m_Mode: 1
@@ -2791,7 +2791,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1579999722}
   - component: {fileID: 1579999723}
-  - component: {fileID: 1579999724}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -2826,19 +2825,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad2657ffd681c604d85a0e9282e01885, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1579999724
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1579999721}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7116feb9bfeff0f4daf8d3d5bed89d1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  config: {fileID: 56053511}
+  somUi: {fileID: 8300000, guid: c4399b7ee7cc59a47a198a59b95bf2c5, type: 3}
 --- !u!1 &1665799399
 GameObject:
   m_ObjectHideFlags: 0

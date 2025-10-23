@@ -30,7 +30,7 @@ public class AudioManager : MonoBehaviour
         }
 
         // Carrega os volumes salvos anteriormente (ou usa 1 como valor padr�o)
-        SetMusicVolume(PlayerPrefs.GetFloat(MusicVolumeKey, 1f));
+        SetMusicVolume(PlayerPrefs.GetFloat(MusicVolumeKey, 0.5f));
         SetSFXVolume(PlayerPrefs.GetFloat(SFXVolumeKey, 1f));
     }
 

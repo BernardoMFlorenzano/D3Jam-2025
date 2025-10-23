@@ -74,6 +74,13 @@ public class InimigoDrone : MonoBehaviour
     [SerializeField] private float descidaMorte = 1f;
     private bool morreu;
 
+    [Header("Sons")]
+    [SerializeField] private float somPassivoVolMult = 0.1f;
+    private AudioSource somPassivo;
+    //[SerializeField] private AudioClip somRasante;
+    //[SerializeField] private float somRasanteVolMult = 1f;
+    private VolumeController volumeController;
+
     //[Header("Variaveis Externas")]
     private SistemaVida sistemaVida;
 
@@ -83,6 +90,9 @@ public class InimigoDrone : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sistemaVida = GetComponent<SistemaVida>();
         impulsoRasante = GetComponent<ImpulsoCima>();
+
+        volumeController = GameObject.FindGameObjectWithTag("GameManager").GetComponentInChildren<VolumeController>();
+        somPassivo = GetComponent<AudioSource>();
 
         patrulhando = true;
         andandoEmPatrulha = false;
@@ -101,6 +111,15 @@ public class InimigoDrone : MonoBehaviour
         morreu = false;
 
         virado = false;
+
+        somPassivo.volume = PlayerPrefs.GetFloat("SFXVolume", 1f) * somPassivoVolMult;
+
+        volumeController.sfxSlider.onValueChanged.AddListener(delegate { SetVolume(); });
+    }
+
+    void SetVolume()
+    {
+        somPassivo.volume = volumeController.sfxSlider.value * somPassivoVolMult;
     }
 
     void Update()

@@ -5215,6 +5215,7 @@ MonoBehaviour:
   animator: {fileID: 3879390005358964030}
   spriteRenderer: {fileID: 9153958849020880934}
   danoPlayer: {fileID: 0}
+  gameManager: {fileID: 0}
   multKnockback: 1
   animatorMorto: {fileID: 9100000, guid: 4a2562155dea66c4d808b77f073d6977, type: 2}
   tempoEfeitoDano: 0.5
@@ -5225,7 +5226,7 @@ MonoBehaviour:
   danoInimigo2: {fileID: 8300000, guid: cdd3e93028759594bb6867e0a6f4cdc1, type: 3}
   danoInimigo3: {fileID: 8300000, guid: 3e2dadee3ff375f48aeb43dc78ad5c7e, type: 3}
   volumeDanoMult: 0.5
-  somPassivoSerra: {fileID: -3103397500063101517}
+  somPassivo: {fileID: -3103397500063101517}
 --- !u!114 &2069038235622414186
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -22,6 +22,7 @@ public class SpawnWaves : MonoBehaviour
     [SerializeField] CinemachinePositionComposer controleCamera;
     [SerializeField] private GameObject pickupCura;
     [SerializeField] private GameObject seta;
+    [SerializeField] private AudioClip piano;
     [SerializeField] private float tempoSeta;
     private bool piscandoSeta = false;
     
@@ -123,6 +124,7 @@ public class SpawnWaves : MonoBehaviour
         StartCoroutine(TempoSetaGo());
         while (piscandoSeta)
         {
+            AudioManager.instance.PlaySFX(piano, 1f);
             seta.SetActive(true);
             yield return new WaitForSeconds(0.5f);
             seta.SetActive(false);

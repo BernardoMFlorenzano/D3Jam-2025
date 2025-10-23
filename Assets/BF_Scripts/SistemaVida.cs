@@ -47,7 +47,7 @@ public class SistemaVida : MonoBehaviour
     [SerializeField] private AudioClip danoInimigo2;
     [SerializeField] private AudioClip danoInimigo3;
     [SerializeField] private float volumeDanoMult;
-    [SerializeField] private AudioSource somPassivoSerra;
+    [SerializeField] private AudioSource somPassivo;
 
     [Header("Spawner")]
     private SpawnWaves spawner;
@@ -84,8 +84,8 @@ public class SistemaVida : MonoBehaviour
 
         corpo.localPosition = new Vector2(0, corpo.localPosition.y);    // Resetar o que as corrotinas cuidariam
         spriteRenderer.enabled = true;
-        if (somPassivoSerra)
-            somPassivoSerra.enabled = false;
+        if (somPassivo)
+            somPassivo.enabled = false;
 
         if (animator)
         {
@@ -282,15 +282,15 @@ public class SistemaVida : MonoBehaviour
 
     IEnumerator DelayRecupDano()
     {
-        if(somPassivoSerra)
-            somPassivoSerra.enabled = false;
+        if(somPassivo)
+            somPassivo.enabled = false;
         if (animator && !morreu)
             animator.SetBool("Dano", true);
         yield return new WaitForSeconds(tempoRecupDano);
         if (animator && !morreu)
             animator.SetBool("Dano", false);
-        if (somPassivoSerra && !morreu)
-            somPassivoSerra.enabled = true;
+        if (somPassivo && !morreu)
+            somPassivo.enabled = true;
         recupDano = false;
     }
 

@@ -3489,6 +3489,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad2657ffd681c604d85a0e9282e01885, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  somUi: {fileID: 8300000, guid: c4399b7ee7cc59a47a198a59b95bf2c5, type: 3}
 --- !u!114 &1579999724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3502,6 +3503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   config: {fileID: 56053511}
+  somUi: {fileID: 8300000, guid: c4399b7ee7cc59a47a198a59b95bf2c5, type: 3}
 --- !u!1 &1665799399
 GameObject:
   m_ObjectHideFlags: 0
