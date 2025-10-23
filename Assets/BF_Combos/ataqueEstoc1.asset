@@ -18,5 +18,7 @@ MonoBehaviour:
   dano: 1
   knockback: 1
   forcaKnockback: 50
-  posEfeito: {x: 1, y: -0.25}
+  posEfeito: {x: 1, y: -0.125}
   escalaEfeito: {x: 1, y: 1}
+  invertido: 0
+  efeitoSlash: {fileID: 8300000, guid: ba33472e74413124f802c9dfe43721af, type: 3}

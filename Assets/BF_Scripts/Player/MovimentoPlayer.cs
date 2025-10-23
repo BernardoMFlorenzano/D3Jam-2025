@@ -73,9 +73,19 @@ public class MovimentoPlayer : MonoBehaviour
     //private bool acabouCombo;
     private int comboCount;
     private Coroutine comboTimerCorrotina;
-    private Coroutine delayAtaqueCorrotina; 
+    private Coroutine delayAtaqueCorrotina;
     //[SerializeField] private float delayTrocaArma;
     //private bool podeTrocarArma = true;
+    [Header("Sons")]
+    [SerializeField] private AudioClip grama1;
+    [SerializeField] private AudioClip grama2;
+    [SerializeField] private AudioClip grama3;
+    [SerializeField] private float tempoSomGrama = 1f;
+    [SerializeField] private float volumeSomGrama = 1f;
+    private bool delaySomGrama = false;
+    [Header("Pausa")]
+    [SerializeField] private Pausa pauseManager;
+    
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -119,6 +129,11 @@ public class MovimentoPlayer : MonoBehaviour
     {
         ataqueInput2 = true;
         ataqueInput1 = false;
+    }
+
+    public void OnPausa()
+    {
+        pauseManager.PausaJogo();
     }
 
     // Update is called once per frame
@@ -168,6 +183,11 @@ public class MovimentoPlayer : MonoBehaviour
 
         rb.linearVelocity = velMovTarget;
 
+        if (direcaoInput.magnitude > 0.1f && rb.linearVelocity.magnitude > 0.1f && estaNoChao)
+        {
+            SomGrama();
+        }
+
         if (puloInput && estaNoChao)
         {
             StartCoroutine(impulsoPulo.Impulso(alturaPulo, duracaoPulo, duracaoQueda));
@@ -179,10 +199,33 @@ public class MovimentoPlayer : MonoBehaviour
         // Animacoes
         if (animatorPlayer)
         {
-            animatorPlayer.SetFloat("Vel", Mathf.Abs(rb.linearVelocityX) + Mathf.Abs(rb.linearVelocityY));
+            //animatorPlayer.SetFloat("Vel", Mathf.Abs(rb.linearVelocityX) + Mathf.Abs(rb.linearVelocityY));
+            animatorPlayer.SetFloat("Vel", rb.linearVelocity.magnitude);
             animatorPlayer.SetBool("NoChao", estaNoChao);
         }
 
+    }
+
+    void SomGrama()
+    {
+        if (!delaySomGrama)
+        {
+            delaySomGrama = true;
+            int escolha = Random.Range(0, 3);
+            if (escolha == 0)
+                AudioManager.instance.PlaySFX(grama1, volumeSomGrama);
+            else if (escolha == 1)
+                AudioManager.instance.PlaySFX(grama2, volumeSomGrama);
+            else
+                AudioManager.instance.PlaySFX(grama3, volumeSomGrama);
+            StartCoroutine(DelaySomGrama());
+        }
+    }
+    
+    IEnumerator DelaySomGrama()
+    {
+        yield return new WaitForSeconds(tempoSomGrama);
+        delaySomGrama = false;
     }
 
     void Flip()
@@ -245,6 +288,7 @@ public class MovimentoPlayer : MonoBehaviour
                 animatorPlayer.SetTrigger("Corte");
                 animatorEfeitoAtaque.SetTrigger("Corte");
                 efeitoAtaque.SetarEfeitoPosEscala(cortePadrao.posEfeito, cortePadrao.escalaEfeito, cortePadrao.invertido, Vector3.zero);
+                AudioManager.instance.PlaySFX(cortePadrao.efeitoSlash, 1f);
             }
             else if (ataqueModo == 2)
             {
@@ -253,6 +297,7 @@ public class MovimentoPlayer : MonoBehaviour
                 animatorPlayer.SetTrigger("Estocada");
                 animatorEfeitoAtaque.SetTrigger("Estocada");
                 efeitoAtaque.SetarEfeitoPosEscala(estocPadrao.posEfeito, estocPadrao.escalaEfeito, estocPadrao.invertido, Vector3.zero);
+                AudioManager.instance.PlaySFX(estocPadrao.efeitoSlash, 1f);
             }
 
             if (podeEntrarCombo)
@@ -266,6 +311,8 @@ public class MovimentoPlayer : MonoBehaviour
 
             rangeCorpo.SetActive(false);
             rangeCorpo.SetActive(true);
+
+
             yield return new WaitForSeconds(0.1f);
             rangeCorpo.SetActive(false);
             //agindo = false;
@@ -297,6 +344,7 @@ public class MovimentoPlayer : MonoBehaviour
                 SetarColisorVars(1, ataqueModo, combo1[comboCount].dano, combo1[comboCount].knockback, combo1[comboCount].forcaKnockback);
                 SetarHitBox(combo1[comboCount].boxSize, combo1[comboCount].boxOffset);
                 efeitoAtaque.SetarEfeitoPosEscala(combo1[comboCount].posEfeito, combo1[comboCount].escalaEfeito, combo1[comboCount].invertido, Vector3.zero);
+                AudioManager.instance.PlaySFX(combo1[comboCount].efeitoSlash, 1f);
                 comboCount++;
                 continuouCombo = true;
                 if (comboCount >= combo1.Count)
@@ -311,6 +359,7 @@ public class MovimentoPlayer : MonoBehaviour
                 SetarColisorVars(1, ataqueModo, combo2[comboCount].dano, combo2[comboCount].knockback, combo2[comboCount].forcaKnockback);
                 SetarHitBox(combo2[comboCount].boxSize, combo2[comboCount].boxOffset);
                 efeitoAtaque.SetarEfeitoPosEscala(combo2[comboCount].posEfeito, combo2[comboCount].escalaEfeito, combo2[comboCount].invertido, Vector3.zero);
+                AudioManager.instance.PlaySFX(combo2[comboCount].efeitoSlash, 1f);
                 comboCount++;
                 continuouCombo = true;
                 if (comboCount >= combo2.Count)
@@ -325,6 +374,7 @@ public class MovimentoPlayer : MonoBehaviour
                 SetarColisorVars(1, ataqueModo, combo3[comboCount].dano, combo3[comboCount].knockback, combo3[comboCount].forcaKnockback);
                 SetarHitBox(combo3[comboCount].boxSize, combo3[comboCount].boxOffset);
                 efeitoAtaque.SetarEfeitoPosEscala(combo3[comboCount].posEfeito, combo3[comboCount].escalaEfeito, combo3[comboCount].invertido, Vector3.zero);
+                AudioManager.instance.PlaySFX(combo3[comboCount].efeitoSlash, 1f);
                 comboCount++;
                 continuouCombo = true;
                 if (comboCount >= combo3.Count)
@@ -339,6 +389,7 @@ public class MovimentoPlayer : MonoBehaviour
                 SetarColisorVars(1, ataqueModo, combo4[comboCount].dano, combo4[comboCount].knockback, combo4[comboCount].forcaKnockback);
                 SetarHitBox(combo4[comboCount].boxSize, combo4[comboCount].boxOffset);
                 efeitoAtaque.SetarEfeitoPosEscala(combo4[comboCount].posEfeito, combo4[comboCount].escalaEfeito, combo4[comboCount].invertido, Vector3.zero);
+                AudioManager.instance.PlaySFX(combo4[comboCount].efeitoSlash, 1f);
                 comboCount++;
                 continuouCombo = true;
                 if (comboCount >= combo4.Count)
@@ -359,11 +410,13 @@ public class MovimentoPlayer : MonoBehaviour
                 {
                     SetarHitBox(sizeBoxCorte, offsetBoxCorte);   // Hitbox padrão
                     efeitoAtaque.SetarEfeitoPosEscala(cortePadrao.posEfeito, cortePadrao.escalaEfeito, cortePadrao.invertido, Vector3.zero);
+                    AudioManager.instance.PlaySFX(cortePadrao.efeitoSlash, 1f);
                 }
                 else if (ataqueModo == 2)
                 {
                     SetarHitBox(sizeBoxEstocada, offsetBoxEstocada);
                     efeitoAtaque.SetarEfeitoPosEscala(estocPadrao.posEfeito, estocPadrao.escalaEfeito, cortePadrao.invertido, Vector3.zero);
+                    AudioManager.instance.PlaySFX(estocPadrao.efeitoSlash, 1f);
                 }
                 ResetarCombo(); // Quebrou o combo
             }
@@ -439,6 +492,7 @@ public class MovimentoPlayer : MonoBehaviour
             //animatorPlayer.SetTrigger("Corte");
             animatorEfeitoAtaque.SetTrigger("Corte");
             efeitoAtaque.SetarEfeitoPosEscala(corteArPadrao.posEfeito, corteArPadrao.escalaEfeito, corteArPadrao.invertido, Vector3.zero);
+            AudioManager.instance.PlaySFX(corteArPadrao.efeitoSlash, 1f);
         }
         else if (ataqueModo == 2)
         {
@@ -451,7 +505,8 @@ public class MovimentoPlayer : MonoBehaviour
 
             //animatorPlayer.SetTrigger("Corte");
             animatorEfeitoAtaque.SetTrigger("Estocada");
-            efeitoAtaque.SetarEfeitoPosEscala(estocArPadrao.posEfeito, estocArPadrao.escalaEfeito, estocArPadrao.invertido, new Vector3(0,0,-90f));
+            efeitoAtaque.SetarEfeitoPosEscala(estocArPadrao.posEfeito, estocArPadrao.escalaEfeito, estocArPadrao.invertido, new Vector3(0, 0, -90f));
+            AudioManager.instance.PlaySFX(estocArPadrao.efeitoSlash, 1f);
         }
         rangeCorpo.SetActive(false);
         rangeCorpo.SetActive(true);

@@ -6,6 +6,7 @@ using UnityEngine;
 //using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class SistemaVida : MonoBehaviour
 {
@@ -28,17 +29,24 @@ public class SistemaVida : MonoBehaviour
     private bool podeLevarDano;
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private AudioClip danoPlayer;
     private Slider sliderVida;
     [Header("Inimigos")]
     [SerializeField] private float multKnockback;
     [SerializeField] private RuntimeAnimatorController animatorMorto;
     [SerializeField] private float tempoEfeitoDano;
     [SerializeField] private Transform corpo;
+    [SerializeField] private ParticleSystem particulasDano;
     [SerializeField] private float tempoMorto;
     private bool animDano = false;
     private Coroutine corEfeitoDano;
     private Coroutine corTimerEfeitoDano;
     private Coroutine corTimerEfeitoDanoPisca;
+    [SerializeField] private AudioClip danoInimigo1;
+    [SerializeField] private AudioClip danoInimigo2;
+    [SerializeField] private AudioClip danoInimigo3;
+    [SerializeField] private float volumeDanoMult;
+    [SerializeField] private AudioSource somPassivoSerra;
 
     [Header("Spawner")]
     private SpawnWaves spawner;
@@ -74,6 +82,8 @@ public class SistemaVida : MonoBehaviour
 
         corpo.localPosition = new Vector2(0, corpo.localPosition.y);    // Resetar o que as corrotinas cuidariam
         spriteRenderer.enabled = true;
+        if (somPassivoSerra)
+            somPassivoSerra.enabled = false;
 
         if (animator)
         {
@@ -139,6 +149,11 @@ public class SistemaVida : MonoBehaviour
                     rb.AddForce(new Vector2(1 * MathF.Sign(direcao.x) * forcaKnockback * multKnockback, 0), ForceMode2D.Impulse);
                 }
             }
+
+            TocaSomHit();
+            if (particulasDano)
+                CriaParticulasDano();
+
 
             if (vidaAtual <= 0 && !morreu)
             {
@@ -209,6 +224,10 @@ public class SistemaVida : MonoBehaviour
                 }
             }
 
+            TocaSomHit();
+            if (particulasDano)
+                CriaParticulasDano();
+
             if (vidaAtual <= 0 && !morreu)
             {
                 morreu = true;
@@ -236,13 +255,40 @@ public class SistemaVida : MonoBehaviour
         }
     }
 
+    void TocaSomHit()
+    {
+        if (CompareTag("Player"))
+        {
+            AudioManager.instance.PlaySFX(danoPlayer, 1f);
+        }
+        else
+        {
+            int escolha = Random.Range(0, 3);
+            if (escolha == 0)
+                AudioManager.instance.PlaySFX(danoInimigo1, 1f);
+            else if (escolha == 1)
+                AudioManager.instance.PlaySFX(danoInimigo2, 1f);
+            else
+                AudioManager.instance.PlaySFX(danoInimigo3, 1f);
+        }
+    }
+
+    void CriaParticulasDano()
+    {
+        particulasDano.Play();
+    }
+
     IEnumerator DelayRecupDano()
     {
+        if(somPassivoSerra)
+            somPassivoSerra.enabled = false;
         if (animator && !morreu)
             animator.SetBool("Dano", true);
         yield return new WaitForSeconds(tempoRecupDano);
         if (animator && !morreu)
             animator.SetBool("Dano", false);
+        if (somPassivoSerra && !morreu)
+            somPassivoSerra.enabled = true;
         recupDano = false;
     }
 
@@ -273,6 +319,8 @@ public class SistemaVida : MonoBehaviour
             }
 
             Debug.Log("Vida do player: " + vidaAtual);
+
+            TocaSomHit();
 
             if (vidaAtual <= 0)
             {
@@ -330,10 +378,36 @@ public class SistemaVida : MonoBehaviour
         }
         spriteRenderer.enabled = true;
     }
-    
+
     IEnumerator TimerDanoInimigo()
     {
         yield return new WaitForSeconds(tempoEfeitoDano);
         animDano = false;
+    }
+
+    public void Cura(int cura)
+    {
+        vidaAtual += cura;
+        sliderVida.value += (float)cura / vidaMax;
+
+        if(vidaAtual > vidaMax)
+        {
+            vidaAtual = vidaMax;
+        }
+        StartCoroutine(EfeitoCuraPlayer());
+    }
+    
+    IEnumerator EfeitoCuraPlayer()
+    {
+        Color corEfeito = new Color(0f,1f,0f,1f);
+        spriteRenderer.color = corEfeito;
+        while (corEfeito.r < 1f)
+        {
+            yield return new WaitForSeconds(0.1f);
+            corEfeito.r += 0.25f;
+            corEfeito.b += 0.25f;
+            spriteRenderer.color = corEfeito;
+        }
+        spriteRenderer.color = new Color(1f,1f,1f,1f);
     }
 }

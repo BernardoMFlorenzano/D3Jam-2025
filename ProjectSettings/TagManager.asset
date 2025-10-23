@@ -10,6 +10,7 @@ TagManager:
   - InimigoVoador
   - Spawner
   - SliderVida
+  - GameManager
   layers:
   - Default
   - TransparentFX
@@ -52,6 +53,9 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Efeitos
+    uniqueID: 3578799691
     locked: 0
   - name: UI
     uniqueID: 4072550337

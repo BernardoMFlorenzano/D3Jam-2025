@@ -242,7 +242,7 @@ public class InimigoDrone : MonoBehaviour
 
     void EmCombate()
     {
-        if (sistemaVida.recupDano && preparandoAtaque)
+        if ((sistemaVida.recupDano || sistemaVida.morreu) && preparandoAtaque)
         {
             if (corPreparandoAtaque != null)
             {

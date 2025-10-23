@@ -21,3 +21,4 @@ MonoBehaviour:
   posEfeito: {x: 0.75, y: -0.25}
   escalaEfeito: {x: 1, y: 1}
   invertido: 1
+  efeitoSlash: {fileID: 8300000, guid: fc42c0cb3e06b634e934cdebac867903, type: 3}

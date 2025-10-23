@@ -16,4 +16,5 @@ public class Ataque : ScriptableObject
     public Vector2 posEfeito;
     public Vector2 escalaEfeito;
     public bool invertido;  // Se deve tocar a animação invertida
+    public AudioClip efeitoSlash;
 }

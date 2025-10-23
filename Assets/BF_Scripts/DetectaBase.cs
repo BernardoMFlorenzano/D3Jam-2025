@@ -41,6 +41,29 @@ public class DetectaBase : MonoBehaviour
         }
     }
 
+    void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Inimigo") || collision.CompareTag("InimigoVoador") && tipo == 1)
+        {
+            if (sistemaVida.atingivelBase == false)
+            {
+                sistemaVida = collision.GetComponent<SistemaVida>();
+                if (sistemaVida)
+                {
+                    sistemaVida.atingivelBase = true;
+                }
+            }
+            //Debug.Log("Player acerta pela base");
+        }
+
+        if (collision.CompareTag("Player") && tipo == 2)
+        {
+            // Define o player como atingivel por esse inimigo
+            colisorCorpo.atingePelaBase = true;
+            Debug.Log("Inimigo acerta pela base");
+        }
+    }
+
     void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Inimigo") || collision.CompareTag("InimigoVoador") && tipo == 1)

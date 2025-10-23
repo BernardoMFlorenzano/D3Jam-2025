@@ -8,16 +8,6 @@ public class PassaCena : MonoBehaviour
         SceneManager.LoadScene(index);
     }
 
-    public void AtivaConfiguracao()
-    {
-        // Ativa
-    }
-
-    public void DesativaConfiguracao()
-    {
-        // Ativa
-    }
-
     public void SairJogo()
     {
         Application.Quit();

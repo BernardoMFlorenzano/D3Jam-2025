@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ExemploTocaAudio : MonoBehaviour
 {
-    // Referência aos arquivos de áudio do jogo
+    // Referï¿½ncia aos arquivos de ï¿½udio do jogo
     public AudioClip musicaClip;
     public AudioClip efeitoClip;
 
@@ -16,17 +16,17 @@ public class ExemploTocaAudio : MonoBehaviour
 
     }
 
-    // Método público para tocar a música de fundo
+    // Mï¿½todo pï¿½blico para tocar a mï¿½sica de fundo
     public void PlayMusic()
     {
-        // Chama o método do AudioManager para tocar a música selecionada
+        // Chama o mï¿½todo do AudioManager para tocar a mï¿½sica selecionada
         AudioManager.instance.PlayMusic(musicaClip);
     }
 
-    // Método público para tocar um efeito sonoro (SFX)
+    // Mï¿½todo pï¿½blico para tocar um efeito sonoro (SFX)
     public void PlayEfeito()
     {
-        // Chama o método do AudioManager para tocar o som do efeito (uma vez)
-        AudioManager.instance.PlaySFX(efeitoClip);
+        // Chama o mï¿½todo do AudioManager para tocar o som do efeito (uma vez)
+        AudioManager.instance.PlaySFX(efeitoClip, 1f);
     }
 }

@@ -69,6 +69,12 @@ public class InimigoSerra : MonoBehaviour
     private bool acabouAtaque;
     private Coroutine corCooldownAtaque;
     private Coroutine corTerminaCorrida;
+    [Header("Sons")]
+    private AudioSource somPassivo;
+    [SerializeField] private float somPassivoVolMult = 0.1f;
+    [SerializeField] private AudioClip somCorrida;
+    [SerializeField] private float somCorridaVolMult = 1f;
+    private VolumeController volumeController;
 
 
     //[Header("Variaveis Externas")]
@@ -79,6 +85,9 @@ public class InimigoSerra : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         rb = GetComponent<Rigidbody2D>();
         sistemaVida = GetComponent<SistemaVida>();
+
+        volumeController = GameObject.FindGameObjectWithTag("GameManager").GetComponentInChildren<VolumeController>();
+        somPassivo = GetComponent<AudioSource>();
 
         patrulhando = true;
         andandoEmPatrulha = false;
@@ -95,6 +104,15 @@ public class InimigoSerra : MonoBehaviour
         atacando = false;
 
         virado = false;
+
+        somPassivo.volume = PlayerPrefs.GetFloat("SFXVolume", 1f) * somPassivoVolMult;
+
+        volumeController.sfxSlider.onValueChanged.AddListener(delegate { SetVolume(); });
+    }
+
+    void SetVolume()
+    {
+        somPassivo.volume = volumeController.sfxSlider.value * somPassivoVolMult;
     }
 
     void Update()
@@ -237,7 +255,7 @@ public class InimigoSerra : MonoBehaviour
 
     void EmCombate()
     {
-        if (sistemaVida.recupDano && preparandoAtaque)
+        if ((sistemaVida.recupDano || sistemaVida.morreu) && preparandoAtaque)
         {
             if (corPreparandoAtaque != null)
             {
@@ -306,6 +324,10 @@ public class InimigoSerra : MonoBehaviour
         preparandoAtaque = false;
         velAtualCorrida = velBaseInimigoHorCorrida; // Seta velocidade inicial da corrida
 
+        if (!sistemaVida.morreu) // Depois tem que arrumar pra parar todo a logica do inimigo 
+        {
+            AudioManager.instance.PlaySFX(somCorrida, somCorridaVolMult);
+        }
         SetaColisor(danoAtaque, knockBackAtaque, forcaKnockbackAtaque);
         corTerminaCorrida = StartCoroutine(TerminaCorrida());
         //Debug.Log("Começa Ataque");
