@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2247ec47b523fd946938ddf4efeaa13c, type: 3}
-  m_Name: Wave2
+  m_Name: WaveSerra3
   m_EditorClassIdentifier: 
   inimigosWave:
-  - {fileID: 3395394184713998687, guid: 6eaef844d60cae64b8868f956830642b, type: 3}
-  - {fileID: 3395394184713998687, guid: 6eaef844d60cae64b8868f956830642b, type: 3}
-  - {fileID: 3395394184713998687, guid: 6eaef844d60cae64b8868f956830642b, type: 3}
+  - {fileID: 7720991257211596735, guid: 63ede79f5c91fe84bade3e5f9661b716, type: 3}
+  - {fileID: 7720991257211596735, guid: 63ede79f5c91fe84bade3e5f9661b716, type: 3}
+  - {fileID: 5700549740386008618, guid: a319cf99f412c9443919a453e225fe68, type: 3}
+  - {fileID: 5700549740386008618, guid: a319cf99f412c9443919a453e225fe68, type: 3}
   intervaloSpawn: 2
   lado: 2
