@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: InimigoDroneV1
       objectReference: {fileID: 0}
+    - target: {fileID: 4934909786156698670, guid: 25df433e18623184ea90c711082a9024, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5436901742834339176, guid: 25df433e18623184ea90c711082a9024, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
