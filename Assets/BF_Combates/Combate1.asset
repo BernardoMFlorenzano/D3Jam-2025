@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Combate1
   m_EditorClassIdentifier: 
   listaWaves:
+  - {fileID: 11400000, guid: c7e821f7a4f37b04eb1a79aef33c49dd, type: 2}
   - {fileID: 11400000, guid: 5b898bdfe01537946b8fc1a9d1ef3925, type: 2}
   delayEntreWaves: 5
   tempoMaxWave: 20

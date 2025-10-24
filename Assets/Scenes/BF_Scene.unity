@@ -6281,7 +6281,7 @@ MonoBehaviour:
     space: 0
   m_DeprecatedInstances: []
   m_AutoRefresh: 1
-  m_Seed: 1600064431
+  m_Seed: 1960827302
 --- !u!114 &1259696394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8433,7 +8433,7 @@ MonoBehaviour:
   sofrendoKnockback: 0
   recupDano: 0
   agindo: 0
-  vidaMax: 10
+  vidaMax: 30
   morreu: 0
   tempoInvenc: 1
   tempoInvencPos: 0.5
@@ -8920,7 +8920,7 @@ MonoBehaviour:
     space: 0
   m_DeprecatedInstances: []
   m_AutoRefresh: 1
-  m_Seed: -853996310
+  m_Seed: 87838516
 --- !u!114 &1623755110
 MonoBehaviour:
   m_ObjectHideFlags: 0
