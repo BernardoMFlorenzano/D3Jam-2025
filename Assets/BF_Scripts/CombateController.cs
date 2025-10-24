@@ -44,10 +44,10 @@ public class CombateController : MonoBehaviour
 
         acabouCombates = true;
 
-        yield return new WaitUntil(() => spawner.desligado == false);
+        //yield return new WaitUntil(() => spawner.desligado == false);
         // Agora espera acabar o ultimo combate
-        yield return new WaitUntil(() => spawner.desligado == true);
-        gameManager.TrocaCena(2); // Acaba jogo
+        //yield return new WaitUntil(() => spawner.desligado == true);
+        //gameManager.TrocaCena(2); // Acaba jogo
     }
     
     void DesativaBackTrack(float x)
