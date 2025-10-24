@@ -27,6 +27,7 @@ public class MovimentoPlayer : MonoBehaviour
     private ImpulsoCima impulsoPulo;
     private bool puloInput;
     public bool estaNoChao;
+    private Vector2 direcaoPulo;
 
     [Header("Ataque")]
     [SerializeField] private GameObject rangeCorpo;
@@ -143,15 +144,13 @@ public class MovimentoPlayer : MonoBehaviour
         if (agindo)   // Não deixa player dar input
             return;
 
-        if (estaNoChao)
-        {
-            direcaoInput.x = Input.GetAxisRaw("Horizontal");
-            direcaoInput.y = Input.GetAxisRaw("Vertical");
-            if (direcaoInput.x < 0 && !virado)
-                Flip();
-            else if (direcaoInput.x > 0 && virado)
-                Flip();
-        }
+    
+        direcaoInput.x = Input.GetAxisRaw("Horizontal");
+        direcaoInput.y = Input.GetAxisRaw("Vertical");
+        if (direcaoInput.x < 0 && !virado)
+            Flip();
+        else if (direcaoInput.x > 0 && virado)
+            Flip();
 
         if (estaEmCombo && direcaoInput.magnitude > 0.1f)
         {
@@ -179,11 +178,21 @@ public class MovimentoPlayer : MonoBehaviour
 
         direcaoInput.Normalize();
 
-        velMovTarget.x = direcaoInput.x * velPlayerHor;
-        velMovTarget.y = direcaoInput.y * velPlayerVer;
+        if (estaNoChao)
+        {
+            velMovTarget.x = direcaoInput.x * velPlayerHor;
+            velMovTarget.y = direcaoInput.y * velPlayerVer;
 
-        rb.linearVelocity = velMovTarget;
+            rb.linearVelocity = velMovTarget;
+        }
+        else
+        {
+            velMovTarget.x = direcaoPulo.x * velPlayerHor;
+            velMovTarget.y = direcaoPulo.y * velPlayerVer;
 
+            rb.linearVelocity = velMovTarget;
+        }
+        
         if (direcaoInput.magnitude > 0.1f && rb.linearVelocity.magnitude > 0.1f && estaNoChao)
         {
             SomGrama();
@@ -191,6 +200,7 @@ public class MovimentoPlayer : MonoBehaviour
 
         if (puloInput && estaNoChao)
         {
+            direcaoPulo = direcaoInput;
             StartCoroutine(impulsoPulo.Impulso(alturaPulo, duracaoPulo, duracaoQueda));
             puloInput = false;
             estaNoChao = false;
