@@ -17,5 +17,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5b898bdfe01537946b8fc1a9d1ef3925, type: 2}
   delayEntreWaves: 5
   tempoMaxWave: 20
-  maxInimigos: 5
+  maxInimigos: 3
   minInimigoPassaWave: 0
