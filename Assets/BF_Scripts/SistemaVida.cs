@@ -100,7 +100,20 @@ public class SistemaVida : MonoBehaviour
         // Avisa spawner
         spawner.numInimigos--;
 
-        Destroy(gameObject, tempoMorto);
+        StartCoroutine(DesapareceInimigo());
+    }
+
+    IEnumerator DesapareceInimigo()
+    {
+        yield return new WaitForSeconds(tempoMorto);
+        Color corEfeito = new Color(1f, 1f, 1f, 1f);
+        while(corEfeito.a > 0f)
+        {
+            corEfeito.a -= 0.1f;
+            spriteRenderer.color = corEfeito;
+            yield return new WaitForSeconds(0.05f);
+        }
+        Destroy(gameObject);
     }
 
     void MataPlayer()
@@ -115,7 +128,7 @@ public class SistemaVida : MonoBehaviour
         gameManager.TrocaCena(3);   // Morte
     }
 
-    public void LevaAtaqueCorte(int tipo, int dano, bool knockback, float forcaKnockback, GameObject atacante)
+    public void LevaAtaqueCorte(int tipo, int dano, bool knockback, float forcaKnockback, bool shake, float forcaShake, GameObject atacante)
     {
         if (atingivelBase && !CompareTag("Player"))
         {
@@ -159,9 +172,9 @@ public class SistemaVida : MonoBehaviour
             TocaSomHit();
             if (particulasDano)
                 CriaParticulasDano();
-            if (dano > 1)
+            if (shake)
             {
-                shakeCamera.Shake(2f,0.25f);
+                shakeCamera.Shake(forcaShake,0.25f);
             }
 
             if (vidaAtual <= 0 && !morreu)
@@ -191,7 +204,7 @@ public class SistemaVida : MonoBehaviour
         }
     }
 
-    public void LevaAtaqueEstocada(int tipo, int dano, bool knockback, float forcaKnockback, GameObject atacante)
+    public void LevaAtaqueEstocada(int tipo, int dano, bool knockback, float forcaKnockback, bool shake, float forcaShake, GameObject atacante)
     {
         if (atingivelBase && !CompareTag("Player"))
         {
@@ -236,9 +249,9 @@ public class SistemaVida : MonoBehaviour
             TocaSomHit();
             if (particulasDano)
                 CriaParticulasDano();
-            if (dano > 1)
+            if (shake)
             {
-                shakeCamera.Shake(2f,0.25f);
+                shakeCamera.Shake(forcaShake,0.25f);
             }
 
             if (vidaAtual <= 0 && !morreu)

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -294,7 +295,7 @@ public class MovimentoPlayer : MonoBehaviour
         {
             if (ataqueModo == 1)
             {
-                SetarColisorVars(1, ataqueModo, cortePadrao.dano, cortePadrao.knockback, cortePadrao.forcaKnockback);
+                SetarColisorVars(1, ataqueModo, cortePadrao.dano, cortePadrao.knockback, cortePadrao.forcaKnockback, cortePadrao.shake, cortePadrao.forcaShake);
                 SetarHitBox(sizeBoxCorte, offsetBoxCorte);
                 animatorPlayer.SetTrigger("Corte");
                 animatorEfeitoAtaque.SetTrigger("Corte");
@@ -303,7 +304,7 @@ public class MovimentoPlayer : MonoBehaviour
             }
             else if (ataqueModo == 2)
             {
-                SetarColisorVars(1, ataqueModo, estocPadrao.dano, estocPadrao.knockback, estocPadrao.forcaKnockback);
+                SetarColisorVars(1, ataqueModo, estocPadrao.dano, estocPadrao.knockback, estocPadrao.forcaKnockback, estocPadrao.shake, estocPadrao.forcaShake);
                 SetarHitBox(sizeBoxEstocada, offsetBoxEstocada);
                 animatorPlayer.SetTrigger("Estocada");
                 animatorEfeitoAtaque.SetTrigger("Estocada");
@@ -352,7 +353,7 @@ public class MovimentoPlayer : MonoBehaviour
             // Combo 1
             if (comboCount < combo1.Count && comboEfetuado[comboCount] == combo1[comboCount].modoAtaque && comboEfetuado[comboCount - 1] == combo1[comboCount - 1].modoAtaque)
             {
-                SetarColisorVars(1, ataqueModo, combo1[comboCount].dano, combo1[comboCount].knockback, combo1[comboCount].forcaKnockback);
+                SetarColisorVars(1, ataqueModo, combo1[comboCount].dano, combo1[comboCount].knockback, combo1[comboCount].forcaKnockback, combo1[comboCount].shake, combo1[comboCount].forcaShake);
                 SetarHitBox(combo1[comboCount].boxSize, combo1[comboCount].boxOffset);
                 efeitoAtaque.SetarEfeitoPosEscala(combo1[comboCount].posEfeito, combo1[comboCount].escalaEfeito, combo1[comboCount].invertido, Vector3.zero);
                 AudioManager.instance.PlaySFX(combo1[comboCount].efeitoSlash, 1f);
@@ -367,7 +368,7 @@ public class MovimentoPlayer : MonoBehaviour
             // Combo 2
             else if (comboCount < combo2.Count && comboEfetuado[comboCount] == combo2[comboCount].modoAtaque && comboEfetuado[comboCount - 1] == combo2[comboCount - 1].modoAtaque)
             {
-                SetarColisorVars(1, ataqueModo, combo2[comboCount].dano, combo2[comboCount].knockback, combo2[comboCount].forcaKnockback);
+                SetarColisorVars(1, ataqueModo, combo2[comboCount].dano, combo2[comboCount].knockback, combo2[comboCount].forcaKnockback, combo2[comboCount].shake, combo2[comboCount].forcaShake);
                 SetarHitBox(combo2[comboCount].boxSize, combo2[comboCount].boxOffset);
                 efeitoAtaque.SetarEfeitoPosEscala(combo2[comboCount].posEfeito, combo2[comboCount].escalaEfeito, combo2[comboCount].invertido, Vector3.zero);
                 AudioManager.instance.PlaySFX(combo2[comboCount].efeitoSlash, 1f);
@@ -382,7 +383,7 @@ public class MovimentoPlayer : MonoBehaviour
             // Combo 3
             else if (comboCount < combo3.Count && comboEfetuado[comboCount] == combo3[comboCount].modoAtaque && comboEfetuado[comboCount - 1] == combo3[comboCount - 1].modoAtaque)
             {
-                SetarColisorVars(1, ataqueModo, combo3[comboCount].dano, combo3[comboCount].knockback, combo3[comboCount].forcaKnockback);
+                SetarColisorVars(1, ataqueModo, combo3[comboCount].dano, combo3[comboCount].knockback, combo3[comboCount].forcaKnockback, combo3[comboCount].shake, combo3[comboCount].forcaShake);
                 SetarHitBox(combo3[comboCount].boxSize, combo3[comboCount].boxOffset);
                 efeitoAtaque.SetarEfeitoPosEscala(combo3[comboCount].posEfeito, combo3[comboCount].escalaEfeito, combo3[comboCount].invertido, Vector3.zero);
                 AudioManager.instance.PlaySFX(combo3[comboCount].efeitoSlash, 1f);
@@ -397,7 +398,7 @@ public class MovimentoPlayer : MonoBehaviour
             // Combo 4
             else if (comboCount < combo4.Count && comboEfetuado[comboCount] == combo4[comboCount].modoAtaque && comboEfetuado[comboCount - 1] == combo4[comboCount - 1].modoAtaque)
             {
-                SetarColisorVars(1, ataqueModo, combo4[comboCount].dano, combo4[comboCount].knockback, combo4[comboCount].forcaKnockback);
+                SetarColisorVars(1, ataqueModo, combo4[comboCount].dano, combo4[comboCount].knockback, combo4[comboCount].forcaKnockback, combo4[comboCount].shake, combo4[comboCount].forcaShake);
                 SetarHitBox(combo4[comboCount].boxSize, combo4[comboCount].boxOffset);
                 efeitoAtaque.SetarEfeitoPosEscala(combo4[comboCount].posEfeito, combo4[comboCount].escalaEfeito, combo4[comboCount].invertido, Vector3.zero);
                 AudioManager.instance.PlaySFX(combo4[comboCount].efeitoSlash, 1f);
@@ -416,7 +417,7 @@ public class MovimentoPlayer : MonoBehaviour
             // Não achou combo, então ataca normalmente e acaba combo
             else
             {
-                SetarColisorVars(1, ataqueModo, 1, false, 0);
+                SetarColisorVars(1, ataqueModo, 1, false, 0, false, 0);
                 if (ataqueModo == 1)
                 {
                     SetarHitBox(sizeBoxCorte, offsetBoxCorte);   // Hitbox padrão
@@ -499,7 +500,7 @@ public class MovimentoPlayer : MonoBehaviour
         if (ataqueModo == 1)
         {
             SetarHitBox(sizeBoxCorteAr, offsetBoxCorteAr); 
-            SetarColisorVars(2, ataqueModo, corteArPadrao.dano, corteArPadrao.knockback, corteArPadrao.forcaKnockback); // ataque no ar
+            SetarColisorVars(2, ataqueModo, corteArPadrao.dano, corteArPadrao.knockback, corteArPadrao.forcaKnockback, corteArPadrao.shake, corteArPadrao.forcaShake); // ataque no ar
             //animatorPlayer.SetTrigger("Corte");
             animatorEfeitoAtaque.SetTrigger("Corte");
             efeitoAtaque.SetarEfeitoPosEscala(corteArPadrao.posEfeito, corteArPadrao.escalaEfeito, corteArPadrao.invertido, Vector3.zero);
@@ -508,7 +509,7 @@ public class MovimentoPlayer : MonoBehaviour
         else if (ataqueModo == 2)
         {
             SetarHitBox(sizeBoxEstocadaAr, offsetBoxEstocadaAr);
-            SetarColisorVars(2, ataqueModo, estocArPadrao.dano, estocArPadrao.knockback, estocArPadrao.forcaKnockback); // ataque no ar
+            SetarColisorVars(2, ataqueModo, estocArPadrao.dano, estocArPadrao.knockback, estocArPadrao.forcaKnockback, estocArPadrao.shake, estocArPadrao.forcaShake); // ataque no ar
 
             // Box do chao é diferente
             boxBase.size = sizeBoxEstocArChao;
@@ -541,12 +542,14 @@ public class MovimentoPlayer : MonoBehaviour
         
     }
 
-    public void SetarColisorVars(int condicaoAtaque, int ataqueModo, int dano, bool knockback, float forcaKnockback)
+    public void SetarColisorVars(int condicaoAtaque, int ataqueModo, int dano, bool knockback, float forcaKnockback, bool shake, float forcaShake)
     {
         colisorCorpo.condicaoAtaque = condicaoAtaque;    // ataque no chao
         colisorCorpo.modoAtaque = ataqueModo;   // corte ou estocada
         colisorCorpo.dano = dano;
         colisorCorpo.knockback = knockback;
         colisorCorpo.forcaKnockback = forcaKnockback;
+        colisorCorpo.shake = shake;
+        colisorCorpo.forcaShake = forcaShake;
     }
 }

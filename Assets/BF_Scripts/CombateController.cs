@@ -14,6 +14,8 @@ public class CombateController : MonoBehaviour
     private Coroutine corAtivaCombate;
     private PassaCena gameManager;
     public bool acabouCombates;
+    private bool tocouMusica;
+    [SerializeField] private AudioClip musicaCombate;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -36,6 +38,12 @@ public class CombateController : MonoBehaviour
             yield return new WaitUntil(() => cameraPos.position.x >= xPosCombates[contCombate]);
 
             DesativaBackTrack(xPosCombates[contCombate]);
+
+            if(!tocouMusica)
+            {
+                tocouMusica = true;
+                AudioManager.instance.PlayMusic(musicaCombate);
+            }
 
             spawner.combate = combate;
             spawner.desligado = false;

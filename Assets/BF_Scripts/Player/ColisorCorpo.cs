@@ -7,6 +7,8 @@ public class ColisorCorpo : MonoBehaviour
     public int dano;
     public bool knockback;
     public float forcaKnockback;
+    public bool shake;
+    public float forcaShake;
     private SistemaVida sistemaVida;
     [SerializeField] private GameObject gameObjectPrincipal;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -28,12 +30,12 @@ public class ColisorCorpo : MonoBehaviour
             sistemaVida = collision.GetComponentInParent<SistemaVida>();
             if (modoAtaque == 1)
             {
-                sistemaVida.LevaAtaqueCorte(condicaoAtaque, dano, knockback, forcaKnockback, gameObjectPrincipal);
+                sistemaVida.LevaAtaqueCorte(condicaoAtaque, dano, knockback, forcaKnockback, shake, forcaShake, gameObjectPrincipal);
             }
             else if (modoAtaque == 2)
             {
                 //Debug.Log("Tenta dar dano de estocada");
-                sistemaVida.LevaAtaqueEstocada(condicaoAtaque, dano, knockback, forcaKnockback, gameObjectPrincipal);
+                sistemaVida.LevaAtaqueEstocada(condicaoAtaque, dano, knockback, forcaKnockback, shake, forcaShake, gameObjectPrincipal);
             }
         }
     }
