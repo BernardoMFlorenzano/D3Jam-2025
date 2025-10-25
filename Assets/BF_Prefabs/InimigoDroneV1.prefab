@@ -70,7 +70,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6039226610278790047, guid: 25df433e18623184ea90c711082a9024, type: 3}
       propertyPath: forcaKnockbackAtaque
-      value: 10
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6039226610278790047, guid: 25df433e18623184ea90c711082a9024, type: 3}
       propertyPath: tempoParadoPosAtaque

@@ -12,8 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cb80bd5a7f1be245984c68db8402e00, type: 3}
   m_Name: Combate9
   m_EditorClassIdentifier: 
-  listaWaves: []
+  listaWaves:
+  - {fileID: 11400000, guid: 30dd1ba2938df18478fd3584f766e1fa, type: 2}
+  - {fileID: 11400000, guid: b66148615f81e4542be13994e8ed066c, type: 2}
+  - {fileID: 11400000, guid: 30dd1ba2938df18478fd3584f766e1fa, type: 2}
+  - {fileID: 11400000, guid: b66148615f81e4542be13994e8ed066c, type: 2}
+  - {fileID: 11400000, guid: 30dd1ba2938df18478fd3584f766e1fa, type: 2}
+  - {fileID: 11400000, guid: b66148615f81e4542be13994e8ed066c, type: 2}
+  - {fileID: 11400000, guid: 4ba39051e4c0f914ebd8aef2c88a0b21, type: 2}
   delayEntreWaves: 2
-  tempoMaxWave: 10
-  maxInimigos: 5
+  tempoMaxWave: 5
+  maxInimigos: 30
   minInimigoPassaWave: 1

@@ -15,6 +15,7 @@ MonoBehaviour:
   listaWaves:
   - {fileID: 11400000, guid: f2c7a664b2b552e41a19fa4372d7b287, type: 2}
   - {fileID: 11400000, guid: f2c7a664b2b552e41a19fa4372d7b287, type: 2}
+  - {fileID: 11400000, guid: f2c7a664b2b552e41a19fa4372d7b287, type: 2}
   delayEntreWaves: 5
   tempoMaxWave: 20
   maxInimigos: 5

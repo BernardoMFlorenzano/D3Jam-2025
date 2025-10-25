@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Combate3
   m_EditorClassIdentifier: 
   listaWaves:
+  - {fileID: 11400000, guid: f2c7a664b2b552e41a19fa4372d7b287, type: 2}
   - {fileID: 11400000, guid: eb4f528e3556350429703f8e477bf1c3, type: 2}
   - {fileID: 11400000, guid: cbf56cbdb95258a4dbbd808462875d10, type: 2}
   - {fileID: 11400000, guid: eb4f528e3556350429703f8e477bf1c3, type: 2}

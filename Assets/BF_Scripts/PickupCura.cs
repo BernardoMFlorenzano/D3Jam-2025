@@ -3,6 +3,7 @@ using UnityEngine;
 public class PickupCura : MonoBehaviour
 {
     [SerializeField] private int cura;
+    [SerializeField] private AudioClip curaSom;
     private SistemaVida sistemaVida;
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -14,6 +15,7 @@ public class PickupCura : MonoBehaviour
             if (sistemaVida)
             {
                 sistemaVida.Cura(cura);
+                AudioManager.instance.PlaySFX(curaSom,1f);
             }
             Debug.Log("Curou");
             Destroy(gameObject);

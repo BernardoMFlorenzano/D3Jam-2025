@@ -781,6 +781,7 @@ MonoBehaviour:
   layerObjetosNome: 
   animatorPlayer: {fileID: 0}
   animatorDrone: {fileID: 0}
+  posChaoDrone: 0.4
 --- !u!114 &8843119527186386392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -852,7 +853,7 @@ MonoBehaviour:
   sizeBoxDano: {x: 0, y: 0}
   offsetBoxRangeAtaque: {x: 0, y: 0}
   sizeBoxRangeAtaque: {x: 0, y: 0}
-  cooldownAtaque: 10
+  cooldownAtaque: 6
   tempoParadoPosAtaque: 2
   velInimigoHorRasante: 6
   velInimigoVerRasante: 3.5
@@ -881,6 +882,7 @@ MonoBehaviour:
   layerObjetosNome: 
   animatorPlayer: {fileID: 0}
   animatorDrone: {fileID: 8448991945719089523}
+  posChaoDrone: 0.4
 --- !u!82 &3755760797265865131
 AudioSource:
   m_ObjectHideFlags: 0

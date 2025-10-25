@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1738644745382752714, guid: 6eaef844d60cae64b8868f956830642b, type: 3}
       propertyPath: vidaMax
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2069038235622414186, guid: 6eaef844d60cae64b8868f956830642b, type: 3}
       propertyPath: danoAtaque
