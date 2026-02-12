@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using System.Data.Common;
+
 //using System.Numerics;
 using TMPro;
 using UnityEngine;
@@ -48,6 +50,7 @@ public class SistemaVida : MonoBehaviour
     [SerializeField] private AudioClip danoInimigo3;
     [SerializeField] private float volumeDanoMult;
     [SerializeField] private AudioSource somPassivo;
+    private ShakeCamera shakeCamera;
 
     [Header("Spawner")]
     private SpawnWaves spawner;
@@ -59,6 +62,7 @@ public class SistemaVida : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         spawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<SpawnWaves>();
+        shakeCamera = GameObject.FindGameObjectWithTag("CineMachine").GetComponent<ShakeCamera>();
         vidaAtual = vidaMax;
         podeLevarDano = true;
         morreu = false;
@@ -155,7 +159,10 @@ public class SistemaVida : MonoBehaviour
             TocaSomHit();
             if (particulasDano)
                 CriaParticulasDano();
-
+            if (dano > 1)
+            {
+                shakeCamera.Shake(2f,0.25f);
+            }
 
             if (vidaAtual <= 0 && !morreu)
             {
@@ -229,6 +236,10 @@ public class SistemaVida : MonoBehaviour
             TocaSomHit();
             if (particulasDano)
                 CriaParticulasDano();
+            if (dano > 1)
+            {
+                shakeCamera.Shake(2f,0.25f);
+            }
 
             if (vidaAtual <= 0 && !morreu)
             {

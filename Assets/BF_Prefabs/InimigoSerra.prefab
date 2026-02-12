@@ -5251,7 +5251,7 @@ MonoBehaviour:
   velInimigoHorPatrulha: 3.25
   velInimigoVerPatrulha: 2
   distanciaIdealX: 3.5
-  tempoPreparaAtaque: 2
+  tempoPreparaAtaque: 0.75
   danoPassivo: 1
   tempoDeRespostaInimigo: 0.5
   podeTentarAtacar: 0
@@ -5262,7 +5262,7 @@ MonoBehaviour:
   sizeBoxDano: {x: 1.3, y: 0.3}
   offsetBoxRangeAtaque: {x: 1.85, y: 0}
   sizeBoxRangeAtaque: {x: 3.65, y: 0.75}
-  cooldownAtaque: 6
+  cooldownAtaque: 3.5
   tempoParadoPosAtaque: 2
   velBaseInimigoHorCorrida: 10
   velMaxInimigoHorCorrida: 15

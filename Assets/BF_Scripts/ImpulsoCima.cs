@@ -14,6 +14,7 @@ public class ImpulsoCima: MonoBehaviour
     private int layerObjetos;
     [SerializeField] private Animator animatorPlayer;
     [SerializeField] private Animator animatorDrone;
+    [SerializeField] private float posChaoDrone = 0.4f;
 
 
 
@@ -119,7 +120,7 @@ public class ImpulsoCima: MonoBehaviour
         // inimigoDrone.acabouRasante já é falso
 
         Vector2 posicaoInicial = transformCorpo.localPosition;
-        Vector2 posicaoBase = Vector2.zero;
+        Vector2 posicaoBase = new Vector2(0, posChaoDrone);
 
         subindo = false;
         caindo = true;

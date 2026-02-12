@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2247ec47b523fd946938ddf4efeaa13c, type: 3}
-  m_Name: Wave10
+  m_Name: WaveTutorial
   m_EditorClassIdentifier: 
-  inimigosWave: []
+  inimigosWave:
+  - {fileID: 3395394184713998687, guid: 6eaef844d60cae64b8868f956830642b, type: 3}
   intervaloSpawn: 3
-  lado: 2
+  lado: 1
