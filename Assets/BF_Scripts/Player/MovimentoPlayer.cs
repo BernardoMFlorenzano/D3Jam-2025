@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection.Emit;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -117,7 +118,8 @@ public class MovimentoPlayer : MonoBehaviour
 
     public void OnJump()
     {
-        puloInput = true;
+        if (estaNoChao)
+            puloInput = true;
     }
 
     public void OnCorte()
@@ -184,10 +186,12 @@ public class MovimentoPlayer : MonoBehaviour
 
             rb.linearVelocity = velMovTarget;
         }
-        else
+        else    // Mudança do movimento no pulo
         {
-            velMovTarget.x = direcaoPulo.x * velPlayerHor;
-            velMovTarget.y = direcaoPulo.y * velPlayerVer;
+            //velMovTarget.x = direcaoPulo.x * velPlayerHor;
+            //velMovTarget.y = direcaoPulo.y * velPlayerVer;
+            velMovTarget.x = direcaoInput.x * velPlayerHor;
+            velMovTarget.y = direcaoInput.y * velPlayerVer;
 
             rb.linearVelocity = velMovTarget;
         }
@@ -291,6 +295,8 @@ public class MovimentoPlayer : MonoBehaviour
     {
         if (!estaEmCombo)
         {
+            Debug.Log(comboCount);
+
             if (ataqueModo == 1)
             {
                 SetarColisorVars(1, ataqueModo, cortePadrao.dano, cortePadrao.knockback, cortePadrao.forcaKnockback, cortePadrao.shake, cortePadrao.forcaShake);
@@ -478,6 +484,7 @@ public class MovimentoPlayer : MonoBehaviour
 
     void ResetarCombo()
     {
+        Debug.Log("Resetou combo");
         estaEmCombo = false;
         podeEntrarCombo = true;
         //acabouCombo = false;
