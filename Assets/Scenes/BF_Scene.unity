@@ -1520,7 +1520,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4926581890979392868, guid: f02faf5306d01f841814cca5216a97d0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4926581890979392868, guid: f02faf5306d01f841814cca5216a97d0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2291,7 +2291,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 878951129991361548, guid: a9ecd45fec8c08e4a85c3d42d6ca163c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 878951129991361548, guid: a9ecd45fec8c08e4a85c3d42d6ca163c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3076,7 +3076,7 @@ Transform:
   m_GameObject: {fileID: 704887195}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.96, y: -0.42, z: 2}
+  m_LocalPosition: {x: -10.96, y: -0.42, z: 1}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3185,7 +3185,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7813384857536054187, guid: 684a5561edb0420449f8da3859502c00, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7813384857536054187, guid: 684a5561edb0420449f8da3859502c00, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3581,7 +3581,7 @@ MonoBehaviour:
     Probability: 33
   m_Method: 1
   m_Space: 2
-  m_Spacing: {x: 5, y: 20}
+  m_Spacing: {x: 1, y: 20}
   m_Up: 1
   m_Forward: 2
   m_PositionOffset:
@@ -3610,7 +3610,7 @@ MonoBehaviour:
     space: 0
   m_DeprecatedInstances: []
   m_AutoRefresh: 1
-  m_Seed: -85244432
+  m_Seed: 608732017
 --- !u!114 &886795043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3653,10 +3653,10 @@ MonoBehaviour:
         z: 4
       Rotation:
         value:
-          x: -0.5
-          y: 0.5
-          z: -0.5
-          w: 0.5
+          x: 0.50000006
+          y: -0.49999994
+          z: 0.50000006
+          w: -0.49999994
     - Position:
         x: 40
         y: 0
@@ -3700,7 +3700,7 @@ Transform:
   m_GameObject: {fileID: 886795041}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.01, y: -8.15, z: 0}
+  m_LocalPosition: {x: 7.01, y: -6.94, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7857,7 +7857,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 878951129991361548, guid: a9ecd45fec8c08e4a85c3d42d6ca163c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 878951129991361548, guid: a9ecd45fec8c08e4a85c3d42d6ca163c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8311,21 +8311,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a30dc75ad9225e6419879116393a1766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velPlayerHor: 5
-  velPlayerVer: 3
+  velPlayerHor: 5.5
+  velPlayerVer: 3.3
   animatorPlayer: {fileID: 209119855}
   animatorEfeitoAtaque: {fileID: 1820233057}
   efeitoAtaque: {fileID: 1820233059}
   duracaoPulo: 0.5
-  duracaoQueda: 0.4
+  duracaoQueda: 0.35
   alturaPulo: 2
-  delayPosPulo: 0.5
+  delayPosPulo: 0.4
   estaNoChao: 0
   rangeCorpo: {fileID: 2094570081}
   rangeBase: {fileID: 1211273531}
   armaAtual: 0
   agindo: 0
-  delayAtaquePadrao: 0.4
+  delayAtaquePadrao: 0.3
   offsetBoxEstocada: {x: 1.75, y: 0}
   sizeBoxEstocada: {x: 3.5, y: 0.9}
   indexEstocada: 2
@@ -8936,7 +8936,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4926581890979392868, guid: f02faf5306d01f841814cca5216a97d0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4926581890979392868, guid: f02faf5306d01f841814cca5216a97d0, type: 3}
       propertyPath: m_LocalRotation.w
