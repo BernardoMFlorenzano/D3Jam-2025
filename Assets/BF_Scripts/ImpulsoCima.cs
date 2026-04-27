@@ -12,9 +12,15 @@ public class ImpulsoCima: MonoBehaviour
     [SerializeField] private string layerObjetosNome;
     private int layerPlayer;
     private int layerObjetos;
-    [SerializeField] private Animator animatorPlayer;
+    [SerializeField] private Animator animator;
     [SerializeField] private Animator animatorDrone;
     [SerializeField] private float posChaoDrone = 0.4f;
+
+    private float posicaoYInicial;
+    private float velocidadeYAtual = 0f;
+    [SerializeField] private float gravidade = 20f;
+    //[SerializeField] private float multGravCaindo = 1.33f; // Multiplicador da gravidade se estiver caindo
+    [SerializeField] private float capVelocidadeY = 20f;
 
 
 
@@ -31,7 +37,82 @@ public class ImpulsoCima: MonoBehaviour
         layerObjetos = LayerMask.NameToLayer(layerObjetosNome);
         subindo = false;
         caindo = false;
+
+        posicaoYInicial = transformCorpo.localPosition.y;
     }
+
+    void Update()
+    {
+
+    }
+
+    void FixedUpdate()
+    {
+        if (CompareTag("InimigoVoador"))
+            return; // nada
+
+        else 
+        {
+            if (transformCorpo.localPosition.y > posicaoYInicial)
+            {
+                velocidadeYAtual += -gravidade * Time.deltaTime;
+
+                if (velocidadeYAtual > 0 && !subindo)
+                {
+                    subindo = true;
+                    caindo = false;
+
+                    if (CompareTag("Player"))
+                    {
+                        movimentoPlayer.estaNoChao = false;
+                        Physics2D.IgnoreLayerCollision(layerPlayer, layerObjetos, true);
+                    }
+                    
+                }
+                else if (velocidadeYAtual < 0 && !caindo) 
+                {
+                    subindo = false;
+                    caindo = true;
+                }
+            }
+            else if (transformCorpo.localPosition.y < posicaoYInicial)
+            {
+                velocidadeYAtual = 0;
+                transformCorpo.localPosition = new Vector2(transformCorpo.localPosition.x, posicaoYInicial);
+
+                subindo = false;
+                caindo = false;
+
+                if (CompareTag("Player"))
+                {
+                    movimentoPlayer.estaNoChao = true;
+                    Physics2D.IgnoreLayerCollision(layerPlayer, layerObjetos, false);
+                }
+            }
+
+            
+            if (Mathf.Abs(velocidadeYAtual) > 0)
+            {
+                if (Mathf.Abs(velocidadeYAtual) > capVelocidadeY) // Limite de velocidade
+                    velocidadeYAtual = capVelocidadeY * Mathf.Sign(velocidadeYAtual);
+
+                transformCorpo.localPosition = new Vector2(transformCorpo.localPosition.x, transformCorpo.localPosition.y + velocidadeYAtual * Time.deltaTime);
+            }
+
+            if (animator)
+            {
+                animator.SetBool("Pulando", subindo);
+                animator.SetBool("Caindo", caindo);
+            }
+        }
+    }
+
+    public void ForcaPraCima(float velocidade)
+    {
+        if (!CompareTag("InimigoVoador"))
+            velocidadeYAtual = velocidade;
+    }
+
 
     public IEnumerator Impulso(float altura, float duracaoSubida, float duracaoDescida) // Logica de layer collision está desativada
     {
@@ -48,10 +129,10 @@ public class ImpulsoCima: MonoBehaviour
         caindo = false;
 
         // Animacoes
-        if (animatorPlayer)
+        if (animator)
         {
-            animatorPlayer.SetBool("Pulando", subindo);
-            animatorPlayer.SetBool("Caindo", caindo);
+            animator.SetBool("Pulando", subindo);
+            animator.SetBool("Caindo", caindo);
         }
 
 
@@ -77,10 +158,10 @@ public class ImpulsoCima: MonoBehaviour
         caindo = true;
 
         // Animacoes
-        if (animatorPlayer)
+        if (animator)
         {
-            animatorPlayer.SetBool("Pulando", subindo);
-            animatorPlayer.SetBool("Caindo", caindo);
+            animator.SetBool("Pulando", subindo);
+            animator.SetBool("Caindo", caindo);
         }
 
         tempoDecorrido = 0f;
@@ -108,10 +189,10 @@ public class ImpulsoCima: MonoBehaviour
         //Debug.Log("Caiu");
 
         // Animacoes
-        if (animatorPlayer)
+        if (animator)
         {
-            animatorPlayer.SetBool("Pulando", subindo);
-            animatorPlayer.SetBool("Caindo", caindo);
+            animator.SetBool("Pulando", subindo);
+            animator.SetBool("Caindo", caindo);
         }
     }
     

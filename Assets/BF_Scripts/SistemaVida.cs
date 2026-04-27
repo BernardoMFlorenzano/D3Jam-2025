@@ -52,6 +52,10 @@ public class SistemaVida : MonoBehaviour
     [SerializeField] private AudioSource somPassivo;
     private ShakeCamera shakeCamera;
 
+    [Header("Movimento Vertical")]
+    [SerializeField] private float impulsoCimaVel = 0f; // Velocidade pra cima causado por ataques de knockback 
+    private ImpulsoCima impulsoCima; 
+
     [Header("Spawner")]
     private SpawnWaves spawner;
     
@@ -61,6 +65,7 @@ public class SistemaVida : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        impulsoCima = GetComponent<ImpulsoCima>();
         spawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<SpawnWaves>();
         shakeCamera = GameObject.FindGameObjectWithTag("CineMachine").GetComponent<ShakeCamera>();
         vidaAtual = vidaMax;
@@ -148,6 +153,8 @@ public class SistemaVida : MonoBehaviour
                     sofrendoKnockback = true;
                     rb.linearVelocity = Vector2.zero;
                     rb.AddForce(new Vector2(1 * MathF.Sign(direcao.x) * forcaKnockback * multKnockback, 0), ForceMode2D.Impulse);
+                    
+                    impulsoCima.ForcaPraCima(impulsoCimaVel * forcaKnockback/300);
                 }
             }
             else if (tipo == 2)
@@ -166,6 +173,8 @@ public class SistemaVida : MonoBehaviour
                     sofrendoKnockback = true;
                     rb.linearVelocity = Vector2.zero;
                     rb.AddForce(new Vector2(1 * MathF.Sign(direcao.x) * forcaKnockback * multKnockback, 0), ForceMode2D.Impulse);
+                    
+                    impulsoCima.ForcaPraCima(impulsoCimaVel * forcaKnockback/300);
                 }
             }
 
@@ -225,6 +234,8 @@ public class SistemaVida : MonoBehaviour
                     sofrendoKnockback = true;
                     rb.linearVelocity = Vector2.zero;
                     rb.AddForce(new Vector2(1 * MathF.Sign(direcao.x) * forcaKnockback * multKnockback, 0), ForceMode2D.Impulse);
+
+                    impulsoCima.ForcaPraCima(impulsoCimaVel * forcaKnockback/300);
                 }
             }
             else if (tipo == 2)
@@ -243,6 +254,8 @@ public class SistemaVida : MonoBehaviour
                     sofrendoKnockback = true;
                     rb.linearVelocity = Vector2.zero;
                     rb.AddForce(new Vector2(1 * MathF.Sign(direcao.x) * forcaKnockback * multKnockback, 0), ForceMode2D.Impulse);
+                    
+                    impulsoCima.ForcaPraCima(impulsoCimaVel * forcaKnockback/300);
                 }
             }
 
@@ -342,6 +355,8 @@ public class SistemaVida : MonoBehaviour
                 //sofrendoKnockback = true;
                 rb.linearVelocity = Vector2.zero;
                 rb.AddForce(new Vector2(MathF.Sign(direcao.x) * forcaKnockback * multKnockback, 0), ForceMode2D.Impulse);
+
+                impulsoCima.ForcaPraCima(impulsoCimaVel);
             }
 
             Debug.Log("Vida do player: " + vidaAtual);
@@ -387,7 +402,7 @@ public class SistemaVida : MonoBehaviour
         while (animDano)
         {
             Debug.Log(vetorShake);
-            corpo.localPosition = vetorShake;
+            corpo.localPosition = new Vector2(vetorShake.x, corpo.localPosition.y);
             vetorShake.x -= 0.1f * MathF.Sign(vetorShake.x);
             yield return new WaitForSeconds(0.05f);
         }

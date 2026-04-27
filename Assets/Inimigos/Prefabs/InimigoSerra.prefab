@@ -5188,8 +5188,11 @@ MonoBehaviour:
   caindo: 0
   layerPlayerNome: 
   layerObjetosNome: 
-  animatorPlayer: {fileID: 0}
+  animator: {fileID: 0}
   animatorDrone: {fileID: 0}
+  posChaoDrone: 0.4
+  gravidade: 20
+  capVelocidadeY: 20
 --- !u!114 &1738644745382752714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5227,6 +5230,7 @@ MonoBehaviour:
   danoInimigo3: {fileID: 8300000, guid: 3e2dadee3ff375f48aeb43dc78ad5c7e, type: 3}
   volumeDanoMult: 0.5
   somPassivo: {fileID: -3103397500063101517}
+  impulsoCimaVel: 5
 --- !u!114 &2069038235622414186
 MonoBehaviour:
   m_ObjectHideFlags: 0

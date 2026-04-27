@@ -20,9 +20,10 @@ public class MovimentoPlayer : MonoBehaviour
     [SerializeField] private SetaEfeitoAtaque efeitoAtaque;
 
     [Header("Pulo")]
-    [SerializeField] private float duracaoPulo;
-    [SerializeField] private float duracaoQueda;
-    [SerializeField] private float alturaPulo;
+    //[SerializeField] private float duracaoPulo;
+    //[SerializeField] private float duracaoQueda;
+    //[SerializeField] private float alturaPulo;
+    [SerializeField] private float forcaPulo;
     [SerializeField] private float delayPosPulo;
     private ImpulsoCima impulsoPulo;
     private bool puloInput;
@@ -57,6 +58,7 @@ public class MovimentoPlayer : MonoBehaviour
     [SerializeField] private Vector2 sizeBoxEstocadaAr;
     [SerializeField] private Vector2 offsetBoxEstocArChao;
     [SerializeField] private Vector2 sizeBoxEstocArChao;
+    [SerializeField] private float impulsoEstocadaAr = 0f; // Quanto ao acertar a estocado no ar o player sobe
 
     [Header("Combos")]
     [SerializeField] private bool podeEntrarCombo;
@@ -204,7 +206,7 @@ public class MovimentoPlayer : MonoBehaviour
         if (puloInput && estaNoChao)
         {
             direcaoPulo = direcaoInput;
-            StartCoroutine(impulsoPulo.Impulso(alturaPulo, duracaoPulo, duracaoQueda));
+            impulsoPulo.ForcaPraCima(forcaPulo);
             puloInput = false;
             estaNoChao = false;
             animatorPlayer.SetBool("Pulando", true);
@@ -524,6 +526,8 @@ public class MovimentoPlayer : MonoBehaviour
             animatorEfeitoAtaque.SetTrigger("Estocada");
             efeitoAtaque.SetarEfeitoPosEscala(estocArPadrao.posEfeito, estocArPadrao.escalaEfeito, estocArPadrao.invertido, new Vector3(0, 0, -90f));
             AudioManager.instance.PlaySFX(estocArPadrao.efeitoSlash, 1f);
+
+            impulsoPulo.ForcaPraCima(impulsoEstocadaAr);
         }
         rangeCorpo.SetActive(false);
         rangeCorpo.SetActive(true);
@@ -533,6 +537,8 @@ public class MovimentoPlayer : MonoBehaviour
         rangeCorpo.SetActive(false);
 
         yield return new WaitUntil(() => estaNoChao || !agindo || sistemaVida.levandoDano);
+        ataqueInput1 = false;
+        ataqueInput2 = false;
         yield return new WaitForSeconds(delayPosPulo);
         agindo = false;
         podeAtacar = true;
