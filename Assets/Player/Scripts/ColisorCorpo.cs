@@ -28,15 +28,7 @@ public class ColisorCorpo : MonoBehaviour
         if (collision.CompareTag("CorpoInimigo"))
         {
             sistemaVida = collision.GetComponentInParent<SistemaVida>();
-            if (modoAtaque == 1)
-            {
-                sistemaVida.LevaAtaqueCorte(condicaoAtaque, dano, knockback, forcaKnockback, shake, forcaShake, gameObjectPrincipal);
-            }
-            else if (modoAtaque == 2)
-            {
-                //Debug.Log("Tenta dar dano de estocada");
-                sistemaVida.LevaAtaqueEstocada(condicaoAtaque, dano, knockback, forcaKnockback, shake, forcaShake, gameObjectPrincipal);
-            }
+            sistemaVida.LevaAtaqueInimigo(dano, knockback, forcaKnockback, shake, forcaShake, gameObjectPrincipal);
         }
     }
 }

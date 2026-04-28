@@ -133,130 +133,26 @@ public class SistemaVida : MonoBehaviour
         gameManager.TrocaCena(3);   // Morte
     }
 
-    public void LevaAtaqueCorte(int tipo, int dano, bool knockback, float forcaKnockback, bool shake, float forcaShake, GameObject atacante)
+    public void LevaAtaqueInimigo(int dano, bool knockback, float forcaKnockback, bool shake, float forcaShake, GameObject atacante)
     {
         if (atingivelBase && !CompareTag("Player"))
         {
-            if (tipo == 1)
+            Debug.Log("Acertou ataque");
+
+            vidaAtual -= dano;
+
+            recupDano = true;
+
+            if (knockback)
             {
-                Debug.Log("Acertou ataque no chao");
+                Vector2 direcao = transform.position - atacante.transform.position;
+                direcao.Normalize();
 
-                vidaAtual -= dano;
-
-                recupDano = true;
-
-                if (knockback)
-                {
-                    Vector2 direcao = transform.position - atacante.transform.position;
-                    direcao.Normalize();
-
-                    sofrendoKnockback = true;
-                    rb.linearVelocity = Vector2.zero;
-                    rb.AddForce(new Vector2(1 * MathF.Sign(direcao.x) * forcaKnockback * multKnockback, 0), ForceMode2D.Impulse);
-                    
-                    impulsoCima.ForcaPraCima(impulsoCimaVel * forcaKnockback/300);
-                }
-            }
-            else if (tipo == 2)
-            {
-                Debug.Log("Acertou ataque aereo");
-
-                vidaAtual -= dano;
-
-                recupDano = true;
-
-                if (knockback)
-                {
-                    Vector2 direcao = transform.position - atacante.transform.position;
-                    direcao.Normalize();
-
-                    sofrendoKnockback = true;
-                    rb.linearVelocity = Vector2.zero;
-                    rb.AddForce(new Vector2(1 * MathF.Sign(direcao.x) * forcaKnockback * multKnockback, 0), ForceMode2D.Impulse);
-                    
-                    impulsoCima.ForcaPraCima(impulsoCimaVel * forcaKnockback/300);
-                }
-            }
-
-            TocaSomHit();
-            if (particulasDano)
-                CriaParticulasDano();
-            if (shake)
-            {
-                shakeCamera.Shake(forcaShake,0.25f);
-            }
-
-            if (vidaAtual <= 0 && !morreu)
-            {
-                morreu = true;
-                MataInimigo();
-            }
-            else if (!morreu)
-            {
-                if (CorRecupDano != null)
-                    StopCoroutine(CorRecupDano);
-                CorRecupDano = StartCoroutine(DelayRecupDano());
-
-                if (corEfeitoDano != null || corTimerEfeitoDano != null || corTimerEfeitoDanoPisca != null)
-                {
-                    StopCoroutine(corEfeitoDano);
-                    StopCoroutine(corTimerEfeitoDano);
-                    StopCoroutine(corTimerEfeitoDanoPisca);
-                    corpo.localPosition = new Vector2(0, corpo.localPosition.y);
-                    spriteRenderer.enabled = true;
-                }
-                animDano = true;
-                corEfeitoDano = StartCoroutine(TimerDanoInimigo());
-                corTimerEfeitoDano = StartCoroutine(EfeitoDanoInimigo());
-                corTimerEfeitoDanoPisca = StartCoroutine(EfeitoDanoInimigoPisca());
-            }
-        }
-    }
-
-    public void LevaAtaqueEstocada(int tipo, int dano, bool knockback, float forcaKnockback, bool shake, float forcaShake, GameObject atacante)
-    {
-        if (atingivelBase && !CompareTag("Player"))
-        {
-            Debug.Log("Leva estocada");
-            if (tipo == 1)
-            {
-                Debug.Log("Acertou ataque no chao");
-
-                vidaAtual -= dano;
-
-                recupDano = true;
-
-                if (knockback)
-                {
-                    Vector2 direcao = transform.position - atacante.transform.position;
-                    direcao.Normalize();
-
-                    sofrendoKnockback = true;
-                    rb.linearVelocity = Vector2.zero;
-                    rb.AddForce(new Vector2(1 * MathF.Sign(direcao.x) * forcaKnockback * multKnockback, 0), ForceMode2D.Impulse);
-
-                    impulsoCima.ForcaPraCima(impulsoCimaVel * forcaKnockback/300);
-                }
-            }
-            else if (tipo == 2)
-            {
-                Debug.Log("Acertou ataque aereo");
-
-                vidaAtual -= dano;
-
-                recupDano = true;
-
-                if (knockback)
-                {
-                    Vector2 direcao = transform.position - atacante.transform.position;
-                    direcao.Normalize();
-
-                    sofrendoKnockback = true;
-                    rb.linearVelocity = Vector2.zero;
-                    rb.AddForce(new Vector2(1 * MathF.Sign(direcao.x) * forcaKnockback * multKnockback, 0), ForceMode2D.Impulse);
-                    
-                    impulsoCima.ForcaPraCima(impulsoCimaVel * forcaKnockback/300);
-                }
+                sofrendoKnockback = true;
+                rb.linearVelocity = Vector2.zero;
+                rb.AddForce(new Vector2(1 * MathF.Sign(direcao.x) * forcaKnockback * multKnockback, 0), ForceMode2D.Impulse);
+                
+                impulsoCima.ForcaPraCima(impulsoCimaVel * forcaKnockback/300);
             }
 
             TocaSomHit();
