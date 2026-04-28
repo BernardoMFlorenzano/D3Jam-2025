@@ -155,7 +155,7 @@ public class MovimentoPlayer : MonoBehaviour
         else if (direcaoInput.x > 0 && virado)
             Flip();
 
-        if (estaEmCombo && direcaoInput.magnitude > 0.1f)
+        if ((!podeEntrarCombo || estaEmCombo) && direcaoInput.magnitude > 0.1f)
         {
             ResetarCombo();
         }
@@ -486,7 +486,7 @@ public class MovimentoPlayer : MonoBehaviour
 
     void ResetarCombo()
     {
-        Debug.Log("Resetou combo");
+        //Debug.Log("Resetou combo");
         estaEmCombo = false;
         podeEntrarCombo = true;
         //acabouCombo = false;
@@ -503,6 +503,7 @@ public class MovimentoPlayer : MonoBehaviour
     IEnumerator CorrotinaAtaqueAr(int ataqueModo)
     {
         //rangeBase.enabled = true;
+        ResetarCombo();
         
         if (ataqueModo == 1)
         {

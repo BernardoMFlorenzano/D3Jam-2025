@@ -406,7 +406,7 @@ public class SistemaVida : MonoBehaviour
             vetorShake.x -= 0.1f * MathF.Sign(vetorShake.x);
             yield return new WaitForSeconds(0.05f);
         }
-        corpo.localPosition = vetorOriginal;
+        corpo.localPosition = new Vector2(vetorOriginal.x, corpo.localPosition.y);
     }
 
     IEnumerator EfeitoDanoInimigoPisca()
