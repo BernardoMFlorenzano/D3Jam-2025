@@ -133,7 +133,7 @@ public class SistemaVida : MonoBehaviour
         gameManager.TrocaCena(3);   // Morte
     }
 
-    public void LevaAtaqueInimigo(int dano, bool knockback, float forcaKnockback, bool shake, float forcaShake, GameObject atacante)
+    public void LevaAtaqueInimigo(int condicaoAtaque, int modoAtaque, int dano, bool knockback, float forcaKnockback, bool shake, float forcaShake, float forcaImpulsoCorteAr, float forcaImpulsoEstocAr, GameObject atacante)
     {
         if (atingivelBase && !CompareTag("Player"))
         {
@@ -187,6 +187,17 @@ public class SistemaVida : MonoBehaviour
                 corTimerEfeitoDano = StartCoroutine(EfeitoDanoInimigo());
                 corTimerEfeitoDanoPisca = StartCoroutine(EfeitoDanoInimigoPisca());
             }
+
+            // Impulso Ar player
+            
+            if (condicaoAtaque == 2)
+            {
+                if (modoAtaque == 1)
+                    atacante.GetComponent<ImpulsoCima>().ForcaPraCima(forcaImpulsoCorteAr);
+                else
+                    atacante.GetComponent<ImpulsoCima>().ForcaPraCima(forcaImpulsoEstocAr);
+            }
+            
         }
     }
 

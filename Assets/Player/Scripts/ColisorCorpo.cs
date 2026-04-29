@@ -9,12 +9,15 @@ public class ColisorCorpo : MonoBehaviour
     public float forcaKnockback;
     public bool shake;
     public float forcaShake;
+    public float forcaImpulsoCorteAr;
+    public float forcaImpulsoEstocAr;
     private SistemaVida sistemaVida;
     [SerializeField] private GameObject gameObjectPrincipal;
+    private ImpulsoCima impulsoCima;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        impulsoCima = gameObjectPrincipal.GetComponent<ImpulsoCima>();
     }
 
     // Update is called once per frame
@@ -28,7 +31,7 @@ public class ColisorCorpo : MonoBehaviour
         if (collision.CompareTag("CorpoInimigo"))
         {
             sistemaVida = collision.GetComponentInParent<SistemaVida>();
-            sistemaVida.LevaAtaqueInimigo(dano, knockback, forcaKnockback, shake, forcaShake, gameObjectPrincipal);
+            sistemaVida.LevaAtaqueInimigo(condicaoAtaque, modoAtaque, dano, knockback, forcaKnockback, shake, forcaShake, forcaImpulsoCorteAr, forcaImpulsoEstocAr, gameObjectPrincipal);
         }
     }
 }

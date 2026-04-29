@@ -8325,7 +8325,8 @@ MonoBehaviour:
   animatorEfeitoAtaque: {fileID: 1820233057}
   efeitoAtaque: {fileID: 1820233059}
   forcaPulo: 9
-  delayPosPulo: 0.4
+  forcaMovimentoAr: 75
+  delayPosPulo: 0
   estaNoChao: 0
   rangeCorpo: {fileID: 2094570081}
   rangeBase: {fileID: 1211273531}
@@ -8340,11 +8341,12 @@ MonoBehaviour:
   indexCorte: 1
   offsetBoxCorteAr: {x: 1.15, y: 0.1}
   sizeBoxCorteAr: {x: 2.25, y: 2.35}
+  forcaImpulsoCorteAr: 2
   offsetBoxEstocadaAr: {x: 0.65, y: -0.3}
   sizeBoxEstocadaAr: {x: 1.3, y: 3.2}
   offsetBoxEstocArChao: {x: 0.9, y: 0}
   sizeBoxEstocArChao: {x: 1.8, y: 1.3}
-  impulsoEstocadaAr: 0
+  forcaImpulsoEstocAr: 4
   podeEntrarCombo: 0
   delayCancelaCombo: 1
   cortePadrao: {fileID: 11400000, guid: a818a3c7545422643b61a1d8ed9dfc0f, type: 2}
@@ -45259,6 +45261,8 @@ MonoBehaviour:
   forcaKnockback: 0
   shake: 0
   forcaShake: 0
+  forcaImpulsoCorteAr: 1
+  forcaImpulsoEstocAr: 2
   gameObjectPrincipal: {fileID: 1578352476}
 --- !u!1 &2130344029
 GameObject:

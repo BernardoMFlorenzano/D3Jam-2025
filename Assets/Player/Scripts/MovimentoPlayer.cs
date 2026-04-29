@@ -24,6 +24,7 @@ public class MovimentoPlayer : MonoBehaviour
     //[SerializeField] private float duracaoQueda;
     //[SerializeField] private float alturaPulo;
     [SerializeField] private float forcaPulo;
+    [SerializeField] private float forcaMovimentoAr;
     [SerializeField] private float delayPosPulo;
     private ImpulsoCima impulsoPulo;
     private bool puloInput;
@@ -53,12 +54,14 @@ public class MovimentoPlayer : MonoBehaviour
     [Header("Corte Ar")]
     [SerializeField] private Vector2 offsetBoxCorteAr;
     [SerializeField] private Vector2 sizeBoxCorteAr;
+    [SerializeField] private float forcaImpulsoCorteAr;
     [Header("Estocada Ar")]
     [SerializeField] private Vector2 offsetBoxEstocadaAr;
     [SerializeField] private Vector2 sizeBoxEstocadaAr;
     [SerializeField] private Vector2 offsetBoxEstocArChao;
     [SerializeField] private Vector2 sizeBoxEstocArChao;
-    [SerializeField] private float impulsoEstocadaAr = 0f; // Quanto ao acertar a estocado no ar o player sobe
+    [SerializeField] private float forcaImpulsoEstocAr;
+
 
     [Header("Combos")]
     [SerializeField] private bool podeEntrarCombo;
@@ -106,6 +109,9 @@ public class MovimentoPlayer : MonoBehaviour
         boxBase = rangeBase.GetComponent<BoxCollider2D>();
 
         sistemaVida = GetComponent<SistemaVida>();
+
+        colisorCorpo.forcaImpulsoCorteAr = forcaImpulsoCorteAr;
+        colisorCorpo.forcaImpulsoEstocAr = forcaImpulsoEstocAr;
 
         agindo = false;
         podeAtacar = true;
@@ -195,7 +201,8 @@ public class MovimentoPlayer : MonoBehaviour
             velMovTarget.x = direcaoInput.x * velPlayerHor;
             velMovTarget.y = direcaoInput.y * velPlayerVer;
 
-            rb.linearVelocity = velMovTarget;
+            //rb.linearVelocity = velMovTarget;
+            rb.AddForce(velMovTarget * forcaMovimentoAr);         
         }
         
         if (direcaoInput.magnitude > 0.1f && rb.linearVelocity.magnitude > 0.1f && estaNoChao)
@@ -527,8 +534,6 @@ public class MovimentoPlayer : MonoBehaviour
             animatorEfeitoAtaque.SetTrigger("Estocada");
             efeitoAtaque.SetarEfeitoPosEscala(estocArPadrao.posEfeito, estocArPadrao.escalaEfeito, estocArPadrao.invertido, new Vector3(0, 0, -90f));
             AudioManager.instance.PlaySFX(estocArPadrao.efeitoSlash, 1f);
-
-            impulsoPulo.ForcaPraCima(impulsoEstocadaAr);
         }
         rangeCorpo.SetActive(false);
         rangeCorpo.SetActive(true);
