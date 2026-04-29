@@ -41,6 +41,7 @@ public class MovimentoPlayer : MonoBehaviour
     public bool agindo;
     private bool podeAtacar;
     [SerializeField] private float delayAtaquePadrao;
+    [SerializeField] private float delayAtaqueArPadrao;
     private bool ataqueInput1;
     private bool ataqueInput2;
     [Header("Lança")]
@@ -283,7 +284,12 @@ public class MovimentoPlayer : MonoBehaviour
             else
             {
                 if (ataqueModo == 1 || !impulsoPulo.subindo)
+                {
                     StartCoroutine(CorrotinaAtaqueAr(ataqueModo));
+                    if (delayAtaqueCorrotina != null)
+                        StopCoroutine(delayAtaqueCorrotina);
+                    delayAtaqueCorrotina = StartCoroutine(CorrotinaDelayAtaque(delayAtaqueArPadrao));
+                }
                 else
                 {
                     podeAtacar = true;
@@ -535,6 +541,8 @@ public class MovimentoPlayer : MonoBehaviour
             efeitoAtaque.SetarEfeitoPosEscala(estocArPadrao.posEfeito, estocArPadrao.escalaEfeito, estocArPadrao.invertido, new Vector3(0, 0, -90f));
             AudioManager.instance.PlaySFX(estocArPadrao.efeitoSlash, 1f);
         }
+
+        yield return new WaitForSeconds(0.05f);
         rangeCorpo.SetActive(false);
         rangeCorpo.SetActive(true);
 
@@ -542,12 +550,14 @@ public class MovimentoPlayer : MonoBehaviour
 
         rangeCorpo.SetActive(false);
 
-        yield return new WaitUntil(() => estaNoChao || !agindo || sistemaVida.levandoDano);
-        ataqueInput1 = false;
-        ataqueInput2 = false;
-        yield return new WaitForSeconds(delayPosPulo);
         agindo = false;
-        podeAtacar = true;
+
+        //yield return new WaitUntil(() => estaNoChao || !agindo || sistemaVida.levandoDano);
+        //ataqueInput1 = false;
+        //ataqueInput2 = false;
+        //yield return new WaitForSeconds(delayPosPulo);
+        //agindo = false;
+        //podeAtacar = true;
     }
 
     public void SetarHitBox(Vector2 size, Vector2 offset)
@@ -568,5 +578,7 @@ public class MovimentoPlayer : MonoBehaviour
         colisorCorpo.forcaKnockback = forcaKnockback;
         colisorCorpo.shake = shake;
         colisorCorpo.forcaShake = forcaShake;
+        colisorCorpo.forcaImpulsoCorteAr = forcaImpulsoCorteAr;
+        colisorCorpo.forcaImpulsoEstocAr = forcaImpulsoEstocAr;
     }
 }

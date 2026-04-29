@@ -8333,6 +8333,7 @@ MonoBehaviour:
   armaAtual: 0
   agindo: 0
   delayAtaquePadrao: 0.3
+  delayAtaqueArPadrao: 0.5
   offsetBoxEstocada: {x: 1.75, y: 0}
   sizeBoxEstocada: {x: 3.5, y: 0.9}
   indexEstocada: 2
@@ -8341,12 +8342,12 @@ MonoBehaviour:
   indexCorte: 1
   offsetBoxCorteAr: {x: 1.15, y: 0.1}
   sizeBoxCorteAr: {x: 2.25, y: 2.35}
-  forcaImpulsoCorteAr: 2
+  forcaImpulsoCorteAr: 3
   offsetBoxEstocadaAr: {x: 0.65, y: -0.3}
   sizeBoxEstocadaAr: {x: 1.3, y: 3.2}
   offsetBoxEstocArChao: {x: 0.9, y: 0}
   sizeBoxEstocArChao: {x: 1.8, y: 1.3}
-  forcaImpulsoEstocAr: 4
+  forcaImpulsoEstocAr: 8
   podeEntrarCombo: 0
   delayCancelaCombo: 1
   cortePadrao: {fileID: 11400000, guid: a818a3c7545422643b61a1d8ed9dfc0f, type: 2}
