@@ -60,7 +60,7 @@ public class DetectaBase : MonoBehaviour
         {
             // Define o player como atingivel por esse inimigo
             colisorCorpo.atingePelaBase = true;
-            Debug.Log("Inimigo acerta pela base");
+            //Debug.Log("Inimigo acerta pela base");
         }
     }
 

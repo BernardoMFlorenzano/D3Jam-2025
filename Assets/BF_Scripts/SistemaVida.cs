@@ -51,6 +51,7 @@ public class SistemaVida : MonoBehaviour
     [SerializeField] private float volumeDanoMult;
     [SerializeField] private AudioSource somPassivo;
     private ShakeCamera shakeCamera;
+    private float qntEstocArTomadas = 0;
 
     [Header("Movimento Vertical")]
     [SerializeField] private float impulsoCimaVel = 0f; // Velocidade pra cima causado por ataques de knockback 
@@ -77,6 +78,10 @@ public class SistemaVida : MonoBehaviour
             sliderVida = GameObject.FindGameObjectWithTag("SliderVida").GetComponent<Slider>();
             sliderVida.value = 1f;
             gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<PassaCena>();
+        }
+        else
+        {
+            StartCoroutine(ResetaKnockbackMod());
         }
 
     }
@@ -195,7 +200,12 @@ public class SistemaVida : MonoBehaviour
                 if (modoAtaque == 1)
                     atacante.GetComponent<ImpulsoCima>().ForcaPraCima(forcaImpulsoCorteAr);
                 else
-                    atacante.GetComponent<ImpulsoCima>().ForcaPraCima(forcaImpulsoEstocAr);
+                {
+                    atacante.GetComponent<ImpulsoCima>().ForcaPraCima(forcaImpulsoEstocAr / (1 + qntEstocArTomadas/5));
+                    Debug.Log(forcaImpulsoEstocAr / (1 + qntEstocArTomadas/10));
+                    qntEstocArTomadas += 1;
+                }
+                    
             }
             
         }
@@ -236,6 +246,20 @@ public class SistemaVida : MonoBehaviour
         if (somPassivo && !morreu)
             somPassivo.enabled = true;
         recupDano = false;
+    }
+
+    IEnumerator ResetaKnockbackMod()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1f);
+            if (qntEstocArTomadas > 0) 
+                qntEstocArTomadas -= 1;
+            else if (qntEstocArTomadas < 0)
+                qntEstocArTomadas = 0;
+            Debug.Log(qntEstocArTomadas);
+            yield return null;
+        }
     }
 
     public void RepeleObjeto(Vector2 direcao, float forca)
@@ -308,7 +332,7 @@ public class SistemaVida : MonoBehaviour
         vetorShake.x -= 0.05f;
         while (animDano)
         {
-            Debug.Log(vetorShake);
+            //Debug.Log(vetorShake);
             corpo.localPosition = new Vector2(vetorShake.x, corpo.localPosition.y);
             vetorShake.x -= 0.1f * MathF.Sign(vetorShake.x);
             yield return new WaitForSeconds(0.05f);
