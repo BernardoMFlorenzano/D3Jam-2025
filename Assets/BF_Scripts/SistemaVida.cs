@@ -257,7 +257,7 @@ public class SistemaVida : MonoBehaviour
                 qntEstocArTomadas -= 1;
             else if (qntEstocArTomadas < 0)
                 qntEstocArTomadas = 0;
-            Debug.Log(qntEstocArTomadas);
+            //Debug.Log(qntEstocArTomadas);
             yield return null;
         }
     }

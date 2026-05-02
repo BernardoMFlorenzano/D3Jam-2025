@@ -30,6 +30,10 @@ public class ColisorCorpoInimigo : MonoBehaviour
             sistemaVida = collision.GetComponentInParent<SistemaVida>();
             sistemaVida.LevaAtaquePlayer(dano, knockback, forcaKnockback, gameObjectPrincipal);
         }
+        else if (collision.CompareTag("CorpoPlayer"))
+        {
+            sistemaVida = collision.GetComponentInParent<SistemaVida>();
+        }
     }
 
     // Tira getcomponent do triggerstay

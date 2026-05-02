@@ -7,6 +7,7 @@ public class DetectaAcaoAtaque : MonoBehaviour
     [SerializeField] private InimigoSerra inimigoSerra;
     [SerializeField] private InimigoDrone inimigoDrone;
     [SerializeField] private InimigoFogo inimigoFogo;
+    [SerializeField] private InimigoHeavy inimigoHeavy;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -34,6 +35,11 @@ public class DetectaAcaoAtaque : MonoBehaviour
                 inimigoDrone.podeTentarAtacar = true;
                 Debug.Log("Inimigo drone pode atacar");
             }
+            else if (tipoInimigo == 3) // Heavy
+            {
+                inimigoHeavy.podeTentarAtacar = true;
+                Debug.Log("Inimigo heavy pode atacar");
+            }
         }
     }
 
@@ -50,6 +56,11 @@ public class DetectaAcaoAtaque : MonoBehaviour
             {
                 inimigoDrone.podeTentarAtacar = false;
                 Debug.Log("Inimigo drone não pode atacar");
+            }
+            else if (tipoInimigo == 3) // Heavy
+            {
+                inimigoHeavy.podeTentarAtacar = false;
+                Debug.Log("Inimigo heavy pode atacar");
             }
         }
     }

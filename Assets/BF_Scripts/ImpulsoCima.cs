@@ -8,6 +8,7 @@ public class ImpulsoCima: MonoBehaviour
     [SerializeField] private Transform transformCorpo;
     public bool subindo;
     public bool caindo;
+    public bool caiu = false;
     [SerializeField] private string layerPlayerNome;
     [SerializeField] private string layerObjetosNome;
     private int layerPlayer;
@@ -16,7 +17,7 @@ public class ImpulsoCima: MonoBehaviour
     [SerializeField] private Animator animatorDrone;
     [SerializeField] private float posChaoDrone = 0.4f;
 
-    private float posicaoYInicial;
+    private float posicaoYInicial = 0f;
     private float velocidadeYAtual = 0f;
     [SerializeField] private float gravidade = 20f;
     //[SerializeField] private float multGravCaindo = 1.33f; // Multiplicador da gravidade se estiver caindo
@@ -38,7 +39,10 @@ public class ImpulsoCima: MonoBehaviour
         subindo = false;
         caindo = false;
 
-        posicaoYInicial = transformCorpo.localPosition.y;
+        if (posicaoYInicial == 0f)
+            posicaoYInicial = transformCorpo.localPosition.y;
+            
+        Debug.Log("Y Start " + posicaoYInicial);
     }
 
     void Update()
@@ -82,6 +86,7 @@ public class ImpulsoCima: MonoBehaviour
 
                 subindo = false;
                 caindo = false;
+                caiu = true;
 
                 if (CompareTag("Player"))
                 {
@@ -111,6 +116,14 @@ public class ImpulsoCima: MonoBehaviour
     {
         if (!CompareTag("InimigoVoador"))
             velocidadeYAtual = velocidade;
+    }
+
+    public void SetaPosicaoY(float posY)
+    {
+        if (posicaoYInicial == 0f)
+            posicaoYInicial = transformCorpo.localPosition.y;
+        transformCorpo.localPosition = new Vector2(transformCorpo.localPosition.x, posY);
+        Debug.Log("Y Start novo? " + posicaoYInicial);
     }
 
 
@@ -273,4 +286,5 @@ public class ImpulsoCima: MonoBehaviour
 
         inimigoDrone.acabouRasante = true;
     }
+
 }
