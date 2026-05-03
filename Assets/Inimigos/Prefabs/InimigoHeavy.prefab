@@ -5227,6 +5227,7 @@ MonoBehaviour:
   corpo: {fileID: 3320268177094047295}
   particulasDano: {fileID: 5156707541922235424}
   tempoMorto: 5
+  nivelAtaqueStun: 1
   danoInimigo1: {fileID: 8300000, guid: adff40d60e2260a42b159df370488bdf, type: 3}
   danoInimigo2: {fileID: 8300000, guid: cdd3e93028759594bb6867e0a6f4cdc1, type: 3}
   danoInimigo3: {fileID: 8300000, guid: 3e2dadee3ff375f48aeb43dc78ad5c7e, type: 3}
@@ -5457,7 +5458,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.00044047832, y: -0.16530442}
+  m_Offset: {x: -0.005992353, y: 0.0001951456}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -5467,7 +5468,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.1243994, y: 0.84937096}
+  m_Size: {x: 1.0614783, y: 1.0619302}
   m_EdgeRadius: 0
 --- !u!50 &7932281244270970276
 Rigidbody2D:

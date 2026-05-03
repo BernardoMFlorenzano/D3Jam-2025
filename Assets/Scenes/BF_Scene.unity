@@ -7494,6 +7494,75 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 774d9a6140fc7334bb4b08d828f2b929, type: 3}
+--- !u!1001 &1449462877
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1738644745382752714, guid: 6eaef844d60cae64b8868f956830642b, type: 3}
+      propertyPath: vidaMax
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1738644745382752714, guid: 6eaef844d60cae64b8868f956830642b, type: 3}
+      propertyPath: tempoMorto
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1738644745382752714, guid: 6eaef844d60cae64b8868f956830642b, type: 3}
+      propertyPath: nivelAtaqueStun
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3395394184713998687, guid: 6eaef844d60cae64b8868f956830642b, type: 3}
+      propertyPath: m_Name
+      value: InimigoSerra
+      objectReference: {fileID: 0}
+    - target: {fileID: 9063415233367851471, guid: 6eaef844d60cae64b8868f956830642b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -8.6850195
+      objectReference: {fileID: 0}
+    - target: {fileID: 9063415233367851471, guid: 6eaef844d60cae64b8868f956830642b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.828567
+      objectReference: {fileID: 0}
+    - target: {fileID: 9063415233367851471, guid: 6eaef844d60cae64b8868f956830642b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9063415233367851471, guid: 6eaef844d60cae64b8868f956830642b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9063415233367851471, guid: 6eaef844d60cae64b8868f956830642b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9063415233367851471, guid: 6eaef844d60cae64b8868f956830642b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9063415233367851471, guid: 6eaef844d60cae64b8868f956830642b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9063415233367851471, guid: 6eaef844d60cae64b8868f956830642b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9063415233367851471, guid: 6eaef844d60cae64b8868f956830642b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9063415233367851471, guid: 6eaef844d60cae64b8868f956830642b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6eaef844d60cae64b8868f956830642b, type: 3}
 --- !u!1001 &1457950004
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8582,6 +8651,7 @@ MonoBehaviour:
   corpo: {fileID: 0}
   particulasDano: {fileID: 0}
   tempoMorto: 0
+  nivelAtaqueStun: 0
   danoInimigo1: {fileID: 0}
   danoInimigo2: {fileID: 0}
   danoInimigo3: {fileID: 0}
@@ -45709,3 +45779,4 @@ SceneRoots:
   - {fileID: 1734794904}
   - {fileID: 263783763}
   - {fileID: 1864913071}
+  - {fileID: 1449462877}

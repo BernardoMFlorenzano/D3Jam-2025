@@ -41,6 +41,7 @@ public class SistemaVida : MonoBehaviour
     [SerializeField] private Transform corpo;
     [SerializeField] private ParticleSystem particulasDano;
     [SerializeField] private float tempoMorto;
+    [SerializeField] private int nivelAtaqueStun = 0;   // Com que ataques o inimigo leva stun (0 == todos, 1 == pesados) obs: ataques pesados são o que causam shake da camera
     private bool animDano = false;
     private Coroutine corEfeitoDano;
     private Coroutine corTimerEfeitoDano;
@@ -146,9 +147,10 @@ public class SistemaVida : MonoBehaviour
 
             vidaAtual -= dano;
 
-            recupDano = true;
+            if (nivelAtaqueStun == 0 || (dano > 1 && nivelAtaqueStun == 1))
+                recupDano = true;
 
-            if (knockback)
+            if (knockback && (nivelAtaqueStun == 0 || (dano > 1 && nivelAtaqueStun == 1)))
             {
                 Vector2 direcao = transform.position - atacante.transform.position;
                 direcao.Normalize();
@@ -163,6 +165,7 @@ public class SistemaVida : MonoBehaviour
             TocaSomHit();
             if (particulasDano)
                 CriaParticulasDano();
+                
             if (shake)
             {
                 shakeCamera.Shake(forcaShake,0.25f);
@@ -175,10 +178,12 @@ public class SistemaVida : MonoBehaviour
             }
             else if (!morreu)
             {
-                if (CorRecupDano != null)
-                    StopCoroutine(CorRecupDano);
-                CorRecupDano = StartCoroutine(DelayRecupDano());
-
+                if (nivelAtaqueStun == 0 || (dano > 1 && nivelAtaqueStun == 1))
+                {
+                    if (CorRecupDano != null)
+                        StopCoroutine(CorRecupDano);
+                    CorRecupDano = StartCoroutine(DelayRecupDano());
+                }
                 if (corEfeitoDano != null || corTimerEfeitoDano != null || corTimerEfeitoDanoPisca != null)
                 {
                     StopCoroutine(corEfeitoDano);
