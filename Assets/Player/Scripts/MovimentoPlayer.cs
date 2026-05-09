@@ -283,18 +283,10 @@ public class MovimentoPlayer : MonoBehaviour
             }
             else
             {
-                if (ataqueModo == 1 || !impulsoPulo.subindo)
-                {
-                    StartCoroutine(CorrotinaAtaqueAr(ataqueModo));
-                    if (delayAtaqueCorrotina != null)
-                        StopCoroutine(delayAtaqueCorrotina);
-                    delayAtaqueCorrotina = StartCoroutine(CorrotinaDelayAtaque(delayAtaqueArPadrao));
-                }
-                else
-                {
-                    podeAtacar = true;
-                    agindo = false;
-                }
+                StartCoroutine(CorrotinaAtaqueAr(ataqueModo));
+                if (delayAtaqueCorrotina != null)
+                    StopCoroutine(delayAtaqueCorrotina);
+                delayAtaqueCorrotina = StartCoroutine(CorrotinaDelayAtaque(delayAtaqueArPadrao));
             }
         }
     }
