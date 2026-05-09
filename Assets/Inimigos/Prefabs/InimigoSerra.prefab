@@ -95,6 +95,7 @@ MonoBehaviour:
   inimigoSerra: {fileID: 2069038235622414186}
   inimigoDrone: {fileID: 0}
   inimigoFogo: {fileID: 0}
+  inimigoHeavy: {fileID: 0}
 --- !u!1 &1210239396832119283
 GameObject:
   m_ObjectHideFlags: 0
@@ -5186,6 +5187,7 @@ MonoBehaviour:
   transformCorpo: {fileID: 3320268177094047295}
   subindo: 0
   caindo: 0
+  caiu: 0
   layerPlayerNome: 
   layerObjetosNome: 
   animator: {fileID: 0}
@@ -5212,6 +5214,8 @@ MonoBehaviour:
   agindo: 0
   vidaMax: 5
   morreu: 0
+  lifeStealAtivo: 0
+  multCuraLifeSteal: 0.5
   tempoInvenc: 0
   tempoInvencPos: 0
   levandoDano: 0
@@ -5219,12 +5223,14 @@ MonoBehaviour:
   spriteRenderer: {fileID: 9153958849020880934}
   danoPlayer: {fileID: 0}
   gameManager: {fileID: 0}
+  barraPoderFill: 0.025
   multKnockback: 1
   animatorMorto: {fileID: 9100000, guid: 4a2562155dea66c4d808b77f073d6977, type: 2}
   tempoEfeitoDano: 0.5
   corpo: {fileID: 3320268177094047295}
   particulasDano: {fileID: 5156707541922235424}
   tempoMorto: 5
+  nivelAtaqueStun: 0
   danoInimigo1: {fileID: 8300000, guid: adff40d60e2260a42b159df370488bdf, type: 3}
   danoInimigo2: {fileID: 8300000, guid: cdd3e93028759594bb6867e0a6f4cdc1, type: 3}
   danoInimigo3: {fileID: 8300000, guid: 3e2dadee3ff375f48aeb43dc78ad5c7e, type: 3}
@@ -5684,6 +5690,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tipo: 2
   colisorCorpo: {fileID: 7086967380002624218}
+  obstaculoDano: {fileID: 0}
 --- !u!1 &6484448640119437422
 GameObject:
   m_ObjectHideFlags: 0
@@ -5751,7 +5758,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.65, y: -0.09}
+  m_Offset: {x: 0.65, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}

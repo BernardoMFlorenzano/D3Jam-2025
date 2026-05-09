@@ -207,6 +207,7 @@ MonoBehaviour:
   forcaKnockback: 0
   atingePelaBase: 0
   gameObjectPrincipal: {fileID: 6908924969928732317}
+  sistemaVidaInimigo: {fileID: 0}
 --- !u!1 &2852947085452286693
 GameObject:
   m_ObjectHideFlags: 0
@@ -300,6 +301,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tipo: 2
   colisorCorpo: {fileID: 8672899697141758052}
+  obstaculoDano: {fileID: 0}
 --- !u!1 &4373524752747533454
 GameObject:
   m_ObjectHideFlags: 0
@@ -664,6 +666,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forcaRepulsa: 200
+  sistemaVidaSelf: {fileID: 0}
 --- !u!1 &6549098342932181859
 GameObject:
   m_ObjectHideFlags: 0
@@ -759,6 +762,7 @@ MonoBehaviour:
   inimigoSerra: {fileID: 7501459635721231324}
   inimigoDrone: {fileID: 0}
   inimigoFogo: {fileID: 0}
+  inimigoHeavy: {fileID: 0}
 --- !u!1 &6908924969928732317
 GameObject:
   m_ObjectHideFlags: 0
@@ -957,8 +961,14 @@ MonoBehaviour:
   transformCorpo: {fileID: 796459182539537262}
   subindo: 0
   caindo: 0
-  animatorPlayer: {fileID: 0}
+  caiu: 0
+  layerPlayerNome: 
+  layerObjetosNome: 
+  animator: {fileID: 0}
   animatorDrone: {fileID: 0}
+  posChaoDrone: 0.4
+  gravidade: 20
+  capVelocidadeY: 20
 --- !u!114 &940330629633326370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -978,11 +988,29 @@ MonoBehaviour:
   agindo: 0
   vidaMax: 5
   morreu: 0
+  lifeStealAtivo: 0
+  multLifeSteal: 1
   tempoInvenc: 0
+  tempoInvencPos: 0
   levandoDano: 0
   animator: {fileID: 2748340618743598256}
+  spriteRenderer: {fileID: 0}
+  danoPlayer: {fileID: 0}
+  gameManager: {fileID: 0}
+  barraPoderFill: 0.025
   multKnockback: 1
   animatorMorto: {fileID: 9100000, guid: 4a2562155dea66c4d808b77f073d6977, type: 2}
+  tempoEfeitoDano: 0
+  corpo: {fileID: 0}
+  particulasDano: {fileID: 0}
+  tempoMorto: 0
+  nivelAtaqueStun: 0
+  danoInimigo1: {fileID: 0}
+  danoInimigo2: {fileID: 0}
+  danoInimigo3: {fileID: 0}
+  volumeDanoMult: 0
+  somPassivo: {fileID: 0}
+  impulsoCimaVel: 0
 --- !u!114 &7501459635721231324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1024,3 +1052,6 @@ MonoBehaviour:
   velMaxInimigoHorCorrida: 15
   aceleracaoCorrida: 0.1
   tempoCorrida: 1
+  somPassivoVolMult: 0.1
+  somCorrida: {fileID: 0}
+  somCorridaVolMult: 1

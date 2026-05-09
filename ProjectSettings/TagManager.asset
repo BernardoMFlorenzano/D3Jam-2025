@@ -12,6 +12,7 @@ TagManager:
   - SliderVida
   - GameManager
   - CineMachine
+  - SliderPoder
   layers:
   - Default
   - TransparentFX

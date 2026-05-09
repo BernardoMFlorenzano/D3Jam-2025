@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PickupCura : MonoBehaviour
 {
-    [SerializeField] private int cura;
+    [SerializeField] private float cura;
     [SerializeField] private AudioClip curaSom;
     private SistemaVida sistemaVida;
 

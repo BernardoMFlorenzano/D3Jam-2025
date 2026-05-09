@@ -21,9 +21,12 @@ public class SistemaVida : MonoBehaviour
     public bool agindo; // Se estiver agindo, ignora função de repelir
 
     [Header("Vida")]
-    [SerializeField] private int vidaMax;
-    private int vidaAtual;
+    [SerializeField] private float vidaMax;
+    private float vidaAtual;
     public bool morreu;
+    [Header("LifeSteal")]
+    public bool lifeStealAtivo = false;
+    [SerializeField] private float multCuraLifeSteal;
     [Header("Player")]
     [SerializeField] private float tempoInvenc; // tempo de invencibilidade
     [SerializeField] private float tempoInvencPos;  // tempo de invencibilidade apos animação de dano acabar
@@ -33,8 +36,10 @@ public class SistemaVida : MonoBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private AudioClip danoPlayer;
     [SerializeField] private PassaCena gameManager;
+    private MovimentoPlayer movimentoPlayer;
     private Slider sliderVida;
     [Header("Inimigos")]
+    [SerializeField] private float barraPoderFill = 0.05f;
     [SerializeField] private float multKnockback;
     [SerializeField] private RuntimeAnimatorController animatorMorto;
     [SerializeField] private float tempoEfeitoDano;
@@ -51,6 +56,7 @@ public class SistemaVida : MonoBehaviour
     [SerializeField] private AudioClip danoInimigo3;
     [SerializeField] private float volumeDanoMult;
     [SerializeField] private AudioSource somPassivo;
+    private SistemaVida sistemaVidaPlayer;
     private ShakeCamera shakeCamera;
     private float qntEstocArTomadas = 0;
 
@@ -76,6 +82,7 @@ public class SistemaVida : MonoBehaviour
 
         if (CompareTag("Player"))
         {
+            movimentoPlayer = GetComponent<MovimentoPlayer>();
             sliderVida = GameObject.FindGameObjectWithTag("SliderVida").GetComponent<Slider>();
             sliderVida.value = 1f;
             gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<PassaCena>();
@@ -83,6 +90,7 @@ public class SistemaVida : MonoBehaviour
         else
         {
             StartCoroutine(ResetaKnockbackMod());
+            sistemaVidaPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<SistemaVida>();
         }
 
     }
@@ -209,10 +217,10 @@ public class SistemaVida : MonoBehaviour
                     atacante.GetComponent<ImpulsoCima>().ForcaPraCima(forcaImpulsoEstocAr / (1 + qntEstocArTomadas/5));
                     Debug.Log(forcaImpulsoEstocAr / (1 + qntEstocArTomadas/10));
                     qntEstocArTomadas += 1;
-                }
-                    
+                }  
             }
-            
+
+            sistemaVidaPlayer.LifeSteal(dano, barraPoderFill);
         }
     }
 
@@ -281,7 +289,7 @@ public class SistemaVida : MonoBehaviour
             podeLevarDano = false;
             levandoDano = true;
             vidaAtual -= dano;
-            sliderVida.value -= (float)dano / vidaMax;
+            sliderVida.value -= dano / vidaMax;
 
             if (knockback)
             {
@@ -362,14 +370,29 @@ public class SistemaVida : MonoBehaviour
         animDano = false;
     }
 
-    public void Cura(int cura)
+    public void LifeSteal(float cura, float poderFill)
     {
+        if (lifeStealAtivo)
+        {
+            Debug.Log(multCuraLifeSteal);
+            Cura(cura * multCuraLifeSteal);
+        }
+        else
+        {
+            movimentoPlayer.FillBarraPoder(poderFill);
+        }
+    }
+
+    public void Cura(float cura)
+    {
+        Debug.Log("Curou " + cura);
         vidaAtual += cura;
-        sliderVida.value += (float)cura / vidaMax;
+        sliderVida.value += cura / vidaMax;
 
         if(vidaAtual > vidaMax)
         {
             vidaAtual = vidaMax;
+            sliderVida.value = 1f;
         }
         StartCoroutine(EfeitoCuraPlayer());
     }

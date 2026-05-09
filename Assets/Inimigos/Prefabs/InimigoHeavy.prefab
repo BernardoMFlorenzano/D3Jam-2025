@@ -5214,6 +5214,8 @@ MonoBehaviour:
   agindo: 0
   vidaMax: 20
   morreu: 0
+  lifeStealAtivo: 0
+  multCuraLifeSteal: 0.5
   tempoInvenc: 0
   tempoInvencPos: 0
   levandoDano: 0
@@ -5221,6 +5223,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 9153958849020880934}
   danoPlayer: {fileID: 0}
   gameManager: {fileID: 0}
+  barraPoderFill: 0.025
   multKnockback: 1
   animatorMorto: {fileID: 9100000, guid: 0dab97747a9138642a4603ff2f06b350, type: 2}
   tempoEfeitoDano: 0.5

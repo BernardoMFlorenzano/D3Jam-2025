@@ -203,6 +203,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tipo: 2
   colisorCorpo: {fileID: 7097817536938964653}
+  obstaculoDano: {fileID: 0}
 --- !u!1 &3289122524810017036
 GameObject:
   m_ObjectHideFlags: 0
@@ -577,6 +578,7 @@ MonoBehaviour:
   inimigoSerra: {fileID: 0}
   inimigoDrone: {fileID: 6039226610278790047}
   inimigoFogo: {fileID: 0}
+  inimigoHeavy: {fileID: 0}
 --- !u!1 &4267842907587816688
 GameObject:
   m_ObjectHideFlags: 0
@@ -777,11 +779,14 @@ MonoBehaviour:
   transformCorpo: {fileID: 4934909786156698670}
   subindo: 0
   caindo: 0
+  caiu: 0
   layerPlayerNome: 
   layerObjetosNome: 
-  animatorPlayer: {fileID: 0}
+  animator: {fileID: 0}
   animatorDrone: {fileID: 0}
   posChaoDrone: 0.4
+  gravidade: 20
+  capVelocidadeY: 20
 --- !u!114 &8843119527186386392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -801,6 +806,8 @@ MonoBehaviour:
   agindo: 0
   vidaMax: 2
   morreu: 0
+  lifeStealAtivo: 0
+  multCuraLifeSteal: 0.5
   tempoInvenc: 0
   tempoInvencPos: 0
   levandoDano: 0
@@ -808,17 +815,20 @@ MonoBehaviour:
   spriteRenderer: {fileID: 3255195626922919177}
   danoPlayer: {fileID: 0}
   gameManager: {fileID: 0}
+  barraPoderFill: 0.025
   multKnockback: 0.5
   animatorMorto: {fileID: 9100000, guid: 7e8c4963205949842856b860ab29e796, type: 2}
   tempoEfeitoDano: 0.25
   corpo: {fileID: 4934909786156698670}
   particulasDano: {fileID: 4087357076963394473}
   tempoMorto: 5
+  nivelAtaqueStun: 0
   danoInimigo1: {fileID: 8300000, guid: adff40d60e2260a42b159df370488bdf, type: 3}
   danoInimigo2: {fileID: 8300000, guid: cdd3e93028759594bb6867e0a6f4cdc1, type: 3}
   danoInimigo3: {fileID: 8300000, guid: 3e2dadee3ff375f48aeb43dc78ad5c7e, type: 3}
   volumeDanoMult: 0.5
   somPassivo: {fileID: 3755760797265865131}
+  impulsoCimaVel: 0
 --- !u!114 &6039226610278790047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -878,11 +888,14 @@ MonoBehaviour:
   transformCorpo: {fileID: 4934909786156698670}
   subindo: 0
   caindo: 0
+  caiu: 0
   layerPlayerNome: 
   layerObjetosNome: 
-  animatorPlayer: {fileID: 0}
+  animator: {fileID: 0}
   animatorDrone: {fileID: 8448991945719089523}
   posChaoDrone: 0.4
+  gravidade: 20
+  capVelocidadeY: 20
 --- !u!82 &3755760797265865131
 AudioSource:
   m_ObjectHideFlags: 0

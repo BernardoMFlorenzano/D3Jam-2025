@@ -103,6 +103,15 @@
                     "processors": "",
                     "interactions": "Press",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Especial",
+                    "type": "Button",
+                    "id": "501df11a-e23d-410e-bef0-1b6aa084e30f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -505,7 +514,7 @@
                 {
                     "name": "",
                     "id": "3d68b4d4-8b80-41cf-9c97-94784e19ac05",
-                    "path": "<Keyboard>/k",
+                    "path": "<Keyboard>/#(K)",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
@@ -521,6 +530,28 @@
                     "processors": "",
                     "groups": ";Gamepad",
                     "action": "Estocada",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0de35a80-7792-453e-9f83-bb3a7f36477b",
+                    "path": "<Keyboard>/#(L)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Especial",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9232f2b4-f603-447a-844d-55ad941ae601",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Especial",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

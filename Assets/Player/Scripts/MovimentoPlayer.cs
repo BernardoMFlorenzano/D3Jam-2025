@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection.Emit;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class MovimentoPlayer : MonoBehaviour
 {
@@ -84,6 +85,17 @@ public class MovimentoPlayer : MonoBehaviour
     private Coroutine delayAtaqueCorrotina;
     //[SerializeField] private float delayTrocaArma;
     //private bool podeTrocarArma = true;
+
+    [Header("Rage LifeSteal")]
+    public bool rageAtivo = false;
+    private bool podeAtivarRage = false;
+    private bool especialInput;
+    [SerializeField] private float multVelAtaque;
+    [SerializeField] private float multVelMovimento;
+    [SerializeField] private float tempoRage = 5f;
+    public float poderVal = 0f;
+    private Slider sliderPoder;
+    
     [Header("Sons")]
     [SerializeField] private AudioClip grama1;
     [SerializeField] private AudioClip grama2;
@@ -110,6 +122,9 @@ public class MovimentoPlayer : MonoBehaviour
         boxBase = rangeBase.GetComponent<BoxCollider2D>();
 
         sistemaVida = GetComponent<SistemaVida>();
+
+        sliderPoder = GameObject.FindGameObjectWithTag("SliderPoder").GetComponent<Slider>();
+        sliderPoder.value = poderVal;
 
         colisorCorpo.forcaImpulsoCorteAr = forcaImpulsoCorteAr;
         colisorCorpo.forcaImpulsoEstocAr = forcaImpulsoEstocAr;
@@ -141,6 +156,11 @@ public class MovimentoPlayer : MonoBehaviour
     {
         ataqueInput2 = true;
         ataqueInput1 = false;
+    }
+
+    public void OnEspecial()
+    {
+        especialInput = true;
     }
 
     public void OnPausa()
@@ -177,6 +197,10 @@ public class MovimentoPlayer : MonoBehaviour
         if (ataqueInput2)
         {
             AtaqueNormal(indexEstocada);
+        }
+        if (especialInput)
+        {
+            AtivaRage();
         }
 
         if (agindo && estaNoChao || sistemaVida.levandoDano)
@@ -572,5 +596,43 @@ public class MovimentoPlayer : MonoBehaviour
         colisorCorpo.forcaShake = forcaShake;
         colisorCorpo.forcaImpulsoCorteAr = forcaImpulsoCorteAr;
         colisorCorpo.forcaImpulsoEstocAr = forcaImpulsoEstocAr;
+    }
+
+    public void FillBarraPoder(float val)
+    {
+        poderVal += val;
+        if (poderVal >= 1f)
+        {
+            poderVal = 1f;
+            podeAtivarRage = true;
+        }
+
+        sliderPoder.value = poderVal;
+    }
+
+    public void AtivaRage()
+    {
+        especialInput = false;
+        if (!podeAtivarRage)
+            return;
+
+        podeAtivarRage = false;
+        rageAtivo = true;
+        sistemaVida.lifeStealAtivo = true;
+        StartCoroutine(TimerRage(tempoRage));
+    }
+
+    IEnumerator TimerRage(float tempo)
+    {
+        while (poderVal > 0)
+        {
+            yield return new WaitForSeconds(0.1f);
+            poderVal -= 0.1f/tempo;
+            sliderPoder.value = poderVal;
+        }
+
+        poderVal = 0f;
+        rageAtivo = false;
+        sistemaVida.lifeStealAtivo = false;
     }
 }
