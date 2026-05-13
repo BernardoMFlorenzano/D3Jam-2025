@@ -45,6 +45,7 @@ public class SistemaVida : MonoBehaviour
     [SerializeField] private float tempoEfeitoDano;
     [SerializeField] private Transform corpo;
     [SerializeField] private ParticleSystem particulasDano;
+    [SerializeField] private ParticleSystem particulasDano2;
     [SerializeField] private float tempoMorto;
     [SerializeField] private int nivelAtaqueStun = 0;   // Com que ataques o inimigo leva stun (0 == todos, 1 == pesados) obs: ataques pesados são o que causam shake da camera
     private bool animDano = false;
@@ -147,11 +148,14 @@ public class SistemaVida : MonoBehaviour
         gameManager.TrocaCena(3);   // Morte
     }
 
-    public void LevaAtaqueInimigo(int condicaoAtaque, int modoAtaque, int dano, bool knockback, float forcaKnockback, bool shake, float forcaShake, float forcaImpulsoCorteAr, float forcaImpulsoEstocAr, GameObject atacante)
+    public void LevaAtaqueInimigo(int condicaoAtaque, int modoAtaque, int dano, bool knockback, float forcaKnockback, bool shake, float forcaShake, float forcaImpulsoCorteAr, float forcaImpulsoEstocAr, Transform corpoAtacante)
     {
         if (atingivelBase && !CompareTag("Player"))
         {
             Debug.Log("Acertou ataque");
+
+            Vector3 direcao = transform.position - corpoAtacante.position;
+            direcao.Normalize();
 
             vidaAtual -= dano;
 
@@ -160,9 +164,6 @@ public class SistemaVida : MonoBehaviour
 
             if (knockback && (nivelAtaqueStun == 0 || (dano > 1 && nivelAtaqueStun == 1)))
             {
-                Vector2 direcao = transform.position - atacante.transform.position;
-                direcao.Normalize();
-
                 sofrendoKnockback = true;
                 rb.linearVelocity = Vector2.zero;
                 rb.AddForce(new Vector2(1 * MathF.Sign(direcao.x) * forcaKnockback * multKnockback, 0), ForceMode2D.Impulse);
@@ -172,7 +173,7 @@ public class SistemaVida : MonoBehaviour
 
             TocaSomHit();
             if (particulasDano)
-                CriaParticulasDano();
+                CriaParticulasDano(direcao);
                 
             if (shake)
             {
@@ -211,10 +212,10 @@ public class SistemaVida : MonoBehaviour
             if (condicaoAtaque == 2)
             {
                 if (modoAtaque == 1)
-                    atacante.GetComponent<ImpulsoCima>().ForcaPraCima(forcaImpulsoCorteAr);
+                    corpoAtacante.parent.gameObject.GetComponent<ImpulsoCima>().ForcaPraCima(forcaImpulsoCorteAr);
                 else
                 {
-                    atacante.GetComponent<ImpulsoCima>().ForcaPraCima(forcaImpulsoEstocAr / (1 + qntEstocArTomadas/5));
+                    corpoAtacante.parent.gameObject.GetComponent<ImpulsoCima>().ForcaPraCima(forcaImpulsoEstocAr / (1 + qntEstocArTomadas/5));
                     Debug.Log(forcaImpulsoEstocAr / (1 + qntEstocArTomadas/10));
                     qntEstocArTomadas += 1;
                 }  
@@ -242,9 +243,13 @@ public class SistemaVida : MonoBehaviour
         }
     }
 
-    void CriaParticulasDano()
+    void CriaParticulasDano(Vector3 direcao)
     {
         particulasDano.Play();
+
+        Quaternion rot = Quaternion.FromToRotation(Vector2.right, -direcao);
+        particulasDano2.transform.rotation = rot;
+        particulasDano2.Play();
     }
 
     IEnumerator DelayRecupDano()

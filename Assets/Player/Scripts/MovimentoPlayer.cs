@@ -68,6 +68,7 @@ public class MovimentoPlayer : MonoBehaviour
     [Header("Combos")]
     [SerializeField] private bool podeEntrarCombo;
     [SerializeField] private float delayCancelaCombo = 2f;
+    [SerializeField] private float delayFinalizaCombo;
     [SerializeField] private Ataque cortePadrao;
     [SerializeField] private Ataque estocPadrao;
     [SerializeField] private Ataque corteArPadrao;
@@ -90,8 +91,10 @@ public class MovimentoPlayer : MonoBehaviour
     public bool rageAtivo = false;
     private bool podeAtivarRage = false;
     private bool especialInput;
-    [SerializeField] private float multVelAtaque;
-    [SerializeField] private float multVelMovimento;
+    [SerializeField] private float multVelAtaqueRage;
+    [SerializeField] private float multVelMovimentoRage;
+    private float multVelAtaque = 1f;
+    private float multVelMovimento = 1f;
     [SerializeField] private float tempoRage = 5f;
     public float poderVal = 0f;
     private Slider sliderPoder;
@@ -182,7 +185,7 @@ public class MovimentoPlayer : MonoBehaviour
         else if (direcaoInput.x > 0 && virado)
             Flip();
 
-        if ((!podeEntrarCombo || estaEmCombo) && direcaoInput.magnitude > 0.1f)
+        if ((!podeEntrarCombo || estaEmCombo) && rb.linearVelocity.magnitude > 0.1f)
         {
             ResetarCombo();
         }
@@ -214,8 +217,8 @@ public class MovimentoPlayer : MonoBehaviour
 
         if (estaNoChao)
         {
-            velMovTarget.x = direcaoInput.x * velPlayerHor;
-            velMovTarget.y = direcaoInput.y * velPlayerVer;
+            velMovTarget.x = direcaoInput.x * velPlayerHor * multVelMovimento;
+            velMovTarget.y = direcaoInput.y * velPlayerVer * multVelMovimento;
 
             rb.linearVelocity = velMovTarget;
         }
@@ -223,8 +226,8 @@ public class MovimentoPlayer : MonoBehaviour
         {
             //velMovTarget.x = direcaoPulo.x * velPlayerHor;
             //velMovTarget.y = direcaoPulo.y * velPlayerVer;
-            velMovTarget.x = direcaoInput.x * velPlayerHor;
-            velMovTarget.y = direcaoInput.y * velPlayerVer;
+            velMovTarget.x = direcaoInput.x * velPlayerHor * multVelMovimento;
+            velMovTarget.y = direcaoInput.y * velPlayerVer * multVelMovimento;
 
             //rb.linearVelocity = velMovTarget;
             rb.AddForce(velMovTarget * forcaMovimentoAr);         
@@ -303,14 +306,14 @@ public class MovimentoPlayer : MonoBehaviour
                 StartCoroutine(CorrotinaAtaqueChao(ataqueModo));
                 if (delayAtaqueCorrotina != null)
                     StopCoroutine(delayAtaqueCorrotina);
-                delayAtaqueCorrotina = StartCoroutine(CorrotinaDelayAtaque(delayAtaquePadrao));
+                delayAtaqueCorrotina = StartCoroutine(CorrotinaDelayAtaque(delayAtaquePadrao * multVelAtaque));
             }
             else
             {
                 StartCoroutine(CorrotinaAtaqueAr(ataqueModo));
                 if (delayAtaqueCorrotina != null)
                     StopCoroutine(delayAtaqueCorrotina);
-                delayAtaqueCorrotina = StartCoroutine(CorrotinaDelayAtaque(delayAtaqueArPadrao));
+                delayAtaqueCorrotina = StartCoroutine(CorrotinaDelayAtaque(delayAtaqueArPadrao * multVelAtaque));
             }
         }
     }
@@ -397,7 +400,7 @@ public class MovimentoPlayer : MonoBehaviour
                 if (comboCount >= combo1.Count)
                 {
                     finalizouCombo = true;
-                    StartCoroutine(FinalizarCombo(0.5f)); // finaliza o combo
+                    StartCoroutine(FinalizarCombo(delayFinalizaCombo)); // finaliza o combo
                 }
             }
             // Combo 2
@@ -412,7 +415,7 @@ public class MovimentoPlayer : MonoBehaviour
                 if (comboCount >= combo2.Count)
                 {
                     finalizouCombo = true;
-                    StartCoroutine(FinalizarCombo(0.5f)); // finaliza o combo
+                    StartCoroutine(FinalizarCombo(delayFinalizaCombo)); // finaliza o combo
                 }
             }
             // Combo 3
@@ -427,7 +430,7 @@ public class MovimentoPlayer : MonoBehaviour
                 if (comboCount >= combo3.Count)
                 {
                     finalizouCombo = true;
-                    StartCoroutine(FinalizarCombo(0.5f)); // finaliza o combo
+                    StartCoroutine(FinalizarCombo(delayFinalizaCombo)); // finaliza o combo
                 }
             }
             // Combo 4
@@ -442,7 +445,7 @@ public class MovimentoPlayer : MonoBehaviour
                 if (comboCount >= combo4.Count)
                 {
                     finalizouCombo = true;
-                    StartCoroutine(FinalizarCombo(0.5f)); // finaliza o combo
+                    StartCoroutine(FinalizarCombo(delayFinalizaCombo)); // finaliza o combo
                 }
             }
 
@@ -619,6 +622,9 @@ public class MovimentoPlayer : MonoBehaviour
         podeAtivarRage = false;
         rageAtivo = true;
         sistemaVida.lifeStealAtivo = true;
+        multVelMovimento = multVelMovimentoRage;
+        multVelAtaque = multVelAtaqueRage;
+        animatorPlayer.speed = multVelMovimento;
         StartCoroutine(TimerRage(tempoRage));
     }
 
@@ -631,6 +637,9 @@ public class MovimentoPlayer : MonoBehaviour
             sliderPoder.value = poderVal;
         }
 
+        multVelMovimento = 1f;
+        multVelAtaque = 1f;
+        animatorPlayer.speed = 1f;
         poderVal = 0f;
         rageAtivo = false;
         sistemaVida.lifeStealAtivo = false;

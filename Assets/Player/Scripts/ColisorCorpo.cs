@@ -31,7 +31,7 @@ public class ColisorCorpo : MonoBehaviour
         if (collision.CompareTag("CorpoInimigo"))
         {
             sistemaVida = collision.GetComponentInParent<SistemaVida>();
-            sistemaVida.LevaAtaqueInimigo(condicaoAtaque, modoAtaque, dano, knockback, forcaKnockback, shake, forcaShake, forcaImpulsoCorteAr, forcaImpulsoEstocAr, gameObjectPrincipal);
+            sistemaVida.LevaAtaqueInimigo(condicaoAtaque, modoAtaque, dano, knockback, forcaKnockback, shake, forcaShake, forcaImpulsoCorteAr, forcaImpulsoEstocAr, gameObject.transform.parent);
         }
     }
 }
