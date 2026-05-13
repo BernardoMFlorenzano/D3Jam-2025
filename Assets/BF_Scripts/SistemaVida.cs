@@ -19,6 +19,8 @@ public class SistemaVida : MonoBehaviour
     public bool sofrendoKnockback;
     public bool recupDano;
     public bool agindo; // Se estiver agindo, ignora função de repelir
+    [SerializeField] private Color flashDanoCor = Color.white;
+    [SerializeField] private float flashDanoAmount = 1f;
 
     [Header("Vida")]
     [SerializeField] private float vidaMax;
@@ -334,13 +336,25 @@ public class SistemaVida : MonoBehaviour
 
     IEnumerator EfeitoInvencibilidade()
     {
-        spriteRenderer.enabled = false;
+        spriteRenderer.material.SetColor("_FlashColor", flashDanoCor);
+        spriteRenderer.material.SetFloat("_FlashAmount", flashDanoAmount);
+        float amountAtual = flashDanoAmount;
         while (podeLevarDano == false)
         {
             yield return new WaitForSeconds(0.1f);
-            spriteRenderer.enabled = !spriteRenderer.enabled;
+            if (amountAtual > 0)
+            {
+                amountAtual = 0f;
+                spriteRenderer.material.SetFloat("_FlashAmount", 0f);
+            }
+            else
+            {
+                amountAtual = flashDanoAmount;
+                spriteRenderer.material.SetFloat("_FlashAmount", flashDanoAmount);
+            }
+                
         }
-        spriteRenderer.enabled = true;
+        spriteRenderer.material.SetFloat("_FlashAmount", 0f);
     }
 
     IEnumerator EfeitoDanoInimigo()
@@ -360,13 +374,25 @@ public class SistemaVida : MonoBehaviour
 
     IEnumerator EfeitoDanoInimigoPisca()
     {
-        spriteRenderer.enabled = false;
+        spriteRenderer.material.SetColor("_FlashColor", flashDanoCor);
+        spriteRenderer.material.SetFloat("_FlashAmount", flashDanoAmount);
+        float amountAtual = flashDanoAmount;
         while (animDano)
         {
             yield return new WaitForSeconds(0.1f);
-            spriteRenderer.enabled = !spriteRenderer.enabled;
+            if (amountAtual > 0)
+            {
+                amountAtual = 0f;
+                spriteRenderer.material.SetFloat("_FlashAmount", 0f);
+            }
+            else
+            {
+                amountAtual = flashDanoAmount;
+                spriteRenderer.material.SetFloat("_FlashAmount", flashDanoAmount);
+            }
+                
         }
-        spriteRenderer.enabled = true;
+        spriteRenderer.material.SetFloat("_FlashAmount", 0f);
     }
 
     IEnumerator TimerDanoInimigo()

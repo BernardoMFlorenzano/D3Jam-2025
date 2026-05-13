@@ -19,6 +19,10 @@ public class MovimentoPlayer : MonoBehaviour
     [SerializeField] private Animator animatorPlayer;
     [SerializeField] private Animator animatorEfeitoAtaque;
     [SerializeField] private SetaEfeitoAtaque efeitoAtaque;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private ParticleSystem particulasRage;
+    [SerializeField] private Color rageColor;
+    [SerializeField] private float rageColorAmount;
 
     [Header("Pulo")]
     //[SerializeField] private float duracaoPulo;
@@ -625,6 +629,9 @@ public class MovimentoPlayer : MonoBehaviour
         multVelMovimento = multVelMovimentoRage;
         multVelAtaque = multVelAtaqueRage;
         animatorPlayer.speed = multVelMovimento;
+
+        particulasRage.Play();
+
         StartCoroutine(TimerRage(tempoRage));
     }
 
@@ -632,8 +639,13 @@ public class MovimentoPlayer : MonoBehaviour
     {
         while (poderVal > 0)
         {
-            yield return new WaitForSeconds(0.1f);
-            poderVal -= 0.1f/tempo;
+            if (spriteRenderer.material.GetFloat("_FlashAmount") < rageColorAmount)
+            {
+                spriteRenderer.material.SetColor("_FlashColor", rageColor);
+                spriteRenderer.material.SetFloat("_FlashAmount", rageColorAmount);
+            }
+            yield return new WaitForSeconds(0.05f);
+            poderVal -= 0.05f/tempo;
             sliderPoder.value = poderVal;
         }
 
@@ -643,5 +655,9 @@ public class MovimentoPlayer : MonoBehaviour
         poderVal = 0f;
         rageAtivo = false;
         sistemaVida.lifeStealAtivo = false;
+
+        particulasRage.Stop();
+
+        spriteRenderer.material.SetFloat("_FlashAmount", 0f);
     }
 }

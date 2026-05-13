@@ -5212,6 +5212,8 @@ MonoBehaviour:
   sofrendoKnockback: 0
   recupDano: 0
   agindo: 0
+  flashDanoCor: {r: 1, g: 1, b: 1, a: 1}
+  flashDanoAmount: 1
   vidaMax: 5
   morreu: 0
   lifeStealAtivo: 0
@@ -5435,7 +5437,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 47c7198aba57fbc449198d92e5ecf4d7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
