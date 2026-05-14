@@ -5234,9 +5234,9 @@ MonoBehaviour:
   particulasDano2: {fileID: 88179583603109504}
   tempoMorto: 5
   nivelAtaqueStun: 0
-  danoInimigo1: {fileID: 8300000, guid: adff40d60e2260a42b159df370488bdf, type: 3}
-  danoInimigo2: {fileID: 8300000, guid: cdd3e93028759594bb6867e0a6f4cdc1, type: 3}
-  danoInimigo3: {fileID: 8300000, guid: 3e2dadee3ff375f48aeb43dc78ad5c7e, type: 3}
+  danoInimigo1: {fileID: 8300000, guid: b5c191e50b41edb49874b270d2b4d021, type: 3}
+  danoInimigo2: {fileID: 8300000, guid: 18efcfbbf05a3cd4f84da5f8497a0c0a, type: 3}
+  morteInimigo: {fileID: 8300000, guid: e071a3b3dc29eb94990514e7d1091bdf, type: 3}
   volumeDanoMult: 0.5
   somPassivo: {fileID: -3103397500063101517}
   impulsoCimaVel: 5
@@ -5282,7 +5282,7 @@ MonoBehaviour:
   aceleracaoCorrida: 0.1
   tempoCorrida: 1
   somPassivoVolMult: 0.1
-  somCorrida: {fileID: 8300000, guid: 20a5d867ee5167b42a6805f57f9d8696, type: 3}
+  somCorrida: {fileID: 8300000, guid: f495bdad50851504aa89663d189fd955, type: 3}
   somCorridaVolMult: 0.4
 --- !u!82 &-3103397500063101517
 AudioSource:
@@ -5294,8 +5294,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 3de3b00897da800488770ad7e2057705, type: 3}
-  m_Resource: {fileID: 8300000, guid: 3de3b00897da800488770ad7e2057705, type: 3}
+  m_audioClip: {fileID: 8300000, guid: fffb1192946500c48be931c1dc6f9ab2, type: 3}
+  m_Resource: {fileID: 8300000, guid: fffb1192946500c48be931c1dc6f9ab2, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

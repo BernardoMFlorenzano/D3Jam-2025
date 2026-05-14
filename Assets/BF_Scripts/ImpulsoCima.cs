@@ -91,6 +91,7 @@ public class ImpulsoCima: MonoBehaviour
                 if (CompareTag("Player"))
                 {
                     movimentoPlayer.estaNoChao = true;
+                    movimentoPlayer.SomQueda();
                     Physics2D.IgnoreLayerCollision(layerPlayer, layerObjetos, false);
                 }
             }

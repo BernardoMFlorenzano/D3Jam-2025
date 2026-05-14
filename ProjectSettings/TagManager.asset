@@ -68,6 +68,9 @@ TagManager:
   - name: Efeitos
     uniqueID: 3578799691
     locked: 0
+  - name: ForeGround
+    uniqueID: 40103449
+    locked: 0
   - name: UI
     uniqueID: 4072550337
     locked: 0

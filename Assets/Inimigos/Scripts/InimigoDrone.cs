@@ -75,6 +75,8 @@ public class InimigoDrone : MonoBehaviour
     private bool morreu;
 
     [Header("Sons")]
+    [SerializeField] private AudioClip somAtaque;
+    [SerializeField] private AudioClip somRecover;
     [SerializeField] private float somPassivoVolMult = 0.1f;
     private AudioSource somPassivo;
     //[SerializeField] private AudioClip somRasante;
@@ -329,6 +331,9 @@ public class InimigoDrone : MonoBehaviour
         corImpulsoDrone = StartCoroutine(impulsoRasante.ImpulsoDrone(descidaRasante, subidaRasante, tempoChao));
         acabouRasante = false;
         corTerminaRasante = StartCoroutine(TerminaRasante());
+
+        AudioManager.instance.PlaySFX(somAtaque, 1f);
+
         //Debug.Log("Começa Ataque");
     }
 
@@ -366,6 +371,8 @@ public class InimigoDrone : MonoBehaviour
         yield return new WaitUntil(() => acabouRasante);
         acabouAtaque = true;
         SetaColisor(1, false, 0);   // Valor padrão do dano e knockback
+
+        AudioManager.instance.PlaySFX(somRecover, 1f);
         //Debug.Log("Acaba Ataque");
     }
 

@@ -9,6 +9,7 @@ using Random = UnityEngine.Random;
 public class SpawnWaves : MonoBehaviour
 {
     [SerializeField] private CombateController combateController;
+    [SerializeField] private bool spawnDeCura = false;
     public Combate combate; // Vai ser trocado externamente
     //private bool emCombate;
     public bool desligado;
@@ -105,7 +106,8 @@ public class SpawnWaves : MonoBehaviour
 
         if (!combateController.acabouCombates)
         {
-            SpawnarCura();
+            if (spawnDeCura)
+                SpawnarCura();
             piscandoSeta = true;
             StartCoroutine(SetaGo());
         }

@@ -104,11 +104,18 @@ public class MovimentoPlayer : MonoBehaviour
     private Slider sliderPoder;
     
     [Header("Sons")]
+    [SerializeField] private AudioClip pulo1;
+    [SerializeField] private AudioClip pulo2;
+    [SerializeField] private AudioClip cai;
     [SerializeField] private AudioClip grama1;
     [SerializeField] private AudioClip grama2;
     [SerializeField] private AudioClip grama3;
+    [SerializeField] private AudioClip grama4;
+    
     [SerializeField] private float tempoSomGrama = 1f;
     [SerializeField] private float volumeSomGrama = 1f;
+    [SerializeField] private float volumeSomPulo = 1f;
+    [SerializeField] private float volumeSomCai = 0.5f;
     private bool delaySomGrama = false;
     [Header("Pausa")]
     [SerializeField] private Pausa pauseManager;
@@ -249,6 +256,8 @@ public class MovimentoPlayer : MonoBehaviour
             puloInput = false;
             estaNoChao = false;
             animatorPlayer.SetBool("Pulando", true);
+
+            SomPulo();
         }
 
         // Animacoes
@@ -261,18 +270,34 @@ public class MovimentoPlayer : MonoBehaviour
 
     }
 
+    public void SomPulo()
+    {
+        int escolha = Random.Range(0, 2);
+        if (escolha == 0)
+            AudioManager.instance.PlaySFX(pulo1, volumeSomPulo);
+        else if (escolha == 1)
+            AudioManager.instance.PlaySFX(pulo2, volumeSomPulo);
+    }
+
+    public void SomQueda()
+    {
+        AudioManager.instance.PlaySFX(cai, volumeSomCai);
+    }
+
     void SomGrama()
     {
         if (!delaySomGrama)
         {
             delaySomGrama = true;
-            int escolha = Random.Range(0, 3);
+            int escolha = Random.Range(0, 4);
             if (escolha == 0)
                 AudioManager.instance.PlaySFX(grama1, volumeSomGrama);
             else if (escolha == 1)
                 AudioManager.instance.PlaySFX(grama2, volumeSomGrama);
-            else
+            else if (escolha == 2)
                 AudioManager.instance.PlaySFX(grama3, volumeSomGrama);
+            else
+                AudioManager.instance.PlaySFX(grama4, volumeSomGrama);
             StartCoroutine(DelaySomGrama());
         }
     }

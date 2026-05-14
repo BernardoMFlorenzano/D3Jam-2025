@@ -56,9 +56,10 @@ public class SistemaVida : MonoBehaviour
     private Coroutine corTimerEfeitoDanoPisca;
     [SerializeField] private AudioClip danoInimigo1;
     [SerializeField] private AudioClip danoInimigo2;
-    [SerializeField] private AudioClip danoInimigo3;
+    [SerializeField] private AudioClip morteInimigo;
     [SerializeField] private float volumeDanoMult;
     [SerializeField] private AudioSource somPassivo;
+    
     private SistemaVida sistemaVidaPlayer;
     private ShakeCamera shakeCamera;
     private float qntEstocArTomadas = 0;
@@ -108,8 +109,10 @@ public class SistemaVida : MonoBehaviour
     {
         StopAllCoroutines();
 
+        AudioManager.instance.PlaySFX(morteInimigo, 1f);
+
         corpo.localPosition = new Vector2(0, corpo.localPosition.y);    // Resetar o que as corrotinas cuidariam
-        spriteRenderer.enabled = true;
+        spriteRenderer.material.SetFloat("_FlashAmount", 0f);
         if (somPassivo)
             somPassivo.enabled = false;
 
@@ -201,7 +204,7 @@ public class SistemaVida : MonoBehaviour
                     StopCoroutine(corTimerEfeitoDano);
                     StopCoroutine(corTimerEfeitoDanoPisca);
                     corpo.localPosition = new Vector2(0, corpo.localPosition.y);
-                    spriteRenderer.enabled = true;
+                    spriteRenderer.material.SetFloat("_FlashAmount", 0f);
                 }
                 animDano = true;
                 corEfeitoDano = StartCoroutine(TimerDanoInimigo());
@@ -235,13 +238,11 @@ public class SistemaVida : MonoBehaviour
         }
         else
         {
-            int escolha = Random.Range(0, 3);
+            int escolha = Random.Range(0, 2);
             if (escolha == 0)
                 AudioManager.instance.PlaySFX(danoInimigo1, 1f);
             else if (escolha == 1)
                 AudioManager.instance.PlaySFX(danoInimigo2, 1f);
-            else
-                AudioManager.instance.PlaySFX(danoInimigo3, 1f);
         }
     }
 
