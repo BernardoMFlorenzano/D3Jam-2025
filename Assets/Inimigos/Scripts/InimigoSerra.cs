@@ -73,7 +73,9 @@ public class InimigoSerra : MonoBehaviour
     private AudioSource somPassivo;
     [SerializeField] private float somPassivoVolMult = 0.1f;
     [SerializeField] private AudioClip somCorrida;
+    [SerializeField] private AudioClip somPreCorrida;
     [SerializeField] private float somCorridaVolMult = 1f;
+    [SerializeField] private float somPreCorridaVolMult = 1f;
     private VolumeController volumeController;
 
 
@@ -313,6 +315,9 @@ public class InimigoSerra : MonoBehaviour
     {
         rb.linearVelocity = Vector2.zero;
         direcaoCorrida = MathF.Sign(-direcaoPlayer.x);
+
+        AudioManager.instance.PlaySFX(somPreCorrida, somPreCorridaVolMult);
+
         animatorSerra.SetBool("Preparando", true);
         yield return new WaitForSeconds(tempoPreparaAtaque);
         animatorSerra.SetBool("Preparando", false);

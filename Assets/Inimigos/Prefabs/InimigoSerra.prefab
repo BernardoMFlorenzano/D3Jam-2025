@@ -5283,7 +5283,9 @@ MonoBehaviour:
   tempoCorrida: 1
   somPassivoVolMult: 0.1
   somCorrida: {fileID: 8300000, guid: f495bdad50851504aa89663d189fd955, type: 3}
-  somCorridaVolMult: 0.4
+  somPreCorrida: {fileID: 8300000, guid: 9aa603282e815fe468737d2f04286b5c, type: 3}
+  somCorridaVolMult: 0.5
+  somPreCorridaVolMult: 0.5
 --- !u!82 &-3103397500063101517
 AudioSource:
   m_ObjectHideFlags: 0

@@ -240,9 +240,9 @@ public class SistemaVida : MonoBehaviour
         {
             int escolha = Random.Range(0, 2);
             if (escolha == 0)
-                AudioManager.instance.PlaySFX(danoInimigo1, 1f);
+                AudioManager.instance.PlaySFX(danoInimigo1, volumeDanoMult);
             else if (escolha == 1)
-                AudioManager.instance.PlaySFX(danoInimigo2, 1f);
+                AudioManager.instance.PlaySFX(danoInimigo2, volumeDanoMult);
         }
     }
 
