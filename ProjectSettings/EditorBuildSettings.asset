@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Logos.unity
+    guid: 21d83c81f3041df49927c39f6bdb83f9
+  - enabled: 1
     path: Assets/Scenes/BF_MenuInicio.unity
     guid: c1a87a73b273d104aa4cfdba4615dab1
   - enabled: 1
@@ -16,7 +19,7 @@ EditorBuildSettings:
     guid: 4f255a292385395439b455cfcbf14481
   - enabled: 1
     path: Assets/Scenes/BF_Morte.unity
-    guid: da189858d4ec47f469d53e151de54e8e
+    guid: a7fefafac26372a4fbe020b53de1d639
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

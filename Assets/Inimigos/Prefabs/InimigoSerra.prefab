@@ -5217,7 +5217,7 @@ MonoBehaviour:
   vidaMax: 5
   morreu: 0
   lifeStealAtivo: 0
-  multCuraLifeSteal: 0.5
+  multCuraLifeSteal: 0.25
   tempoInvenc: 0
   tempoInvencPos: 0
   levandoDano: 0
@@ -5225,7 +5225,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 9153958849020880934}
   danoPlayer: {fileID: 0}
   gameManager: {fileID: 0}
-  barraPoderFill: 0.025
+  barraPoderFill: 0.01
   multKnockback: 1
   animatorMorto: {fileID: 9100000, guid: 4a2562155dea66c4d808b77f073d6977, type: 2}
   tempoEfeitoDano: 0.5
@@ -5235,7 +5235,7 @@ MonoBehaviour:
   tempoMorto: 5
   nivelAtaqueStun: 0
   danoInimigo1: {fileID: 8300000, guid: b5c191e50b41edb49874b270d2b4d021, type: 3}
-  danoInimigo2: {fileID: 8300000, guid: 18efcfbbf05a3cd4f84da5f8497a0c0a, type: 3}
+  danoInimigo2: {fileID: 8300000, guid: 13a91e2bbaff12f46814d28e524634b3, type: 3}
   morteInimigo: {fileID: 8300000, guid: e071a3b3dc29eb94990514e7d1091bdf, type: 3}
   volumeDanoMult: 0.5
   somPassivo: {fileID: -3103397500063101517}
@@ -5275,7 +5275,7 @@ MonoBehaviour:
   sizeBoxDano: {x: 1.3, y: 0.3}
   offsetBoxRangeAtaque: {x: 1.85, y: 0}
   sizeBoxRangeAtaque: {x: 3.65, y: 0.75}
-  cooldownAtaque: 3.5
+  cooldownAtaque: 4
   tempoParadoPosAtaque: 2
   velBaseInimigoHorCorrida: 10
   velMaxInimigoHorCorrida: 15

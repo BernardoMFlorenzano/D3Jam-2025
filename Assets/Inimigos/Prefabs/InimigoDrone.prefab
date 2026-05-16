@@ -5490,7 +5490,7 @@ GameObject:
   - component: {fileID: 6039226610278790047}
   - component: {fileID: 7302878123799225480}
   - component: {fileID: 3755760797265865131}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: InimigoDrone
   m_TagString: InimigoVoador
   m_Icon: {fileID: 0}
@@ -5699,10 +5699,10 @@ MonoBehaviour:
   agindo: 0
   flashDanoCor: {r: 1, g: 1, b: 1, a: 1}
   flashDanoAmount: 1
-  vidaMax: 2
+  vidaMax: 3
   morreu: 0
   lifeStealAtivo: 0
-  multCuraLifeSteal: 0.5
+  multCuraLifeSteal: 0.25
   tempoInvenc: 0
   tempoInvencPos: 0
   levandoDano: 0
@@ -5710,7 +5710,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 3255195626922919177}
   danoPlayer: {fileID: 0}
   gameManager: {fileID: 0}
-  barraPoderFill: 0.025
+  barraPoderFill: 0.01
   multKnockback: 0.5
   animatorMorto: {fileID: 9100000, guid: 7e8c4963205949842856b860ab29e796, type: 2}
   tempoEfeitoDano: 0.25
@@ -5720,7 +5720,7 @@ MonoBehaviour:
   tempoMorto: 5
   nivelAtaqueStun: 0
   danoInimigo1: {fileID: 8300000, guid: b5c191e50b41edb49874b270d2b4d021, type: 3}
-  danoInimigo2: {fileID: 8300000, guid: 18efcfbbf05a3cd4f84da5f8497a0c0a, type: 3}
+  danoInimigo2: {fileID: 8300000, guid: 13a91e2bbaff12f46814d28e524634b3, type: 3}
   morteInimigo: {fileID: 8300000, guid: e071a3b3dc29eb94990514e7d1091bdf, type: 3}
   volumeDanoMult: 0.5
   somPassivo: {fileID: 3755760797265865131}
@@ -5748,7 +5748,7 @@ MonoBehaviour:
   velInimigoHorPatrulha: 2.5
   velInimigoVerPatrulha: 1.5
   distanciaIdeal: 2
-  tempoPreparaAtaque: 1
+  tempoPreparaAtaque: 0.5
   danoPassivo: 1
   tempoDeRespostaInimigo: 0.5
   podeTentarAtacar: 0
@@ -5763,7 +5763,7 @@ MonoBehaviour:
   tempoParadoPosAtaque: 2
   velInimigoHorRasante: 6
   velInimigoVerRasante: 3.5
-  descidaRasante: 0.25
+  descidaRasante: 0.4
   subidaRasante: 0.5
   tempoChao: 0.5
   acabouRasante: 0

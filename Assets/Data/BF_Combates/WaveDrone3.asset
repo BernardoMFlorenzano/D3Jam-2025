@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: WaveDrone3
   m_EditorClassIdentifier: 
   inimigosWave:
-  - {fileID: 4267842907587816688, guid: 25df433e18623184ea90c711082a9024, type: 3}
-  - {fileID: 4267842907587816688, guid: 25df433e18623184ea90c711082a9024, type: 3}
-  - {fileID: 4267842907587816688, guid: 25df433e18623184ea90c711082a9024, type: 3}
+  - {fileID: 4159705130063220426, guid: cb843791f3c300a47a5ecfd0d267706f, type: 3}
+  - {fileID: 4159705130063220426, guid: cb843791f3c300a47a5ecfd0d267706f, type: 3}
+  - {fileID: 4159705130063220426, guid: cb843791f3c300a47a5ecfd0d267706f, type: 3}
   intervaloSpawn: 3
   lado: 3

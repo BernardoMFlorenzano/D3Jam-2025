@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection.Emit;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.Universal;
+using UnityEngine.Splines.Interpolators;
 using UnityEngine.UI;
 
 public class MovimentoPlayer : MonoBehaviour
@@ -92,6 +95,8 @@ public class MovimentoPlayer : MonoBehaviour
     //private bool podeTrocarArma = true;
 
     [Header("Rage LifeSteal")]
+    [SerializeField] private PopUpTutorial popUpTutorialRage;
+    private bool jaAtivouTutorial = false;
     public bool rageAtivo = false;
     private bool podeAtivarRage = false;
     private bool especialInput;
@@ -102,6 +107,15 @@ public class MovimentoPlayer : MonoBehaviour
     [SerializeField] private float tempoRage = 5f;
     public float poderVal = 0f;
     private Slider sliderPoder;
+
+    [Header("Brilho Player")]
+    [SerializeField] private Light2D luzPlayer;
+    [SerializeField] private Color corLuzPadrao = Color.white;
+    [SerializeField] private float forcaLuzPadrao = 1f;
+
+    [SerializeField] private float forcaLuzAvisoRage = 5f;
+    [SerializeField] private float forcaLuzDuranteRage = 2f;
+    [SerializeField] private Color corLuzRage = Color.red;    
     
     [Header("Sons")]
     [SerializeField] private AudioClip pulo1;
@@ -111,6 +125,9 @@ public class MovimentoPlayer : MonoBehaviour
     [SerializeField] private AudioClip grama2;
     [SerializeField] private AudioClip grama3;
     [SerializeField] private AudioClip grama4;
+    [SerializeField] private AudioClip entraRageSom;
+    [SerializeField] private AudioClip saiRageSom;
+    [SerializeField] private AudioSource somPassivoRage;
     
     [SerializeField] private float tempoSomGrama = 1f;
     [SerializeField] private float volumeSomGrama = 1f;
@@ -138,7 +155,13 @@ public class MovimentoPlayer : MonoBehaviour
         sistemaVida = GetComponent<SistemaVida>();
 
         sliderPoder = GameObject.FindGameObjectWithTag("SliderPoder").GetComponent<Slider>();
+
+        //luzPlayer = rangeCorpo.GetComponentInChildren<Light2D>();
+        
+
         sliderPoder.value = poderVal;
+
+        //somPassivoRage.enabled = false;
 
         colisorCorpo.forcaImpulsoCorteAr = forcaImpulsoCorteAr;
         colisorCorpo.forcaImpulsoEstocAr = forcaImpulsoEstocAr;
@@ -635,12 +658,58 @@ public class MovimentoPlayer : MonoBehaviour
         poderVal += val;
         if (poderVal >= 1f)
         {
+            if (!podeAtivarRage)
+            {
+                StartCoroutine(AnimPodeAtivarRage());
+            }
+
             poderVal = 1f;
             podeAtivarRage = true;
+            if (!jaAtivouTutorial)
+            {
+                popUpTutorialRage.Comeca();
+                Debug.Log("Ativa PopUpTutorial");
+                jaAtivouTutorial = true;
+            }
+            
+            
         }
 
         sliderPoder.value = poderVal;
     }
+
+    IEnumerator AnimPodeAtivarRage(float tempo = 1f)
+    {
+        luzPlayer.color = corLuzRage;
+
+        while (luzPlayer.intensity < forcaLuzAvisoRage)
+        {
+            luzPlayer.intensity += 0.5f;
+            yield return new WaitForSeconds(0.05f);
+            
+        }
+
+        luzPlayer.intensity = forcaLuzAvisoRage;
+
+
+        while (luzPlayer.intensity > forcaLuzPadrao)
+        {
+            luzPlayer.intensity -= 0.5f;
+            yield return new WaitForSeconds(0.05f);
+            
+        }
+
+        ResetaLuzPlayer();
+
+        yield return null;
+    }
+
+    void ResetaLuzPlayer()
+    {
+        luzPlayer.intensity = forcaLuzPadrao;
+        luzPlayer.color = corLuzPadrao;
+    }
+
 
     public void AtivaRage()
     {
@@ -656,6 +725,11 @@ public class MovimentoPlayer : MonoBehaviour
         animatorPlayer.speed = multVelMovimento;
 
         particulasRage.Play();
+        AudioManager.instance.PlaySFX(entraRageSom, 1f);
+        somPassivoRage.Play();
+
+        luzPlayer.color = corLuzRage;
+        luzPlayer.intensity = forcaLuzDuranteRage;
 
         StartCoroutine(TimerRage(tempoRage));
     }
@@ -682,6 +756,10 @@ public class MovimentoPlayer : MonoBehaviour
         sistemaVida.lifeStealAtivo = false;
 
         particulasRage.Stop();
+        AudioManager.instance.PlaySFX(saiRageSom, 1f);
+        somPassivoRage.Stop();
+
+        ResetaLuzPlayer();
 
         spriteRenderer.material.SetFloat("_FlashAmount", 0f);
     }

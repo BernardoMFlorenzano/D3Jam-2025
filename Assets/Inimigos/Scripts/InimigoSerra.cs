@@ -38,7 +38,7 @@ public class InimigoSerra : MonoBehaviour
     [Header("Em Combate")]
     [SerializeField] private float distanciaIdealX; // Distancia horizontal que o inimigo vai tentar manter
     [SerializeField] private float tempoPreparaAtaque;  // Pequeno delay até iniciar ataque
-    [SerializeField] private float danoPassivo;  // Dano no player ao tocar o inimigo fora do modo ataque
+    [SerializeField] private int danoPassivo = 1;  // Dano no player ao tocar o inimigo fora do modo ataque
     [SerializeField] private float tempoDeRespostaInimigo;  // Delay na atualização da posição e direção do player
     public bool podeTentarAtacar; // Colisor de range de ataque está vendo player ou não
     private bool podeAtacar; // Será falso se estiver em cooldown ou outro fator impeça ele de atacar
@@ -366,7 +366,7 @@ public class InimigoSerra : MonoBehaviour
     {
         yield return new WaitForSeconds(tempoCorrida);
         acabouAtaque = true;
-        SetaColisor(1, false, 0);   // Valor padrão do dano e knockback
+        SetaColisor(danoPassivo, false, 0);   // Valor padrão do dano e knockback
         animatorSerra.SetBool("Correndo", false);
         //Debug.Log("Acaba Ataque");
     }

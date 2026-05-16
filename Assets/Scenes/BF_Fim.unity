@@ -954,7 +954,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25da9936c16952a4f8643f231c1d50e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musica: {fileID: 8300000, guid: de5347dd59038144b9048dead75fc1cb, type: 3}
+  musica: {fileID: 8300000, guid: f57452ad97ce0e848ad5792c720888a7, type: 3}
 --- !u!1 &1744213244
 GameObject:
   m_ObjectHideFlags: 0
@@ -1046,7 +1046,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0

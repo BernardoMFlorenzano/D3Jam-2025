@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1738644745382752714, guid: 6eaef844d60cae64b8868f956830642b, type: 3}
       propertyPath: vidaMax
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2069038235622414186, guid: 6eaef844d60cae64b8868f956830642b, type: 3}
       propertyPath: danoAtaque
@@ -22,11 +22,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2069038235622414186, guid: 6eaef844d60cae64b8868f956830642b, type: 3}
       propertyPath: tempoPreparaAtaque
-      value: 1
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 3395394184713998687, guid: 6eaef844d60cae64b8868f956830642b, type: 3}
       propertyPath: m_Name
       value: InimigoSerraV1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7629325376788444360, guid: 6eaef844d60cae64b8868f956830642b, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7629325376788444360, guid: 6eaef844d60cae64b8868f956830642b, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7629325376788444360, guid: 6eaef844d60cae64b8868f956830642b, type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9063415233367851471, guid: 6eaef844d60cae64b8868f956830642b, type: 3}
       propertyPath: m_LocalPosition.x

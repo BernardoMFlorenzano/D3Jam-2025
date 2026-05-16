@@ -13,7 +13,7 @@ public class AcabaJogo : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            gameManager.TrocaCena(2); // Acaba jogo
+            gameManager.TrocaCena(3); // Acaba jogo
         }
     }
 }

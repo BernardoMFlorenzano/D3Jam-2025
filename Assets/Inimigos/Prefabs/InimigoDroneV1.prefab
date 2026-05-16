@@ -58,14 +58,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6039226610278790047, guid: 25df433e18623184ea90c711082a9024, type: 3}
       propertyPath: tempoChao
-      value: 0.7
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6039226610278790047, guid: 25df433e18623184ea90c711082a9024, type: 3}
       propertyPath: cooldownAtaque
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6039226610278790047, guid: 25df433e18623184ea90c711082a9024, type: 3}
       propertyPath: descidaRasante
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6039226610278790047, guid: 25df433e18623184ea90c711082a9024, type: 3}
+      propertyPath: tempoPreparaAtaque
       value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 6039226610278790047, guid: 25df433e18623184ea90c711082a9024, type: 3}
@@ -82,7 +86,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8843119527186386392, guid: 25df433e18623184ea90c711082a9024, type: 3}
       propertyPath: vidaMax
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8843119527186386392, guid: 25df433e18623184ea90c711082a9024, type: 3}
       propertyPath: multLifeSteal

@@ -150,7 +150,7 @@ public class SistemaVida : MonoBehaviour
         }
         Debug.Log("Player Morreu");
 
-        gameManager.TrocaCena(3);   // Morte
+        gameManager.TrocaCena(4);   // Morte
     }
 
     public void LevaAtaqueInimigo(int condicaoAtaque, int modoAtaque, int dano, bool knockback, float forcaKnockback, bool shake, float forcaShake, float forcaImpulsoCorteAr, float forcaImpulsoEstocAr, Transform corpoAtacante)
